@@ -1,12 +1,13 @@
 /* ==========================================================
-   SIGSS - LOGIN (Modern CSS)
+   SIGSS - LOGIN & HEADER
+   CSS Moderno, Estructurado y Flexible (+25% Header)
    ========================================================== */
 
 /* ----------------------------------------------------------
-   1. VARIABLES DEL TEMA
+   1. VARIABLES DE TEMA
    ---------------------------------------------------------- */
 :root {
-  /* Colores principales */
+  /* Colores Principales */
   --color-primary: #5b47fb;
   --color-primary-hover: #4935e8;
   --color-text-main: #031b4e;
@@ -15,16 +16,19 @@
   --color-placeholder: #97a3b9;
   
   /* Superficies y Bordes */
-  --bg-card: rgba(255, 255, 255, 0.75);
+  --bg-page: #f4f5f8;
+  --bg-header: #ffffff;
+  --bg-card: rgba(255, 255, 255, 0.85);
   --border-color: #cdd4e0;
   --border-focus: #b4bdce;
   
-  /* Estilos */
+  /* Tipografía y Estilos generales */
   --font-family: "Roboto", system-ui, -apple-system, sans-serif;
   --radius: 8px;
   --transition: 0.2s ease-in-out;
   --shadow-card: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 
                  0 8px 10px -6px rgba(0, 0, 0, 0.01);
+  --shadow-header: 0 2px 4px rgba(0, 0, 0, 0.03);
 }
 
 /* ----------------------------------------------------------
@@ -37,14 +41,68 @@
 .az-body {
   margin: 0;
   min-height: 100vh;
-  min-height: 100dvh; /* Soporte para alto dinámico en móviles */
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
   font-family: var(--font-family);
   color: var(--color-text-main);
-  background-color: #f4f5f8;
+  background-color: var(--bg-page);
 }
 
+/* ----------------------------------------------------------
+   3. ENCABEZADO / HEADER SUPERIOR (+25% MÁS GRANDE)
+   ---------------------------------------------------------- */
+.header-superior {
+  width: 100%;
+  background-color: var(--bg-header);
+  border-bottom: 1px solid var(--border-color);
+  padding: 0.95rem 1.875rem; /* +25% padding */
+  box-shadow: var(--shadow-header);
+}
+
+.encabezado {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1300px;
+  margin: 0 auto;
+
+  /* Logos en los extremos (+25% de 50px -> 62.5px) */
+  .logo {
+    height: 62.5px;
+    width: auto;
+    object-fit: contain;
+    flex-shrink: 0;
+  }
+
+  /* Bloque de Texto Centrado */
+  .titulo {
+    text-align: center;
+    flex-grow: 1;
+    padding-inline: 1.25rem;
+
+    /* Título (+25% de 1.125rem -> 1.4rem) */
+    h2 {
+      margin: 0;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--color-text-dark);
+      line-height: 1.2;
+    }
+
+    /* Subtítulo (+25% de 0.875rem -> 1.1rem) */
+    p {
+      margin: 0.3rem 0 0;
+      font-size: 1.1rem;
+      color: var(--color-text-muted);
+    }
+  }
+}
+
+/* ----------------------------------------------------------
+   4. CONTENEDOR DE LOGIN Y TARJETA
+   ---------------------------------------------------------- */
 .az-signin-wrapper {
   flex: 1;
   display: grid;
@@ -52,13 +110,10 @@
   padding: 1.25rem;
 }
 
-/* ----------------------------------------------------------
-   3. TARJETA DE LOGIN
-   ---------------------------------------------------------- */
 .az-card-signin {
   width: 100%;
   max-width: 380px;
-  min-height: 520px;
+  min-height: 500px;
   padding: 2.25rem 2rem;
   
   display: flex;
@@ -66,17 +121,16 @@
   justify-content: space-between;
 
   background-color: var(--bg-card);
-  backdrop-filter: blur(10px); /* Efecto Glassmorphism */
+  backdrop-filter: blur(10px);
   border: 1px solid var(--border-color);
   border-radius: var(--radius);
   box-shadow: var(--shadow-card);
 }
 
 /* ----------------------------------------------------------
-   4. COMPONENTES Y ANIDAMIENTO (NESTING)
+   5. ELEMENTOS DEL FORMULARIO Y COMPONENTES
    ---------------------------------------------------------- */
 
-/* Logo */
 .az-logo {
   display: block;
   color: var(--color-text-dark);
@@ -91,7 +145,6 @@
   }
 }
 
-/* Encabezado */
 .az-signin-header {
   width: 100%;
 
@@ -121,7 +174,6 @@
   }
 }
 
-/* Controles de Formulario */
 .form-group {
   margin-bottom: 1.25rem;
 }
@@ -155,7 +207,6 @@
   }
 }
 
-/* Botones */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -198,10 +249,32 @@
 }
 
 /* ----------------------------------------------------------
-   5. RESPONSIVE DESIGN (MEDIA QUERIES)
+   6. RESPONSIVE DESIGN (MEDIA QUERIES)
    ---------------------------------------------------------- */
 
-@media (max-width: 480px) {
+@media (max-width: 576px) {
+  .header-superior {
+    padding: 0.75rem 0.5rem;
+  }
+
+  .encabezado {
+    .logo {
+      height: 45px; /* Ajuste adaptado en móvil */
+    }
+
+    .titulo {
+      padding-inline: 0.5rem;
+
+      h2 {
+        font-size: 1.05rem;
+      }
+
+      p {
+        font-size: 0.85rem;
+      }
+    }
+  }
+
   .az-signin-wrapper {
     padding: 1rem;
   }
@@ -209,14 +282,14 @@
   .az-card-signin {
     max-width: 100%;
     min-height: auto;
-    padding: 2rem 1.5rem;
+    padding: 2rem 1.25rem;
     box-shadow: none;
   }
 }
 
 @media (max-height: 650px) {
   .az-signin-wrapper {
-    padding-block: 2rem;
+    padding-block: 1.5rem;
   }
 
   .az-card-signin {
