@@ -9329,6 +9329,77 @@ body {
         .az-menu-sub .nav-link.active {
           font-weight: 400; } }
 
+#nav-consulta-externa details {
+  position: relative; }
+
+#nav-consulta-externa details > summary.nav-link {
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  list-style: none;
+  color: #031b4e;
+  font-size: 15px;
+  font-weight: 500;
+  padding: 0;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out; }
+  @media (min-width: 992px) {
+    #nav-consulta-externa details > summary.nav-link {
+      font-size: 0.875rem; } }
+  #nav-consulta-externa details > summary.nav-link::-webkit-details-marker {
+    display: none; }
+  #nav-consulta-externa details > summary.nav-link::after {
+    content: '\f3d0';
+    display: inline-block;
+    font-family: 'Ionicons';
+    font-size: 12px;
+    font-weight: 400;
+    margin-left: auto;
+    margin-top: 3px;
+    opacity: 0.5; }
+    @media (min-width: 992px) {
+      #nav-consulta-externa details > summary.nav-link::after {
+        margin-left: 5px; } }
+  #nav-consulta-externa details > summary.nav-link:hover,
+  #nav-consulta-externa details > summary.nav-link:hover i {
+    color: #5b47fb; }
+  #nav-consulta-externa details > summary.nav-link .typcn {
+    font-size: 20px;
+    line-height: 0.95;
+    margin-right: 15px;
+    width: 16px; }
+    @media (min-width: 992px) {
+      #nav-consulta-externa details > summary.nav-link .typcn {
+        font-size: 18px;
+        margin-right: 7px; } }
+    #nav-consulta-externa details > .az-menu-sub {
+      box-sizing: border-box;
+      width: 100%;
+      min-width: 0;
+      margin-left: 0; }
+#nav-consulta-externa.active details > summary.nav-link {
+  color: #5b47fb; }
+  #nav-consulta-externa.active details > summary.nav-link::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    top: 0;
+    left: -20px;
+    width: 2px;
+    background-color: #5b47fb;
+    border-radius: 3px; }
+    @media (min-width: 992px) {
+      #nav-consulta-externa.active details > summary.nav-link::before {
+        top: auto;
+        bottom: -22px;
+        left: 0;
+        right: 0;
+        width: auto;
+        height: 2px; } }
+#nav-consulta-externa details[open] > .az-menu-sub {
+  display: block; }
+
 .az-menu-sub-mega {
   left: 0;
   right: 0;

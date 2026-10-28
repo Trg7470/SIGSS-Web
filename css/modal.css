@@ -1,0 +1,140 @@
+
+/* =========================================================
+   MODAL GENÉRICO SIGSS - ESTILO BASADO EN AZIA
+   ========================================================= */
+
+/* Contenedor */
+.modal-sigss {
+    border: 0;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 8px 30px rgba(28, 39, 60, 0.12);
+}
+
+/* Encabezado */
+.modal-sigss-header {
+    background-color: #f8f9fc;
+    border-bottom: 1px solid #e3e7ed;
+    padding: 18px 24px;
+    align-items: center;
+}
+
+.modal-sigss-header .modal-title {
+    color: #031b4e;
+    font-size: 16px;
+    line-height: 1.5;
+    margin: 0;
+}
+
+.modal-sigss-header .close {
+    font-size: 25px;
+    font-weight: 400;
+    opacity: 0.6;
+    outline: none;
+}
+
+.modal-sigss-header .close:hover {
+    opacity: 1;
+}
+
+/* Cuerpo */
+#modal_generico .modal-body {
+    padding: 24px;
+    background-color: #fff;
+}
+
+#modal_generico_campos > [class*="col-"] {
+    min-width: 0;
+}
+
+/* Etiquetas */
+#modal_generico .modal-body label {
+    display: block;
+    margin-bottom: 6px;
+    color: #031b4e;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+#modal_generico .campo-requerido {
+    color: #dc3545;
+}
+
+/* Controles */
+#modal_generico .form-control {
+    min-height: 38px;
+    border: 1px solid #cdd4e0;
+    border-radius: 4px;
+    color: #031b4e;
+    font-size: 13px;
+    box-shadow: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+#modal_generico textarea.form-control {
+    min-height: 90px;
+    resize: vertical;
+}
+
+#modal_generico .form-control:focus {
+    border-color: #0168fa;
+    box-shadow: 0 0 0 2px rgba(1, 104, 250, 0.10);
+}
+
+#modal_generico .form-control.is-invalid {
+    border-color: #dc3545;
+}
+
+#modal_generico .form-check {
+    padding-top: 8px;
+}
+
+#modal_generico .form-check-input {
+    margin-top: 4px;
+}
+
+#modal_generico .form-check-label {
+    display: inline-block;
+    margin-left: 6px;
+}
+
+/* Pie */
+.modal-sigss-footer {
+    padding: 15px 24px;
+    background-color: #fff;
+    border-top: 1px solid #e3e7ed;
+    gap: 8px;
+}
+
+.modal-sigss-footer .btn {
+    min-height: 36px;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+/* Descripción */
+#modal_generico_descripcion {
+    line-height: 1.6;
+}
+
+/* Adaptación a móviles */
+@media (max-width: 575.98px) {
+    #modal_generico .modal-dialog {
+        margin: 10px;
+    }
+
+    #modal_generico .modal-body {
+        padding: 18px;
+    }
+
+    .modal-sigss-header,
+    .modal-sigss-footer {
+        padding: 14px 18px;
+    }
+
+    .modal-sigss-footer {
+        flex-wrap: wrap;
+    }
+}

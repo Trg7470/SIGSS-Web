@@ -1,82 +1,96 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-90680653-2"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
 
-      gtag('config', 'UA-90680653-2');
-    </script>
-    
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- Meta -->
-    <meta name="description" content="Responsive Bootstrap 4 Dashboard Template">
-    <meta name="author" content="BootstrapDash">
+<head>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-90680653-2"></script>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- Meta -->
+  <meta name="description" content="Responsive Bootstrap 4 Dashboard Template">
+  <meta name="author" content="BootstrapDash">
 
-    <title>SIGSS - Login</title>
+  <title>SIGSS - Login</title>
 
-    <!-- vendor css -->
-    <link href="./lib/fontawesome-free/css/all.min.css" rel="stylesheet">
-    <link href="./lib/ionicons/css/ionicons.min.css" rel="stylesheet">
-    <link href="./lib/typicons.font/typicons.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+  <!-- vendor css -->
+  <link href="./lib/fontawesome-free/css/all.min.css" rel="stylesheet">
+  <link href="./lib/ionicons/css/ionicons.min.css" rel="stylesheet">
+  <link href="./lib/typicons.font/typicons.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+  <link rel="stylesheet" href="./css/popup.css">
+  <link rel="stylesheet" href="./css/login.css">
 
-    <!-- azia CSS -->
-    <link rel="stylesheet" href="./css/login.css">
+</head>
 
-  </head>
-  <body class="az-body">
+<body class="az-body">
 
-    <!-- Encabezado / Header Superior -->
-    <header class="header-superior">
-      <div class="encabezado">
-        <img src="./assets/images/DURANGO.png" class="logo" alt="Logo izquierdo">
-        <div class="titulo">
-          <h2>Servicios de Salud de Durango</h2>
-          <p>Jurisdicción Sanitaria No. 2 Gómez Palacio, Dgo.</p>
-        </div>
-        <img src="./assets/images/SSD.png" class="logo" alt="Logo derecho">
+  <!-- Encabezado / Header Superior -->
+  <header class="header-superior">
+    <div class="encabezado">
+      <img src="./assets/images/DURANGO.png" class="logo" alt="Logo izquierdo">
+      <div class="titulo">
+        <h2>Servicios de Salud de Durango</h2>
+        <p>Jurisdicción Sanitaria No. 2 Gómez Palacio, Dgo.</p>
       </div>
-    </header>
+      <img src="./assets/images/SSD.png" class="logo" alt="Logo derecho">
+    </div>
+  </header>
 
-    <div class="az-signin-wrapper">
-      <div class="az-card-signin">
-        <h1 class="az-logo" style="text-transform: uppercase;">SIGSS</h1>
-        <div class="az-signin-header">
-          <h2>Welcome back!</h2>
-          <h4>Please sign in to continue</h4>
+  <div class="az-signin-wrapper">
+    <div class="az-card-signin">
+      <h1 class="az-logo" style="text-transform: uppercase;">SIGSS</h1>
+      <div class="az-signin-header">
+        <h2>Welcome back!</h2>
+        <h4>Please sign in to continue</h4>
 
-          <form action="index.html">
-            <div class="form-group">
-              <label>Usuario</label>
-              <input type="text" class="form-control" placeholder="Ingresa tu nombre de usuario" value="demo">
-            </div><!-- form-group -->
-            <div class="form-group">
-              <label>Contraseña</label>
-              <input type="password" class="form-control" placeholder="Ingresa tu contraseña" value="thisisademo">
-            </div><!-- form-group -->
-            <button class="btn btn-az-primary btn-block">Iniciar Sesión</button>
-          </form>
-        </div><!-- az-signin-header -->
-      </div><!-- az-card-signin -->
-    </div><!-- az-signin-wrapper -->
+        <form id="form-login">
+          <div class="form-group">
+            <label>Usuario</label>
+            <input type="text" class="form-control" placeholder="Ingresa tu nombre de usuario" value="usuario"
+              id="usuario">
+          </div><!-- form-group -->
+          <div class="form-group">
+            <label>Contraseña</label>
+            <input type="password" class="form-control" placeholder="Ingresa tu contraseña" value="mypassword"
+              id="password">
+          </div><!-- form-group -->
+          <button class="btn btn-az-primary btn-block" id="Iniciar-Sesion">Iniciar Sesión</button>
+        </form>
+      </div><!-- az-signin-header -->
+    </div><!-- az-card-signin -->
+  </div><!-- az-signin-wrapper -->
+  <!-- Popup global -->
+  <div id="modalPopup" class="popup-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-titulo" aria-describedby="modal-mensaje">
+    <div class="popup-card">
+      <!-- Botón cerrar -->
+      <button id="popup-cerrar" class="popup-cerrar" type="button" aria-label="Cerrar diálogo" onclick="cerrarPopup()">
+        &times;
+      </button>
+      <!-- Icono -->
+      <div id="modal-icono" class="popup-icono">
+        <i class="fas fa-circle-xmark"></i>
+      </div>
+      <!-- Titulo -->
+      <h3 id="modal-titulo">
+        Generando documento
+      </h3>
+      <!-- Mensaje -->
+      <p id="modal-mensaje">
+        Espere un momento, por favor...
+      </p>
+      <!-- Boton -->
+      <button id="modal-boton" class="popup-boton" type="button">
+        Aceptar
+      </button>
+    </div>
+  </div>
+  <script src="../lib/jquery/jquery.min.js"></script>
+  <script src="../lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="./js/popup.js"></script>
+  <script src="../lib/ionicons/ionicons.js"></script>
+  <script src="../js/login.js"></script>
+  <script src="../js/azia.js"></script>
+</body>
 
-    <script src="../lib/jquery/jquery.min.js"></script>
-    <script src="../lib/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="../lib/ionicons/ionicons.js"></script>
-    <script src="../js/jquery.cookie.js" type="text/javascript"></script>
-
-    <script src="../js/azia.js"></script>
-    <script>
-      $(function(){
-        'use strict'
-
-      });
-    </script>
-  </body>
 </html>

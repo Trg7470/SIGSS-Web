@@ -1,0 +1,58 @@
+<div id="modalPopup" class="popup-overlay">
+    <div class="popup-card">
+        <!-- Botón cerrar -->
+        <button id="popup-cerrar" class="popup-cerrar" onclick="cerrarPopup()">
+            &times;
+        </button>
+
+        <!-- Icono -->
+        <div id="modal-icono" class="popup-icono">
+            <i class="fas fa-spinner fa-spin"></i>
+        </div>
+
+        <!-- Título -->
+        <h2 id="modal-titulo"> Generando documento </h2>
+
+        <!-- Mensaje -->
+        <p id="modal-mensaje">
+            Espere un momento, por favor...
+        </p>
+
+        <!-- Botón -->
+        <button id="modal-boton" type="button">
+            Aceptar
+        </button>
+    </div>
+</div>
+
+<div id="modalConfirmacion" class="confirmacion-overlay">
+    <div class="confirmacion-card">
+        <button type="button" id="confirmacion-cerrar" class="confirmacion-cerrar">
+            &times;
+        </button>
+
+        <div id="confirmacion-icono" class="confirmacion-icono">
+            <i class="fas fa-exclamation-triangle"></i>
+        </div>
+
+        <h3 id="confirmacion-titulo">
+            ¿Cancelar registro?
+        </h3>
+
+        <p id="confirmacion-mensaje">
+            ¿Estás seguro de que deseas cancelar?
+            Los datos capturados en el formulario se perderán.
+        </p>
+
+        <div class="confirmacion-botones">
+
+            <button type="button" id="confirmacion-confirmar" class="confirmacion-confirmar">
+                Sí, cancelar
+            </button>
+
+            <button type="button" id="confirmacion-cancelar" class="confirmacion-cancelar">
+                No, continuar
+            </button>
+        </div>
+    </div>
+</div>

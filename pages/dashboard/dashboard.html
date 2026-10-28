@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+
+<head>
+  <!-- Configuración del documento -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Sistema Integral de Gestión de Servicios de Salud">
+  <meta name="author" content="SIGSS">
+  <title>SIGSS | Panel principal</title>
+  <!-- Hojas de estilo de iconos -->
+  <link href="../../lib/fontawesome-free/css/all.min.css" rel="stylesheet">
+  <link href="../../lib/ionicons/css/ionicons.min.css" rel="stylesheet">
+  <link href="../../lib/typicons.font/typicons.css" rel="stylesheet">
+  <link href="../../lib/flag-icon-css/css/flag-icon.min.css" rel="stylesheet">
+  <!-- Hojas de estilo de la plantilla -->
+  <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../../../css/popup.css">
+  <link rel="stylesheet" href="../../../css/dashboard.css">
+  <link rel="stylesheet" href="../../../css/modal.css">
+</head>
+
+<body id="pagina-sigss">
+  <!-- ================================================== -->
+  <!-- ENCABEZADO PRINCIPAL                               -->
+  <!-- ================================================== -->
+  <header id="seccion-encabezado" class="az-header">
+    <div id="contenedor-encabezado" class="container">
+      <!-- LOGOTIPO Y BOTÓN DEL MENÚ MÓVIL -->
+      <div id="seccion-logotipo" class="az-header-left">
+        <a href="index.html" id="logo-sigss" class="az-logo">
+          <span></span> SIGSS
+        </a>
+        <a href="#" id="boton-menu-movil" class="az-header-menu-icon d-lg-none" aria-label="Abrir menú">
+          <span></span>
+        </a>
+      </div>
+      <!-- ================================================== -->
+      <!-- MENÚ PRINCIPAL                                     -->
+      <!-- ================================================== -->
+      <nav id="seccion-navegacion" class="az-header-menu">
+        <!-- Encabezado del menú móvil -->
+        <div id="encabezado-menu-movil" class="az-header-menu-header">
+          <a href="index.html" id="logo-sigss-movil" class="az-logo">
+            <span></span> SIGSS
+          </a>
+          <a href="#" id="boton-cerrar-menu" class="close" aria-label="Cerrar menú">
+            &times;
+          </a>
+        </div>
+        <!-- Opciones de navegación -->
+        <ul id="menu-principal" class="nav"></ul>
+      </nav>
+      <!-- ================================================== -->
+      <!-- ACCIONES DEL USUARIO                               -->
+      <!-- ================================================== -->
+      <div id="seccion-acciones-usuario" class="az-header-right">
+        <!-- ================================================== -->
+        <!-- MENSAJES                                           -->
+        <!-- ================================================== -->
+        <div id="seccion-mensajes" class="az-header-message">
+          <a href="#" id="boton-mensajes" aria-label="Mensajes">
+            <i class="typcn typcn-messages"></i>
+          </a>
+        </div>
+        <!-- ================================================== -->
+        <!-- NOTIFICACIONES                                     -->
+        <!-- ================================================== -->
+        <div id="seccion-notificaciones" class="dropdown az-header-notification">
+          <a href="#" id="boton-notificaciones" class="new" aria-label="Notificaciones">
+            <i class="typcn typcn-bell"></i>
+          </a>
+          <!-- Menú desplegable de notificaciones -->
+          <div id="menu-notificaciones" class="dropdown-menu">
+            <!-- Encabezado para dispositivos móviles -->
+            <div id="encabezado-notificaciones-movil" class="az-dropdown-header mg-b-20 d-sm-none">
+              <a href="#" id="volver-notificaciones" class="az-header-arrow" aria-label="Volver">
+                <i class="icon ion-md-arrow-back"></i>
+              </a>
+            </div>
+            <h6 id="titulo-notificaciones" class="az-notification-title">
+              Notificaciones
+            </h6>
+            <p id="texto-notificaciones" class="az-notification-text">
+              Tienes notificaciones pendientes
+            </p>
+            <!-- Lista de notificaciones -->
+            <div id="lista-notificaciones" class="az-notification-list">
+              <!-- Notificación 1 -->
+              <div id="notificacion-1" class="media new">
+                <div class="az-img-user">
+                  <img src="../img/faces/face2.jpg" alt="Usuario">
+                </div>
+                <div class="media-body">
+                  <p>
+                    <strong>Notificación de ejemplo</strong>
+                    Actividad registrada en el sistema.
+                  </p>
+                  <span>Fecha y hora</span>
+                </div>
+              </div>
+              <!-- Notificación 2 -->
+              <div id="notificacion-2" class="media new">
+                <div class="az-img-user online">
+                  <img src="../img/faces/face3.jpg" alt="Usuario">
+                </div>
+                <div class="media-body">
+                  <p>
+                    <strong>Notificación de ejemplo</strong>
+                    Se ha registrado una nueva actividad.
+                  </p>
+                  <span>Fecha y hora</span>
+                </div>
+              </div>
+              <!-- Notificación 3 -->
+              <div id="notificacion-3" class="media">
+                <div class="az-img-user">
+                  <img src="../img/faces/face4.jpg" alt="Usuario">
+                </div>
+                <div class="media-body">
+                  <p>
+                    <strong>Notificación de ejemplo</strong>
+                    Información pendiente de consultar.
+                  </p>
+                  <span>Fecha y hora</span>
+                </div>
+              </div>
+              <!-- Notificación 4 -->
+              <div id="notificacion-4" class="media">
+                <div class="az-img-user">
+                  <img src="../img/faces/face5.jpg" alt="Usuario">
+                </div>
+                <div class="media-body">
+                  <p>
+                    <strong>Notificación de ejemplo</strong>
+                    Se ha actualizado la información.
+                  </p>
+                  <span>Fecha y hora</span>
+                </div>
+              </div>
+            </div>
+            <!-- Pie de las notificaciones -->
+            <div id="pie-notificaciones" class="dropdown-footer">
+              <a href="#" id="ver-todas-notificaciones">
+                Ver todas las notificaciones
+              </a>
+            </div>
+          </div>
+        </div>
+        <!-- ================================================== -->
+        <!-- PERFIL DEL USUARIO                                 -->
+        <!-- ================================================== -->
+        <div id="seccion-perfil" class="dropdown az-profile-menu">
+          <!-- Acceso al perfil -->
+          <a href="#" id="boton-perfil" class="az-img-user" aria-label="Perfil del usuario">
+            <img src="../../assets/images/usuario.png" style="width: 28px; height: 28px;" alt="Foto de perfil">
+          </a>
+          <!-- Menú desplegable del perfil -->
+          <div id="menu-perfil" class="dropdown-menu">
+            <!-- Encabezado móvil -->
+            <div id="encabezado-perfil-movil" class="az-dropdown-header d-sm-none">
+              <a href="#" id="volver-perfil" class="az-header-arrow" aria-label="Volver">
+                <i class="icon ion-md-arrow-back"></i>
+              </a>
+            </div>
+            <!-- Información del usuario -->
+            <div id="informacion-perfil" class="az-header-profile">
+              <div id="imagen-perfil" class="az-img-user">
+                <img src="../../assets/images/usuario.png" alt="Foto de perfil">
+              </div>
+              <h6 id="nombre-usuario">Nombre del usuario</h6>
+              <span id="rol-usuario">Tipo de usuario</span>
+            </div>
+            <!-- Opciones del perfil -->
+            <a href="#" id="opcion-mi-perfil" class="dropdown-item">
+              <i class="typcn typcn-user-outline"></i>
+              Mi perfil
+            </a>
+            <a href="#" id="opcion-editar-perfil" class="dropdown-item">
+              <i class="typcn typcn-edit"></i>
+              Editar perfil
+            </a>
+            <a href="#" id="opcion-registro-actividad" class="dropdown-item">
+              <i class="typcn typcn-time"></i>
+              Registro de actividad
+            </a>
+            <a href="#" id="opcion-configuracion" class="dropdown-item">
+              <i class="typcn typcn-cog-outline"></i>
+              Configuración de la cuenta
+            </a>
+            <a href="#" id="opcion-cerrar-sesion" class="dropdown-item">
+              <i class="typcn typcn-power-outline"></i>
+              Cerrar sesión
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <!-- ================================================== -->
+  <!-- CONTENIDO PRINCIPAL                                -->
+  <!-- ================================================== -->
+  <main id="seccion-contenido" class="az-content az-content-dashboard">
+    <div id="contenedor-contenido" class="container">
+      <div id="contenido-dashboard" class="az-content-body">
+        <!-- Título y bienvenida -->
+        <section id="seccion-bienvenida" class="az-dashboard-one-title">
+          <div id="informacion-bienvenida">
+            <h1 id="titulo-bienvenida" class="az-dashboard-title">
+            </h1>
+            <p id="descripcion-bienvenida" class="az-dashboard-text">
+            </p>
+          </div>
+          <!-- Información adicional -->
+          <div id="informacion-adicional" class="az-content-header-right">
+            <div id="informacion-fecha" class="media">
+              <div class="media-body">
+                <label id="fecha">Fecha</label>
+                <h6 id="hora">--/--/----</h6>
+              </div>
+            </div>
+          </div>
+        </section>
+        <!-- ================================================== -->
+        <!-- CONTENIDO DINÁMICO SEGÚN EL USUARIO                -->
+        <!-- ================================================== -->
+        <section id="seccion-panel-usuario" aria-label="Panel del usuario">
+          <div id="contenedor-modulos">
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+  <!-- ================================================== -->
+  <!-- PIE DE PÁGINA                                      -->
+  <!-- ================================================== -->
+  <footer id="seccion-pie-pagina" class="az-footer ht-40">
+    <div id="contenedor-pie-pagina" class="container ht-100p pd-t-0-f">
+      <span id="texto-pie-pagina" class="text-muted d-block text-center text-sm-left d-sm-inline-block">
+        SIGSS | Sistema Integral de Gestión de Servicios de Salud
+      </span>
+      <span id="version-sistema" class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">
+        Sistema de gestión de servicios de salud
+      </span>
+    </div>
+  </footer>
+  <!-- Popup global -->
+  <div id="modalPopup" class="popup-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-titulo"
+    aria-describedby="modal-mensaje">
+    <div class="popup-card">
+      <!-- Botón cerrar -->
+      <button id="popup-cerrar" class="popup-cerrar" type="button" aria-label="Cerrar diálogo" onclick="cerrarPopup()">
+        &times;
+      </button>
+      <!-- Icono -->
+      <div id="modal-icono" class="popup-icono">
+        <i class="fas fa-circle-xmark"></i>
+      </div>
+      <!-- Titulo -->
+      <h3 id="modal-titulo">
+        Generando documento
+      </h3>
+      <!-- Mensaje -->
+      <p id="modal-mensaje">
+        Espere un momento, por favor...
+      </p>
+      <!-- Boton -->
+      <button id="modal-boton" class="popup-boton" type="button">
+        Aceptar
+      </button>
+    </div>
+  </div>
+
+  <!-- Modal genérico -->
+  <div class="modal fade" id="modal_generico" tabindex="-1" role="dialog" aria-labelledby="modal_generico_titulo"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" id="modal_generico_dialogo" role="document">
+      <div class="modal-content modal-sigss">
+        <!-- ENCABEZADO -->
+        <div class="modal-header modal-sigss-header">
+          <h5 class="modal-title font-weight-bold" id="modal_generico_titulo">
+            <i class="fa-solid fa-pen text-primary mr-2" id="modal_generico_icono"></i>
+            <span id="modal_generico_titulo_texto">
+              Formulario
+            </span>
+          </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <!-- FORMULARIO -->
+        <form id="form_modal_generico" novalidate>
+          <div class="modal-body">
+            <!-- Descripción opcional -->
+            <p class="text-muted small mb-3 d-none" id="modal_generico_descripcion"></p>
+            <!-- Identificador del registro -->
+            <input type="hidden" id="modal_generico_id">
+            <!-- Los campos se generan mediante JavaScript -->
+            <div class="row" id="modal_generico_campos"></div>
+            <!-- Mensaje de validación -->
+            <div class="alert alert-danger mt-3 mb-0 d-none" id="modal_generico_error" role="alert">
+            </div>
+          </div>
+          <!-- PIE -->
+          <div class="modal-footer modal-sigss-footer">
+            <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">
+              <i class="fa-solid fa-xmark mr-1"></i>
+              Cancelar
+            </button>
+            <button type="submit" class="btn btn-primary" id="modal_generico_guardar">
+              <i class="fa-solid fa-floppy-disk mr-1" id="modal_generico_guardar_icono"></i>
+              <span id="modal_generico_guardar_texto">
+                Guardar
+              </span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- ================================================== -->
+  <!-- BIBLIOTECAS JAVASCRIPT                             -->
+  <!-- ================================================== -->
+  <script src="../../lib/jquery/jquery.min.js"></script>
+  <script src="../../lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../../lib/ionicons/ionicons.js"></script>
+  <script src="../../js/popup.js"></script>
+  <!-- Bibliotecas de gráficas de Azia -->
+  <script src="../../lib/jquery.flot/jquery.flot.js"></script>
+  <script src="../../lib/jquery.flot/jquery.flot.resize.js"></script>
+  <script src="../../lib/chart.js/Chart.bundle.min.js"></script>
+  <script src="../../lib/peity/jquery.peity.min.js"></script>
+  <!-- Funcionalidad de la plantilla -->
+  <script src="../../js/azia.js"></script>
+  <!-- Lógica personalizada del SIGSS -->
+  <script src="../../js/modal_manager.js"></script>
+  <script src="../../js/dashboard.js"></script>
+  <script src="../../js/clock.js"></script>
+</body>
+
+</html>
