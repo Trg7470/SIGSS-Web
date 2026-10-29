@@ -38,3 +38,10 @@ export function llenar_select(
 
     return true;
 }
+
+export function verificar_nulo(id) {
+    const elemento = document.getElementById(id);
+    if (!elemento) return null;
+    const texto = String(elemento.value ?? "").trim();
+    return texto === "" ? null : texto;
+}

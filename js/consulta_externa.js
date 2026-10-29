@@ -1,4 +1,4 @@
-import { llenar_select } from "./utils.js";
+import { llenar_select, verificar_nulo } from "./utils.js";
 
 export async function init({ vista, usuario }) {
     if (vista === "registrar") {
@@ -485,119 +485,114 @@ async function registrar_consulta() {
     const clave_edad = document.getElementById("clave-edad")
         .selectedOptions[0]?.textContent.split("|")[0].trim();
 
-    const data = {
-        paciente:{
-            Sexo: document.getElementById("sexo").value,
-            Es_Afromexicano: document.getElementById("afromexicano").value,
-            Es_Indigena: document.getElementById("indigena").value,
-            Es_Migrante: document.getElementById("migrante").value,
+const data = {
+        paciente: {
+            Sexo: verificar_nulo("sexo"),
+            Es_Afromexicano: verificar_nulo("afromexicano"),
+            Es_Indigena: verificar_nulo("indigena"),
+            Es_Migrante: verificar_nulo("migrante"),
         },
         consultas: {
             Fecha_Consulta: document.getElementById("fecha-atencion").value,
             Unidades_Id_Unidad: Usuario.Id_Unidad,
             Prestadores_Id_Prestador: Usuario.Id_Prestador,
             Pacientes_Id_Paciente: Paciente.Id_Paciente,
-            Servicios_Id_Cat_Servicios: document.getElementById("servicio").value,
-            Cat_I_G_Id_Cat_Intervenciones_Gerontologicas: document.getElementById("intervencion-gerontologica").value,
-            Cat_Servicio_Id_Cat_Especialidad: document.getElementById("especialidad").value,
-            Cat_Referido_Nivel_Id_Cat_Referido_Nivel: document.getElementById("nivel").value,
-            Cat_Referido_Motivo_Id_Cat_Referido_Motivo: document.getElementById("referido-por").value,
-            Cat_Derechohabiencia_Id_Cat_Derechohabiencia: document.getElementById("derechohabiencia").value,
+            Servicios_Id_Cat_Servicios: verificar_nulo("servicio"),
+            Cat_I_G_Id_Cat_Intervenciones_Gerontologicas: verificar_nulo("intervencion-gerontologica"),
+            Cat_Servicio_Id_Cat_Especialidad: verificar_nulo("especialidad"),
+            Cat_Referido_Nivel_Id_Cat_Referido_Nivel: verificar_nulo("nivel"),
+            Cat_Referido_Motivo_Id_Cat_Referido_Motivo: verificar_nulo("referido-por"),
+            Cat_Derechohabiencia_Id_Cat_Derechohabiencia: verificar_nulo("derechohabiencia"),
             Edad: document.getElementById("edad").value,
             Clave_Edad: clave_edad,
-            Folio_Receta: document.getElementById("folio-receta").value,
-            Primera_Vez_Uneme: document.getElementById("primera-vez-uneme").value,
-            Primera_Vez_Anio_Cobertura: document.getElementById("primera-vez-anio").value,
-            Contrarreferido: document.getElementById("contrarreferido").value,
-            Intervencion_Salud_Mental_Adicciones: document.getElementById("intervenciones-salud-mental-adicciones").value,
-            Primera_Vez: document.getElementById("primera-vez").value,
-            Subsecuente: document.getElementById("subsecuente").value,
-            RT_Por_Motivo: document.getElementById("rt-motivo").value,
-            Fecha_Proxima_Cita: document.getElementById("fecha-proxima-consulta").value,
+            Folio_Receta: verificar_nulo("folio-receta"),
+            Primera_Vez_Uneme: verificar_nulo("primera-vez-uneme"),
+            Primera_Vez_Anio_Cobertura: verificar_nulo("primera-vez-anio"),
+            Contrarreferido: verificar_nulo("contrarreferido"),
+            Intervencion_Salud_Mental_Adicciones: verificar_nulo("intervenciones-salud-mental-adicciones"),
+            Primera_Vez: verificar_nulo("primera-vez"),
+            Subsecuente: verificar_nulo("subsecuente"),
+            RT_Por_Motivo: verificar_nulo("rt-motivo"),
+            Fecha_Proxima_Cita: verificar_nulo("fecha-proxima-consulta"),
         },
-        mediciones:
-        {
-            Peso: document.getElementById("peso").value,
-            Talla: document.getElementById("talla").value,
-            Circunferencia_Cintura: document.getElementById("circunferencia-cintura").value,
-            Presion_Sistolica: document.getElementById("presion-sistolica").value,
-            Presion_Diastolica: document.getElementById("presion-diastolica").value,
-            Frecuencia_Cardiaca: document.getElementById("frecuencia-cardiaca").value,
-            Frecuencia_Respiratoria: document.getElementById("frecuencia-respiratoria").value,
-            Temperatura: document.getElementById("temperatura").value,
-            Saturacion_Oxigeno: document.getElementById("saturacion-oxigeno").value,
-            Resultado_Glucosa: document.getElementById("resultado-glucosa").value,
-            Glucosa_Ayuno: document.getElementById("glucosa-ayuno").value,
-            Numero_Tiras: document.getElementById("tiras-embarazadas").value,
-            Probable_Tb: document.getElementById("probable-tuberculosis").value,
+        mediciones: {
+            Peso: verificar_nulo("peso"),
+            Talla: verificar_nulo("talla"),
+            Circunferencia_Cintura: verificar_nulo("circunferencia-cintura"),
+            Presion_Sistolica: verificar_nulo("presion-sistolica"),
+            Presion_Diastolica: verificar_nulo("presion-diastolica"),
+            Frecuencia_Cardiaca: verificar_nulo("frecuencia-cardiaca"),
+            Frecuencia_Respiratoria: verificar_nulo("frecuencia-respiratoria"),
+            Temperatura: verificar_nulo("temperatura"),
+            Saturacion_Oxigeno: verificar_nulo("saturacion-oxigeno"),
+            Glucosa: verificar_nulo("glucosa"),
+            Resultado_Glucosa: verificar_nulo("resultado-glucosa"),
+            Glucosa_Ayuno: verificar_nulo("glucosa-ayuno"),
+            Numero_Tiras: verificar_nulo("tiras-embarazadas"),
+            Probable_Tb: verificar_nulo("probable-tuberculosis"),
         },
-        discapacidad:
-        {
-            discapacidad: {Cat_Discapacidades_Id_Discapacidad: document.getElementById("discapacidad-a").value},
-            dificultad: {Cat_Discapacidades_Id_Discapacidad_B: document.getElementById("discapacidad-b").value},
-            motivo: {Cat_Discapacidades_Id_Discapacidad_C: document.getElementById("discapacidad-c").value},
+        discapacidad: {
+            discapacidad: { Cat_Discapacidades_Id_Discapacidad: verificar_nulo("discapacidad-a") },
+            dificultad: { Cat_Discapacidades_Id_Discapacidad_B: verificar_nulo("discapacidad-b") },
+            motivo: { Cat_Discapacidades_Id_Discapacidad_C: verificar_nulo("discapacidad-c") },
         },
-diagnosticos: [
-    {
-        Cat_Diagnosticos_Id_Cat_Diagnosticos: document.getElementById("diagnostico-a-cie10-id").value,
-        Cat_Medicina_Tradicional_Id_Cat_Medicina_Tradicional: document.getElementById("diagnostico-a-medicina-indigena").value,
-        Confirmacion_Diagnostica: document.getElementById("diagnostico-a-confirmacion").value
-    },
-    {
-        Cat_Diagnosticos_Id_Cat_Diagnosticos: document.getElementById("diagnostico-b-cie10-id").value,
-        Cat_Medicina_Tradicional_Id_Cat_Medicina_Tradicional: document.getElementById("diagnostico-b-medicina-indigena").value,
-        Confirmacion_Diagnostica: document.getElementById("diagnostico-b-confirmacion").value
-    },
-    {
-        Cat_Diagnosticos_Id_Cat_Diagnosticos: document.getElementById("diagnostico-c-cie10-id").value,
-        Cat_Medicina_Tradicional_Id_Cat_Medicina_Tradicional: document.getElementById("diagnostico-c-medicina-indigena").value,
-        Confirmacion_Diagnostica: document.getElementById("diagnostico-c-confirmacion").value
-    }
-],
-        salud_reproductiva:
-        {
-            RT_Pregestacional: document.getElementById("rt-ap").value,
-            Cat_Riesgos_Id_Cat_Riesgos: document.getElementById("riesgos").value,
-            RT_Embarazo: document.getElementById("rt-embarazo").value,
-            Plan_Seguridad: document.getElementById("plan-seguridad").value,
-            Trimestre_Gestacional: document.getElementById("trimestre-gestacional").value,
-            Cat_Complicaciones_Id_Cat_Complicaciones: document.getElementById("complicaciones").value,
-            Alto_Riesgo_Primera_Vez: document.getElementById("riesgo-primera-vez").value,
-            Otras_Acciones: document.getElementById("otras-acciones").value,
-            RT_Puerperio: document.getElementById("rt-puerperio").value,
-            RT_Infeccion_Puerperial: document.getElementById("rt-ip").value,
-            Terapia_Hormonal: document.getElementById("terapia-hormonal").value,
+        diagnosticos: [
+            {
+                Cat_Diagnosticos_Id_Cat_Diagnosticos: verificar_nulo("diagnostico-a-cie10-id"),
+                Cat_Medicina_Tradicional_Id_Cat_Medicina_Tradicional: verificar_nulo("diagnostico-a-medicina-indigena"),
+                Confirmacion_Diagnostica: verificar_nulo("diagnostico-a-confirmacion")
+            },
+            {
+                Cat_Diagnosticos_Id_Cat_Diagnosticos: verificar_nulo("diagnostico-b-cie10-id"),
+                Cat_Medicina_Tradicional_Id_Cat_Medicina_Tradicional: verificar_nulo("diagnostico-b-medicina-indigena"),
+                Confirmacion_Diagnostica: verificar_nulo("diagnostico-b-confirmacion")
+            },
+            {
+                Cat_Diagnosticos_Id_Cat_Diagnosticos: verificar_nulo("diagnostico-c-cie10-id"),
+                Cat_Medicina_Tradicional_Id_Cat_Medicina_Tradicional: verificar_nulo("diagnostico-c-medicina-indigena"),
+                Confirmacion_Diagnostica: verificar_nulo("diagnostico-c-confirmacion")
+            }
+        ],
+        salud_reproductiva: {
+            RT_Pregestacional: verificar_nulo("rt-ap"),
+            Cat_Riesgos_Id_Cat_Riesgos: verificar_nulo("riesgos"),
+            RT_Embarazo: verificar_nulo("rt-embarazo"),
+            Plan_Seguridad: verificar_nulo("plan-seguridad"),
+            Trimestre_Gestacional: verificar_nulo("trimestre-gestacional"),
+            Cat_Complicaciones_Id_Cat_Complicaciones: verificar_nulo("complicaciones"),
+            Alto_Riesgo_Primera_Vez: verificar_nulo("riesgo-primera-vez"),
+            Otras_Acciones: verificar_nulo("otras-acciones"),
+            RT_Puerperio: verificar_nulo("rt-puerperio"),
+            RT_Infeccion_Puerperial: verificar_nulo("rt-ip"),
+            Terapia_Hormonal: verificar_nulo("terapia-hormonal"),
         },
-        salud_nino_adolescente:
-        {
-            Resultado_Batelle: document.getElementById("resultado-batelle").value,
-            RT_Nino_Sano: document.getElementById("rt-ns").value,
-            Tipo: document.getElementById("tipo-edi").value,
-            Resultado: document.getElementById("resultado-edi").value,
-            RT_EDA: document.getElementById("rt-edas").value,
-            Plan_Tratamiento: document.getElementById("plan-tratamiento").value,
-            Recuperado: document.getElementById("recuperado").value,
-            Sobres_VSO: document.getElementById("sobres-vso").value,
-            RT_IRA: document.getElementById("rt-iras").value,
-            Tipo_Tratamiento: document.getElementById("tipo-tratamiento-ira").value,
-            RT_Neumonia: document.getElementById("rt-neumonia").value,
-            Aplicacion_Cedula_Cancer: document.getElementById("aplicacion-cedula-cancer").value,
-            Madre_INF_PA: document.getElementById("madre-inf-prevencion").value,
+        salud_nino_adolescente: {
+            Resultado_Batelle: verificar_nulo("resultado-batelle"),
+            RT_Nino_Sano: verificar_nulo("rt-ns"),
+            Tipo: verificar_nulo("tipo-edi"),
+            Resultado: verificar_nulo("resultado-edi"),
+            RT_EDA: verificar_nulo("rt-edas"),
+            Plan_Tratamiento: verificar_nulo("plan-tratamiento"),
+            Recuperado: verificar_nulo("recuperado"),
+            Sobres_VSO: verificar_nulo("sobres-vso"),
+            RT_IRA: verificar_nulo("rt-iras"),
+            Tipo_Tratamiento: verificar_nulo("tipo-tratamiento-ira"),
+            RT_Neumonia: verificar_nulo("rt-neumonia"),
+            Aplicacion_Cedula_Cancer: verificar_nulo("aplicacion-cedula-cancer"),
+            Madre_INF_PA: verificar_nulo("madre-inf-prevencion"),
         },
-        promocion_salud:
-        {
-            Consulta_Integrada_Linea_Vida: document.getElementById("consulta-linea-vida").value,
-            Presenta_Cartilla: document.getElementById("presenta-cartilla").value,
-            Esquema_Vacunacion: document.getElementById("esquema-vacunacion").value,
-            Promocion_Albendazol: document.getElementById("entrega-albendazol").value,
-            Sobres_VSO: document.getElementById("sobres-vso-promocion").value
+        promocion_salud: {
+            Consulta_Integrada_Linea_Vida: verificar_nulo("consulta-linea-vida"),
+            Presenta_Cartilla: verificar_nulo("presenta-cartilla"),
+            Esquema_Vacunacion: verificar_nulo("esquema-vacunacion"),
+            Promocion_Albendazol: verificar_nulo("entrega-albendazol"),
+            Sobres_VSO: verificar_nulo("sobres-vso-promocion")
         },
-        teleconsulta:
-        {
-            Unidad_Consultante: document.getElementById("unidad-consultante").value,
-            Modalidad: document.getElementById("modalidad").value,
-            Cat_Teleconsulta_Interpretacion_Id_Teleconsulta: document.getElementById("Teleconsulta").value,
-            Cat_Teleconsulta_Interpretacion_Id_Interpretacion_Diagnostica: document.getElementById("interpretacion-diagnostica").value
+        teleconsulta: {
+            Unidad_Consultante: verificar_nulo("unidad-consultante"),
+            Modalidad: verificar_nulo("modalidad"),
+            Cat_Teleconsulta_Interpretacion_Id_Teleconsulta: verificar_nulo("Teleconsulta"),
+            Cat_Teleconsulta_Interpretacion_Id_Interpretacion_Diagnostica: verificar_nulo("interpretacion-diagnostica")
         }
     };
     console.log(data);
