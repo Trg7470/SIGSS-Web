@@ -178,7 +178,7 @@ function configurar_busqueda_diagnosticos(id) {
 
                 opcion.addEventListener("click", () => {
                     input.value = opcion.textContent;
-                    hidden.value = diagnostico.Cat_Id_Diagnostico;
+                    hidden.value = diagnostico.Id_Cat_Diagnosticos;
                     resultados.style.display = "none";
                     resultados.replaceChildren();
                 });
@@ -431,7 +431,7 @@ async function cargar_datos() {
         llenar_select("diagnostico-a-confirmacion", catalogos_json.confirmacion_diagnostica, "Id_Cat_Confirmacion_Diagnostica", c => `${c.Clave} | ${c.Nombre}`, "Selecciona una opción", true);
         llenar_select("diagnostico-b-confirmacion", catalogos_json.confirmacion_diagnostica, "Id_Cat_Confirmacion_Diagnostica", c => `${c.Clave} | ${c.Nombre}`, "Selecciona una opción", true);
         llenar_select("diagnostico-c-confirmacion", catalogos_json.confirmacion_diagnostica, "Id_Cat_Confirmacion_Diagnostica", c => `${c.Clave} | ${c.Nombre}`, "Selecciona una opción", true);
-        llenar_select("intervenciones-salud-mental-adicciones", catalogos_json.intervenciones_salud_mental_adicciones, "Id_Cat_Intervencion_Salud_Mental_Adicciones", i => `${i.Clave} | ${i.Nombre}`, "Selecciona una opción", true);
+        llenar_select("intervenciones-salud-mental-adicciones", catalogos_json.intervenciones_salud_mental_adicciones, "Id_Cat_Intervenciones_Salud_Mental_Adicciones", i => `${i.Clave} | ${i.Nombre}`, "Selecciona una opción", true);
         llenar_select("rt-ap", catalogos_json.rt, "Id_Cat_Rt", r => `${r.Clave} | ${r.Nombre}`, "Selecciona una opción", true);
         llenar_select("riesgos", catalogos.riesgos, "Id_Cat_Riesgos", r => `${r.Clave} | ${r.Nombre}`, "Selecciona una opción", true);
         llenar_select("rt-embarazo", catalogos_json.rt, "Id_Cat_Rt", r => `${r.Clave} | ${r.Nombre}`, "Selecciona una opción", true);
@@ -444,7 +444,6 @@ async function cargar_datos() {
         llenar_select("primera-vez", catalogos_json.otros_eventos, "Id_Cat_Otros_Eventos", e => `${e.Clave} | ${e.Nombre}`, "Selecciona una opción", true);
         llenar_select("subsecuente", catalogos_json.otros_eventos, "Id_Cat_Otros_Eventos", e => `${e.Clave} | ${e.Nombre}`, "Selecciona una opción", true);
         llenar_select("rt-ns", catalogos_json.rt, "Id_Cat_Rt", r => `${r.Clave} | ${r.Nombre}`, "Selecciona una opción", true);
-        llenar_select("rt-edi", catalogos_json.rt, "Id_Cat_Rt", r => `${r.Clave} | ${r.Nombre}`, "Selecciona una opción", true);
         llenar_select("tipo-edi", catalogos_json.edi_tipo, "Id_Cat_Edi_Tipo", t => `${t.Clave} | ${t.Nombre}`, "Selecciona una opción", true);
         llenar_select("resultado-edi", catalogos_json.resultados_edi, "Id_Cat_Resultados_Edi", r => `${r.Clave} | ${r.Nombre}`, "Selecciona una opción", true);
         llenar_select("resultado-batelle", catalogos_json.resultado_batelle, "Id_Cat_Resultado_Batelle", r => `${r.Clave} | ${r.Nombre}`, "Selecciona una opción", true);
@@ -454,10 +453,10 @@ async function cargar_datos() {
         llenar_select("tipo-tratamiento-ira", catalogos_json.ira_tratamiento, "Id_Cat_Ira_Tratamiento", t => `${t.Clave} | ${t.Nombre}`, "Selecciona una opción", true);
         llenar_select("rt-neumonia", catalogos_json.rt, "Id_Cat_Rt", r => `${r.Clave} | ${r.Nombre}`, "Selecciona una opción", true);
         llenar_select("aplicacion-cedula-cancer", catalogos_json.aplicacion_cedula_cancer_anio, "Id_Cat_Aplicacion_Cedula_Cancer_Anio", a => `${a.Clave} | ${a.Nombre}`, "Selecciona una opción", true);
-        llenar_select("intervencion-gerontologica", catalogos.intervenciones_gerontologicas, "Id_Cat_Intervencion_Gerontologica", i => `${i.Clave} | ${i.Nombre}`, "Selecciona una opción", true);
+        llenar_select("intervencion-gerontologica", catalogos.intervenciones_gerontologicas, "Id_Cat_Intervenciones_Gerontologicas", i => `${i.Clave} | ${i.Nombre}`, "Selecciona una opción", true);
         llenar_select("esquema-vacunacion", catalogos_json.esquema_vacunacion, "Id_Cat_Esquema_Vacunacion", e => `${e.Clave} | ${e.Nombre}`, "Selecciona una opcion", true);
-        llenar_select("referido-por", catalogos.referido_motivo, "Cat_Id_Referido_Motivo", r => `${r.Clave} | ${r.Nombre}`, "Selecciona una opción", true);
-        llenar_select("nivel", catalogos.referido_nivel, "Cat_Id_Referido_Nivel", n => `${n.Clave} | ${n.Nombre}`, "Selecciona una opción", true);
+        llenar_select("referido-por", catalogos.referido_motivo, "Id_Cat_Referido_Motivo", r => `${r.Clave} | ${r.Nombre}`, "Selecciona una opción", true);
+        llenar_select("nivel", catalogos.referido_nivel, "Id_Cat_Referido_Nivel", n => `${n.Clave} | ${n.Nombre}`, "Selecciona una opción", true);
         llenar_select("especialidad", catalogos.servicios, "Id_Cat_Servicios", s => `${s.Clave} | ${s.Nombre}`, "Selecciona una opción", true);
 
         const teleconsulta = catalogos.teleconsulta_interpretacion || [];
@@ -487,6 +486,12 @@ async function registrar_consulta() {
         .selectedOptions[0]?.textContent.split("|")[0].trim();
 
     const data = {
+        paciente:{
+            Sexo: document.getElementById("sexo").value,
+            Es_Afromexicano: document.getElementById("afromexicano").value,
+            Es_Indigena: document.getElementById("indigena").value,
+            Es_Migrante: document.getElementById("migrante").value,
+        },
         consultas: {
             Fecha_Consulta: document.getElementById("fecha-atencion").value,
             Unidades_Id_Unidad: Usuario.Id_Unidad,
@@ -504,13 +509,101 @@ async function registrar_consulta() {
             Primera_Vez_Uneme: document.getElementById("primera-vez-uneme").value,
             Primera_Vez_Anio_Cobertura: document.getElementById("primera-vez-anio").value,
             Contrarreferido: document.getElementById("contrarreferido").value,
-            Intervencion_Salud_Mental_Adicciones: document.getElementById("intervencion-salud-mental-adicciones").value,
+            Intervencion_Salud_Mental_Adicciones: document.getElementById("intervenciones-salud-mental-adicciones").value,
             Primera_Vez: document.getElementById("primera-vez").value,
             Subsecuente: document.getElementById("subsecuente").value,
             RT_Por_Motivo: document.getElementById("rt-motivo").value,
             Fecha_Proxima_Cita: document.getElementById("fecha-proxima-consulta").value,
+        },
+        mediciones:
+        {
+            Peso: document.getElementById("peso").value,
+            Talla: document.getElementById("talla").value,
+            Circunferencia_Cintura: document.getElementById("circunferencia-cintura").value,
+            Presion_Sistolica: document.getElementById("presion-sistolica").value,
+            Presion_Diastolica: document.getElementById("presion-diastolica").value,
+            Frecuencia_Cardiaca: document.getElementById("frecuencia-cardiaca").value,
+            Frecuencia_Respiratoria: document.getElementById("frecuencia-respiratoria").value,
+            Temperatura: document.getElementById("temperatura").value,
+            Saturacion_Oxigeno: document.getElementById("saturacion-oxigeno").value,
+            Resultado_Glucosa: document.getElementById("resultado-glucosa").value,
+            Glucosa_Ayuno: document.getElementById("glucosa-ayuno").value,
+            Numero_Tiras: document.getElementById("tiras-embarazadas").value,
+            Probable_Tb: document.getElementById("probable-tuberculosis").value,
+        },
+        discapacidad:
+        {
+            discapacidad: {Cat_Discapacidades_Id_Discapacidad: document.getElementById("discapacidad-a").value},
+            dificultad: {Cat_Discapacidades_Id_Discapacidad_B: document.getElementById("discapacidad-b").value},
+            motivo: {Cat_Discapacidades_Id_Discapacidad_C: document.getElementById("discapacidad-c").value},
+        },
+diagnosticos: [
+    {
+        Cat_Diagnosticos_Id_Cat_Diagnosticos: document.getElementById("diagnostico-a-cie10-id").value,
+        Cat_Medicina_Tradicional_Id_Cat_Medicina_Tradicional: document.getElementById("diagnostico-a-medicina-indigena").value,
+        Confirmacion_Diagnostica: document.getElementById("diagnostico-a-confirmacion").value
+    },
+    {
+        Cat_Diagnosticos_Id_Cat_Diagnosticos: document.getElementById("diagnostico-b-cie10-id").value,
+        Cat_Medicina_Tradicional_Id_Cat_Medicina_Tradicional: document.getElementById("diagnostico-b-medicina-indigena").value,
+        Confirmacion_Diagnostica: document.getElementById("diagnostico-b-confirmacion").value
+    },
+    {
+        Cat_Diagnosticos_Id_Cat_Diagnosticos: document.getElementById("diagnostico-c-cie10-id").value,
+        Cat_Medicina_Tradicional_Id_Cat_Medicina_Tradicional: document.getElementById("diagnostico-c-medicina-indigena").value,
+        Confirmacion_Diagnostica: document.getElementById("diagnostico-c-confirmacion").value
+    }
+],
+        salud_reproductiva:
+        {
+            RT_Pregestacional: document.getElementById("rt-ap").value,
+            Cat_Riesgos_Id_Cat_Riesgos: document.getElementById("riesgos").value,
+            RT_Embarazo: document.getElementById("rt-embarazo").value,
+            Plan_Seguridad: document.getElementById("plan-seguridad").value,
+            Trimestre_Gestacional: document.getElementById("trimestre-gestacional").value,
+            Cat_Complicaciones_Id_Cat_Complicaciones: document.getElementById("complicaciones").value,
+            Alto_Riesgo_Primera_Vez: document.getElementById("riesgo-primera-vez").value,
+            Otras_Acciones: document.getElementById("otras-acciones").value,
+            RT_Puerperio: document.getElementById("rt-puerperio").value,
+            RT_Infeccion_Puerperial: document.getElementById("rt-ip").value,
+            Terapia_Hormonal: document.getElementById("terapia-hormonal").value,
+        },
+        salud_nino_adolescente:
+        {
+            Resultado_Batelle: document.getElementById("resultado-batelle").value,
+            RT_Nino_Sano: document.getElementById("rt-ns").value,
+            Tipo: document.getElementById("tipo-edi").value,
+            Resultado: document.getElementById("resultado-edi").value,
+            RT_EDA: document.getElementById("rt-edas").value,
+            Plan_Tratamiento: document.getElementById("plan-tratamiento").value,
+            Recuperado: document.getElementById("recuperado").value,
+            Sobres_VSO: document.getElementById("sobres-vso").value,
+            RT_IRA: document.getElementById("rt-iras").value,
+            Tipo_Tratamiento: document.getElementById("tipo-tratamiento-ira").value,
+            RT_Neumonia: document.getElementById("rt-neumonia").value,
+            Aplicacion_Cedula_Cancer: document.getElementById("aplicacion-cedula-cancer").value,
+            Madre_INF_PA: document.getElementById("madre-inf-prevencion").value,
+        },
+        promocion_salud:
+        {
+            Consulta_Integrada_Linea_Vida: document.getElementById("consulta-linea-vida").value,
+            Presenta_Cartilla: document.getElementById("presenta-cartilla").value,
+            Esquema_Vacunacion: document.getElementById("esquema-vacunacion").value,
+            Promocion_Albendazol: document.getElementById("entrega-albendazol").value,
+            Sobres_VSO: document.getElementById("sobres-vso-promocion").value
+        },
+        teleconsulta:
+        {
+            Unidad_Consultante: document.getElementById("unidad-consultante").value,
+            Modalidad: document.getElementById("modalidad").value,
+            Cat_Teleconsulta_Interpretacion_Id_Teleconsulta: document.getElementById("Teleconsulta").value,
+            Cat_Teleconsulta_Interpretacion_Id_Interpretacion_Diagnostica: document.getElementById("interpretacion-diagnostica").value
         }
     };
-
     console.log(data);
 }
+
+const boton_registrar = document.getElementById("guardar-datos");
+boton_registrar.addEventListener("click", async () => {
+    await registrar_consulta();
+});

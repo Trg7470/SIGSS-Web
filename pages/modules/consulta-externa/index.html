@@ -259,6 +259,11 @@
                 class="form-control"
                 id="peso"
                 placeholder="Ingresa el peso del paciente"
+                min="0"
+                max="999.99"
+                step="0.01"
+                inputmode="decimal"
+                title="Ingresa hasta 3 dígitos enteros y 2 decimales."
               />
               <div class="input-group-append">
                 <span class="input-group-text">kg</span>
@@ -304,7 +309,7 @@
                 <label for="presion-diastolica">Presión diastólica</label>
                 <div class="input-group">
                   <input
-                    type="text"
+                    type="number"
                     class="form-control"
                     id="presion-diastolica"
                     placeholder="Diastólica"
@@ -319,7 +324,7 @@
                 <label for="presion-sistolica">Presión sistólica</label>
                 <div class="input-group">
                   <input
-                    type="text"
+                    type="number"
                     class="form-control"
                     id="presion-sistolica"
                     placeholder="Sistólica"
@@ -376,6 +381,11 @@
                 class="form-control"
                 id="temperatura"
                 placeholder="Ingresa la temperatura del paciente"
+                min="0"
+                max="99.9"
+                step="0.1"
+                inputmode="decimal"
+                title="Ingresa hasta 2 dígitos enteros y 1 decimal."
               />
               <div class="input-group-append">
                 <span class="input-group-text">°C</span>
@@ -415,8 +425,8 @@
           </div>
 
           <div class="form-group">
-            <label for="ayuno">¿El paciente estaba en ayuno?</label>
-            <select class="form-control" id="ayuno">
+            <label for="glucosa-ayuno">¿El paciente estaba en ayuno?</label>
+            <select class="form-control" id="glucosa-ayuno">
               <option value="">Selecciona una opción</option>
               <option value="1">Sí</option>
               <option value="0">No</option>
@@ -693,8 +703,13 @@
         </div>
         <div class="card-body">
           <div class="form-group">
-            <label for="intervenciones-salud-mental-adicciones">Intervenciones de salud mental y adicciones</label>
-            <select class="form-control" id="intervenciones-salud-mental-adicciones">
+            <label for="intervenciones-salud-mental-adicciones"
+              >Intervenciones de salud mental y adicciones</label
+            >
+            <select
+              class="form-control"
+              id="intervenciones-salud-mental-adicciones"
+            >
               <option value="">Selecciona una opción</option>
             </select>
           </div>
@@ -749,8 +764,8 @@
           </div>
 
           <div class="form-group">
-            <label for="riesgo-primeravez">Alto riesgo primera vez</label>
-            <select class="form-control" id="riesgo-primeravez">
+            <label for="riesgo-primera-vez">Alto riesgo primera vez</label>
+            <select class="form-control" id="riesgo-primera-vez">
               <option value="">Selecciona una opción</option>
               <option value="0">No</option>
               <option value="1">Sí</option>
@@ -838,13 +853,6 @@
 
         <div class="card-body">
           <div class="form-group">
-            <label for="rt-edi">Relación Temporal</label>
-            <select class="form-control" id="rt-edi">
-              <option value="">Selecciona una opción</option>
-            </select>
-          </div>
-
-          <div class="form-group">
             <label for="tipo-edi">Tipo</label>
             <select class="form-control" id="tipo-edi">
               <option value="">Selecciona una opción</option>
@@ -857,9 +865,6 @@
               <option value="">Selecciona una opción</option>
             </select>
           </div>
-        </div>
-
-        <div class="mb-3">
           <div class="form-group">
             <label for="resultado-batelle"
               >Resultado Batelle 16 meses a 4 &lt; 6 años</label
@@ -1067,7 +1072,7 @@
 
           <div class="form-group">
             <label for="contrarreferido">Contrareferido</label>
-            <select class="form-control" id="contrareferido">
+            <select class="form-control" id="contrarreferido">
               <option value="">Selecciona una opción</option>
               <option value="0">No</option>
               <option value="1">Sí</option>
@@ -1109,7 +1114,8 @@
               type="text"
               class="form-control"
               id="unidad-consultante"
-              placeholder="Ingresa la unidad consultante">
+              placeholder="Ingresa la unidad consultante"
+            />
           </div>
           <div class="form-group">
             <label for="modalidad">Modalidad</label>
