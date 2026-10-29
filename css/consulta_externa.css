@@ -5,7 +5,6 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900");
 
 :root {
-  /* Paleta basada en Azia */
   --sigss-primary: #3366ff;
   --sigss-primary-dark: #244fe0;
   --sigss-accent: #5b47fb;
@@ -19,7 +18,9 @@
   --sigss-shadow: 0 3px 14px rgba(28, 39, 60, .06);
 }
 
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+}
 
 body {
   background: var(--sigss-background);
@@ -35,6 +36,7 @@ body {
 }
 
 /* ---------- Tarjetas / secciones ---------- */
+
 .container > .card {
   border: 1px solid var(--sigss-border);
   border-radius: 5px;
@@ -74,7 +76,8 @@ body {
   background: var(--sigss-primary);
 }
 
-/* ---------- Rejilla base: 12 columnas, 3 campos por fila ---------- */
+/* ---------- Rejilla base: 12 columnas ---------- */
+
 .container > .card > .card-body {
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
@@ -98,7 +101,8 @@ body {
   min-width: 0;
 }
 
-/* Subtítulos dentro de una sección (p. ej. Atención Pregestacional) */
+/* ---------- Subtítulos ---------- */
+
 .container > .card > .card-body > p.font-weight-bold {
   grid-column: 1 / -1;
   margin: 8px 0 -8px;
@@ -108,7 +112,8 @@ body {
   font-size: 14px;
 }
 
-/* Subtarjetas internas */
+/* ---------- Subtarjetas internas ---------- */
+
 .container > .card > .card-body > .card-body {
   grid-column: 1 / -1;
   display: grid;
@@ -132,6 +137,7 @@ body {
 }
 
 /* ---------- Etiquetas ---------- */
+
 .form-group > label,
 .form-group label {
   display: block;
@@ -144,7 +150,9 @@ body {
 }
 
 /* ---------- Controles ---------- */
+
 .form-control {
+  display: block;
   min-height: 42px;
   padding: 9px 12px;
   border: 1px solid #d5dfe6;
@@ -202,7 +210,8 @@ select.form-control {
   background-image: none;
 }
 
-/* Parejas de campos dentro de un .form-row (presión, frecuencias, edad...) */
+/* ---------- Filas de campos ---------- */
+
 .form-row {
   margin-right: -8px;
   margin-left: -8px;
@@ -227,33 +236,78 @@ select.form-control {
 }
 
 /* =========================================================
-   Pares con etiquetas separadas (glucosa/ayuno, resultado de glucosa/
-   tiras, unidad consultada/interpretación). El grupo pasa a una
-   mini-rejilla de 2 columnas para que cada etiqueta quede justo encima
-   de su campo (antes iban separadas con space-between).
+   Corrección general de input-group
+   El input y su unidad siempre permanecen en una fila.
    ========================================================= */
-#mediciones .form-group:has(#glucosa),
-#detecciones-diagnostico .form-group:has(#resultado-glucosa),
-#teleconsulta .form-group:has(#unidad-consultada) {
+
+.container .input-group {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  width: 100%;
+  min-width: 0;
+  gap: 0;
+}
+
+.container .input-group > .form-control {
+  display: block;
+  flex: 1 1 0%;
+  width: 1%;
+  min-width: 0;
+  margin: 0;
+}
+
+.container .input-group > .input-group-append {
+  display: flex;
+  flex: 0 0 auto;
+  min-width: 0;
+  margin-left: -1px;
+}
+
+.container .input-group > .input-group-append > .input-group-text,
+.container .input-group > .input-group-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  min-height: 42px;
+  padding: 9px 12px;
+  white-space: nowrap;
+  color: #3b4863;
+  background: #f4f5f8;
+  border: 1px solid #d5dfe6;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.container .input-group > .form-control:first-child {
+  border-radius: 4px 0 0 4px;
+}
+
+.container .input-group > .input-group-append > .input-group-text,
+.container .input-group > .input-group-text {
+  border-radius: 0 4px 4px 0;
+}
+
+/* =========================================================
+   Pares de campos con etiquetas independientes
+   Resultado de glucosa y tiras de embarazadas.
+   ========================================================= */
+
+#detecciones-diagnostico .form-group:has(#resultado-glucosa) {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   column-gap: 18px;
   row-gap: 0;
 }
 
-/* Los contenedores .d-flex se "disuelven" (bootstrap lo fuerza con !important) */
-#mediciones .form-group:has(#glucosa) > .d-flex,
-#detecciones-diagnostico .form-group:has(#resultado-glucosa) > .d-flex,
-#teleconsulta .form-group:has(#unidad-consultada) > .d-flex {
+#detecciones-diagnostico .form-group:has(#resultado-glucosa) > .d-flex {
   display: contents !important;
 }
 
-#mediciones #glucosa,
-#mediciones #ayuno,
 #detecciones-diagnostico #resultado-glucosa,
-#detecciones-diagnostico #tiras-embarazadas,
-#teleconsulta #unidad-consultada,
-#teleconsulta #interpretacion-diagnostica {
+#detecciones-diagnostico #tiras-embarazadas {
   margin: 0 !important;
   min-width: 0;
 }
@@ -261,22 +315,18 @@ select.form-control {
 /* =========================================================
    Identificación y Atención
    ========================================================= */
-#identificacion-atencion #clues,
-#identificacion-atencion #nombre-unidad {
-  min-width: 0;
-}
 
 #identificacion-atencion #clues,
 #identificacion-atencion #nombre-unidad,
 #identificacion-atencion #nombre-prestador {
+  min-width: 0;
   letter-spacing: .1px;
 }
 
 /* =========================================================
    Información del Paciente
-   Escritorio: Expediente + Nombre + Edad/Clave de edad en una fila
-   (3 + 5 + 4 = 12); Sexo, Afromexicano, Indígena y Migrante, 3 + 3 + 3 + 3.
    ========================================================= */
+
 #informacion-paciente #nombre-paciente {
   width: 100%;
 }
@@ -302,7 +352,6 @@ select.form-control {
   }
 }
 
-/* Tablet: el nombre ocupa la fila completa */
 @media (min-width: 576px) and (max-width: 991.98px) {
   #informacion-paciente .form-group:has(#nombre-paciente) {
     grid-column: 1 / -1;
@@ -311,9 +360,49 @@ select.form-control {
 
 /* =========================================================
    Mediciones
-   Escritorio: Peso/Talla/Cintura 4+4+4, Presión 6 + Frecuencias 6,
-   Temperatura 3 + Saturación 3 + Glucosa/Ayuno 6.
    ========================================================= */
+
+#mediciones .form-group:has(#glucosa),
+#mediciones .form-group:has(#ayuno) {
+  min-width: 0;
+}
+
+#mediciones #glucosa {
+  width: 100%;
+  min-width: 0;
+}
+
+#mediciones .input-group {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  width: 100%;
+  min-width: 0;
+  gap: 0;
+}
+
+#mediciones .input-group > .form-control {
+  flex: 1 1 0%;
+  width: 1%;
+  min-width: 0;
+}
+
+#mediciones .input-group > .input-group-append {
+  display: flex;
+  flex: 0 0 auto;
+  min-width: 0;
+}
+
+#mediciones .input-group-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  min-height: 42px;
+  white-space: nowrap;
+}
+
 @media (min-width: 992px) {
   #mediciones .form-group:has(#presion-diastolica),
   #mediciones .form-group:has(#frecuencia-cardiaca) {
@@ -321,25 +410,25 @@ select.form-control {
   }
 
   #mediciones .form-group:has(#temperatura),
-  #mediciones .form-group:has(#saturacion-oxigeno) {
+  #mediciones .form-group:has(#saturacion-oxigeno),
+  #mediciones .form-group:has(#glucosa),
+  #mediciones .form-group:has(#ayuno) {
     grid-column: span 3;
-  }
-
-  #mediciones .form-group:has(#glucosa) {
-    grid-column: span 6;
   }
 }
 
 /* =========================================================
    Detecciones y Diagnóstico
    ========================================================= */
+
 #detecciones-diagnostico .form-group:has(#resultado-glucosa),
 #detecciones-diagnostico .form-group:has(#discapacidad-a),
 #detecciones-diagnostico .form-group:has(#diagnostico-a-cie10) {
   grid-column: 1 / -1;
 }
 
-/* Grupos de diagnóstico A) B) C): con aire y alineados */
+/* ---------- Diagnósticos CIE-10 ---------- */
+
 #detecciones-diagnostico .form-row.mb-3,
 #detecciones-diagnostico .form-row:has(#diagnostico-a-cie10),
 #detecciones-diagnostico .form-row:has(#diagnostico-b-cie10),
@@ -358,9 +447,8 @@ select.form-control {
   padding-bottom: 10px;
 }
 
-/* ---- Dificultad para: (discapacidad) - estilo "Referido a" ----
-   Título a la izquierda alineado con los controles; las etiquetas
-   a, b, c van justo encima de su campo. */
+/* ---------- Discapacidad ---------- */
+
 #detecciones-diagnostico .form-group:has(#discapacidad-a) {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -389,13 +477,35 @@ select.form-control {
   line-height: 1.35;
 }
 
-#detecciones-diagnostico label[for="discapacidad-a"] { grid-column: 2; grid-row: 1; }
-#detecciones-diagnostico label[for="discapacidad-b"] { grid-column: 3; grid-row: 1; }
-#detecciones-diagnostico label[for="discapacidad-c"] { grid-column: 4; grid-row: 1; }
+#detecciones-diagnostico label[for="discapacidad-a"] {
+  grid-column: 2;
+  grid-row: 1;
+}
 
-#detecciones-diagnostico #discapacidad-a { grid-column: 2; grid-row: 2; }
-#detecciones-diagnostico #discapacidad-b { grid-column: 3; grid-row: 2; }
-#detecciones-diagnostico #discapacidad-c { grid-column: 4; grid-row: 2; }
+#detecciones-diagnostico label[for="discapacidad-b"] {
+  grid-column: 3;
+  grid-row: 1;
+}
+
+#detecciones-diagnostico label[for="discapacidad-c"] {
+  grid-column: 4;
+  grid-row: 1;
+}
+
+#detecciones-diagnostico #discapacidad-a {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+#detecciones-diagnostico #discapacidad-b {
+  grid-column: 3;
+  grid-row: 2;
+}
+
+#detecciones-diagnostico #discapacidad-c {
+  grid-column: 4;
+  grid-row: 2;
+}
 
 #detecciones-diagnostico #discapacidad-a,
 #detecciones-diagnostico #discapacidad-b,
@@ -405,20 +515,17 @@ select.form-control {
 }
 
 /* =========================================================
-   Salud Reproductiva: dos bloques (Atención Pregestacional y Embarazo)
+   Salud Reproductiva
    ========================================================= */
+
 #salud-reproductiva > .card-body + .card-body {
   padding-top: 8px;
 }
 
 /* =========================================================
    Salud del Niño y Adolescente
-   Aquí los subtítulos (p), el bloque Batelle (.mb-3) y los dos últimos
-   campos son hijos directos de la tarjeta, no de un .card-body. La
-   tarjeta pasa a flex con salto de línea: los bloques de ancho completo
-   ocupan su fila y los dos últimos campos (Aplicación Cédula Cáncer y
-   Madre INF. Prevención de accidentes) quedan lado a lado.
    ========================================================= */
+
 #salud-nino-adolescente {
   flex-direction: row;
   flex-wrap: wrap;
@@ -449,7 +556,6 @@ select.form-control {
   font-size: 14px;
 }
 
-/* Campos sueltos: mismo ancho que una columna de 3 por fila */
 #salud-nino-adolescente > .mb-3,
 #salud-nino-adolescente > .form-group {
   flex: 0 0 auto;
@@ -458,7 +564,6 @@ select.form-control {
   margin: 18px 0 0 24px !important;
 }
 
-/* Segundo campo suelto: a la derecha del primero, 18px de separación */
 #salud-nino-adolescente > .form-group + .form-group {
   margin-left: 18px !important;
 }
@@ -468,10 +573,9 @@ select.form-control {
 }
 
 /* =========================================================
-   Referencias: Referido por + Referido a + Nivel + Especialidad
-   El .form-row pasa a "display: contents" para que sus campos entren
-   en la misma rejilla que "Referido por".
+   Referencias
    ========================================================= */
+
 #referencias .form-row {
   display: contents;
 }
@@ -485,14 +589,12 @@ select.form-control {
   padding: 0;
 }
 
-/* La etiqueta "Referido a" se alinea verticalmente con los controles */
 #referencias .form-row > .form-group:has(#referido-a) {
   align-self: end;
   align-items: center !important;
   min-height: 42px;
 }
 
-/* "Referido a" con el mismo estilo que "Dificultad para: (discapacidad)" */
 #referencias #referido-a {
   display: flex;
   align-items: center;
@@ -508,7 +610,6 @@ select.form-control {
 }
 
 @media (min-width: 992px) {
-  /* 3 + 2 + 3 + 4 = 12 columnas en una sola fila */
   #referencias .form-group:has(#referido-por) {
     grid-column: span 3;
   }
@@ -539,23 +640,22 @@ select.form-control {
 }
 
 /* =========================================================
-   Teleconsulta: Unidad Consultante + Consultada + Interpretación
-   Escritorio: 4 + 8 (4 + 4) = 12 columnas, una sola fila.
+   Teleconsulta
    ========================================================= */
+
 @media (min-width: 992px) {
   #teleconsulta .form-group:has(#unidad-consultante) {
     grid-column: span 4;
   }
 
-  #teleconsulta .form-group:has(#unidad-consultada) {
-    grid-column: span 8;
+  #teleconsulta .form-group:has(#interpretacion-diagnostica) {
+    grid-column: span 4;
   }
 }
 
-/* Tablet: consultante arriba y el par de unidades debajo, ancho completo */
 @media (min-width: 576px) and (max-width: 991.98px) {
   #teleconsulta .form-group:has(#unidad-consultante),
-  #teleconsulta .form-group:has(#unidad-consultada) {
+  #teleconsulta .form-group:has(#interpretacion-diagnostica) {
     grid-column: 1 / -1;
   }
 }
@@ -563,6 +663,7 @@ select.form-control {
 /* =========================================================
    Botonera
    ========================================================= */
+
 .container > .card.align-items-end > .card-body {
   display: flex;
   flex-wrap: wrap;
@@ -623,6 +724,7 @@ select.form-control {
 }
 
 /* ---------- Estados accesibles ---------- */
+
 .form-control:focus-visible,
 .btn:focus-visible {
   outline: 2px solid var(--sigss-accent);
@@ -637,6 +739,7 @@ select.form-control {
 /* =========================================================
    Tablet (≤ 991px)
    ========================================================= */
+
 @media (max-width: 991.98px) {
   .container {
     max-width: 100%;
@@ -654,6 +757,7 @@ select.form-control {
   }
 
   /* Discapacidad: título arriba, tres campos debajo */
+
   #detecciones-diagnostico .form-group:has(#discapacidad-a) {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
@@ -665,15 +769,38 @@ select.form-control {
     margin-bottom: 10px;
   }
 
-  #detecciones-diagnostico label[for="discapacidad-a"] { grid-column: 1; grid-row: 2; }
-  #detecciones-diagnostico label[for="discapacidad-b"] { grid-column: 2; grid-row: 2; }
-  #detecciones-diagnostico label[for="discapacidad-c"] { grid-column: 3; grid-row: 2; }
+  #detecciones-diagnostico label[for="discapacidad-a"] {
+    grid-column: 1;
+    grid-row: 2;
+  }
 
-  #detecciones-diagnostico #discapacidad-a { grid-column: 1; grid-row: 3; }
-  #detecciones-diagnostico #discapacidad-b { grid-column: 2; grid-row: 3; }
-  #detecciones-diagnostico #discapacidad-c { grid-column: 3; grid-row: 3; }
+  #detecciones-diagnostico label[for="discapacidad-b"] {
+    grid-column: 2;
+    grid-row: 2;
+  }
 
-  /* Salud del niño: dos por fila (24 + W + 18 + W + 24 = 100%) */
+  #detecciones-diagnostico label[for="discapacidad-c"] {
+    grid-column: 3;
+    grid-row: 2;
+  }
+
+  #detecciones-diagnostico #discapacidad-a {
+    grid-column: 1;
+    grid-row: 3;
+  }
+
+  #detecciones-diagnostico #discapacidad-b {
+    grid-column: 2;
+    grid-row: 3;
+  }
+
+  #detecciones-diagnostico #discapacidad-c {
+    grid-column: 3;
+    grid-row: 3;
+  }
+
+  /* Salud del niño: dos por fila */
+
   #salud-nino-adolescente > .mb-3,
   #salud-nino-adolescente > .form-group {
     width: calc((100% - 66px) / 2);
@@ -683,6 +810,7 @@ select.form-control {
 /* =========================================================
    Móvil (≤ 575px)
    ========================================================= */
+
 @media (max-width: 575.98px) {
   .container {
     padding: 10px 10px 24px;
@@ -722,34 +850,59 @@ select.form-control {
     flex: 1 1 100%;
   }
 
+  /*
+     Excepción para input-group:
+     anula el wrap de .d-flex y mantiene el input
+     junto al input-group-text en la misma fila.
+  */
+
+  .container .d-flex.input-group,
+  .container .input-group,
+  #mediciones .input-group {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    width: 100%;
+    min-width: 0;
+    gap: 0;
+  }
+
+  .container .input-group > .form-control,
+  #mediciones .input-group > .form-control {
+    flex: 1 1 0%;
+    width: 1%;
+    min-width: 0;
+  }
+
+  .container .input-group > .input-group-append,
+  #mediciones .input-group > .input-group-append {
+    display: flex;
+    flex: 0 0 auto;
+  }
+
+  .container .input-group > .input-group-text,
+  .container .input-group > .input-group-append > .input-group-text,
+  #mediciones .input-group > .input-group-text,
+  #mediciones .input-group > .input-group-append > .input-group-text {
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
+
   /* Referencias: una columna */
+
   #referencias .form-row > .form-group {
     grid-column: 1 / -1;
   }
 
-  /* Pares con etiquetas: una columna, cada etiqueta sobre su campo */
-  #mediciones .form-group:has(#glucosa),
-#detecciones-diagnostico .form-group:has(#resultado-glucosa),
-#teleconsulta .form-group:has(#unidad-consultada) {
+  /* Resultado de glucosa: una columna */
+
+  #detecciones-diagnostico .form-group:has(#resultado-glucosa) {
     grid-template-columns: minmax(0, 1fr);
   }
 
-  #mediciones .form-group:has(#glucosa) > .d-flex:first-child > label:first-child { order: 1; }
-  #mediciones .form-group:has(#glucosa) > .d-flex:last-child > :first-child { order: 2; margin-bottom: 14px !important; }
-  #mediciones .form-group:has(#glucosa) > .d-flex:first-child > label:last-child { order: 3; }
-  #mediciones .form-group:has(#glucosa) > .d-flex:last-child > :last-child { order: 4; }
-
-  #detecciones-diagnostico .form-group:has(#resultado-glucosa) > .d-flex:first-child > label:first-child { order: 1; }
-  #detecciones-diagnostico .form-group:has(#resultado-glucosa) > .d-flex:last-child > :first-child { order: 2; margin-bottom: 14px !important; }
-  #detecciones-diagnostico .form-group:has(#resultado-glucosa) > .d-flex:first-child > label:last-child { order: 3; }
-  #detecciones-diagnostico .form-group:has(#resultado-glucosa) > .d-flex:last-child > :last-child { order: 4; }
-
-  #teleconsulta .form-group:has(#unidad-consultada) > .d-flex:first-child > label:first-child { order: 1; }
-  #teleconsulta .form-group:has(#unidad-consultada) > .d-flex:last-child > :first-child { order: 2; margin-bottom: 14px !important; }
-  #teleconsulta .form-group:has(#unidad-consultada) > .d-flex:first-child > label:last-child { order: 3; }
-  #teleconsulta .form-group:has(#unidad-consultada) > .d-flex:last-child > :last-child { order: 4; }
-
   /* Discapacidad: una columna */
+
   #detecciones-diagnostico .form-group:has(#discapacidad-a) {
     grid-template-columns: minmax(0, 1fr);
   }
@@ -763,14 +916,34 @@ select.form-control {
     grid-column: 1;
   }
 
-  #detecciones-diagnostico label[for="discapacidad-a"] { grid-row: 2; }
-  #detecciones-diagnostico #discapacidad-a { grid-row: 3; margin-bottom: 14px !important; }
-  #detecciones-diagnostico label[for="discapacidad-b"] { grid-row: 4; }
-  #detecciones-diagnostico #discapacidad-b { grid-row: 5; margin-bottom: 14px !important; }
-  #detecciones-diagnostico label[for="discapacidad-c"] { grid-row: 6; }
-  #detecciones-diagnostico #discapacidad-c { grid-row: 7; }
+  #detecciones-diagnostico label[for="discapacidad-a"] {
+    grid-row: 2;
+  }
+
+  #detecciones-diagnostico #discapacidad-a {
+    grid-row: 3;
+    margin-bottom: 14px !important;
+  }
+
+  #detecciones-diagnostico label[for="discapacidad-b"] {
+    grid-row: 4;
+  }
+
+  #detecciones-diagnostico #discapacidad-b {
+    grid-row: 5;
+    margin-bottom: 14px !important;
+  }
+
+  #detecciones-diagnostico label[for="discapacidad-c"] {
+    grid-row: 6;
+  }
+
+  #detecciones-diagnostico #discapacidad-c {
+    grid-row: 7;
+  }
 
   /* Salud del niño: una columna */
+
   #salud-nino-adolescente > .card-body {
     padding: 16px 18px 0;
   }
@@ -792,6 +965,7 @@ select.form-control {
   }
 
   /* Botonera */
+
   .container > .card.align-items-end > .card-body {
     justify-content: stretch;
     padding: 16px;
@@ -802,10 +976,11 @@ select.form-control {
     margin: 0 !important;
   }
 }
+
 /* =========================================================
-   SIGSS | Resultados de búsqueda de diagnósticos CIE-10
-   Scroll vertical para los resultados del autocompletado
+   Resultados de búsqueda de diagnósticos CIE-10
    ========================================================= */
+
 #diagnostico-a-cie10-resultados,
 #diagnostico-b-cie10-resultados,
 #diagnostico-c-cie10-resultados {
@@ -820,6 +995,7 @@ select.form-control {
 }
 
 /* Personalización del scroll en Chrome, Edge y Safari */
+
 #diagnostico-a-cie10-resultados::-webkit-scrollbar,
 #diagnostico-b-cie10-resultados::-webkit-scrollbar,
 #diagnostico-c-cie10-resultados::-webkit-scrollbar {
