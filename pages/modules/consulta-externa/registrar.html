@@ -937,6 +937,54 @@
     </div>
   </div>
 
+  <!-- Modal Generico -->
+    <div class="modal fade" id="modal_generico" tabindex="-1" role="dialog" aria-labelledby="modal_generico_titulo"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" id="modal_generico_dialogo" role="document">
+      <div class="modal-content modal-sigss">
+        <!-- ENCABEZADO -->
+        <div class="modal-header modal-sigss-header">
+          <h5 class="modal-title font-weight-bold" id="modal_generico_titulo">
+            <i class="fa-solid fa-pen text-primary mr-2" id="modal_generico_icono"></i>
+            <span id="modal_generico_titulo_texto">
+              Formulario
+            </span>
+          </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <!-- FORMULARIO -->
+        <form id="form_modal_generico" novalidate>
+          <div class="modal-body">
+            <!-- Descripción opcional -->
+            <p class="text-muted small mb-3 d-none" id="modal_generico_descripcion"></p>
+            <!-- Identificador del registro -->
+            <input type="hidden" id="modal_generico_id">
+            <!-- Los campos se generan mediante JavaScript -->
+            <div class="row" id="modal_generico_campos"></div>
+            <!-- Mensaje de validación -->
+            <div class="alert alert-danger mt-3 mb-0 d-none" id="modal_generico_error" role="alert">
+            </div>
+          </div>
+          <!-- PIE -->
+          <div class="modal-footer modal-sigss-footer">
+            <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">
+              <i class="fa-solid fa-xmark mr-1"></i>
+              Cancelar
+            </button>
+            <button type="submit" class="btn btn-primary" id="modal_generico_guardar">
+              <i class="fa-solid fa-floppy-disk mr-1" id="modal_generico_guardar_icono"></i>
+              <span id="modal_generico_guardar_texto">
+                Guardar
+              </span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
   <!-- ================================================== -->
   <!-- BIBLIOTECAS JAVASCRIPT                             -->
   <!-- ================================================== -->
@@ -955,7 +1003,8 @@
   <script src="../../../js/azia.js"></script>
 
   <!-- Lógica personalizada del SIGSS -->
-  <script src="../../../js/consulta_externa.js"></script>
+  <script src="../../../js/modal_manager.js"></script>
+  <script type="module" src="../../../js/consulta_externa.js"></script>
   <script src="../../../js/dashboard.js"></script>
   <script src="../../../js/clock.js"></script>
 </body>

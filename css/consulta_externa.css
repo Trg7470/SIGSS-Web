@@ -1774,3 +1774,250 @@ body {
     flex: 1 1 100%;
   }
 }
+/* =========================================================
+   MODAL GENÉRICO SIGSS  (#modal_generico)
+   ---------------------------------------------------------
+   La estructura (.modal, .modal-dialog, .fade, .show) viene de
+   bootstrap.min.css. Aquí solo va la apariencia SIGSS, y los
+   controles del modal se estilizan aparte porque quedan fuera
+   de .sigss-formulario.
+   ========================================================= */
+
+/* ---------- Fondo oscuro ---------- */
+
+.modal-backdrop {
+  background-color: #031b4e;
+}
+
+.modal-backdrop.show {
+  opacity: .55;
+}
+
+/* ---------- Contenedor ---------- */
+
+.modal-sigss {
+  border: 0;
+  border-radius: 6px;
+  background: var(--sigss-surface);
+  box-shadow: 0 18px 48px rgba(3, 27, 78, .28);
+  overflow: hidden;
+}
+
+/* ---------- Encabezado ---------- */
+
+.modal-sigss-header {
+  align-items: center;
+  padding: 18px 24px;
+  border-bottom: 1px solid var(--sigss-border);
+  border-radius: 0;
+  background: #fbfcfd;
+}
+
+.modal-sigss-header .modal-title {
+  margin: 0;
+  color: var(--sigss-text);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.modal-sigss-header .modal-title i {
+  font-size: 15px;
+}
+
+.modal-sigss-header .close {
+  margin: 0 -6px 0 auto;
+  padding: 6px 10px;
+  color: var(--sigss-muted);
+  font-size: 26px;
+  font-weight: 400;
+  line-height: 1;
+  text-shadow: none;
+  opacity: 1;
+  transition: color .15s ease;
+}
+
+.modal-sigss-header .close:hover,
+.modal-sigss-header .close:focus {
+  color: var(--sigss-text);
+  opacity: 1;
+}
+
+/* ---------- Cuerpo ---------- */
+
+.modal-sigss .modal-body {
+  padding: 24px 24px 12px;
+}
+
+#modal_generico_descripcion {
+  color: var(--sigss-muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* ---------- Etiquetas y controles (misma apariencia que el formulario) ---------- */
+
+.modal-sigss label {
+  display: block;
+  margin-bottom: 7px;
+  color: #3b4863;
+  font-size: 12px;
+  font-weight: 650;
+  line-height: 1.4;
+  letter-spacing: .05px;
+}
+
+.modal-sigss .form-control {
+  display: block;
+  min-height: 42px;
+  padding: 9px 12px;
+  border: 1px solid #d5dfe6;
+  border-radius: 4px;
+  background-color: #fff;
+  color: var(--sigss-text);
+  font-size: 13px;
+  line-height: 1.45;
+  box-shadow: none;
+  transition: border-color .18s ease, box-shadow .18s ease, background-color .18s ease;
+}
+
+.modal-sigss .form-control:hover {
+  border-color: #b8cbd5;
+}
+
+.modal-sigss .form-control:focus {
+  border-color: var(--sigss-accent);
+  background-color: #fff;
+  box-shadow: 0 0 0 3px var(--sigss-focus);
+  color: var(--sigss-text);
+}
+
+.modal-sigss .form-control::placeholder {
+  color: #a0acb6;
+  opacity: 1;
+}
+
+.modal-sigss select.form-control {
+  padding-right: 30px;
+}
+
+.modal-sigss .form-control:disabled,
+.modal-sigss .form-control[readonly] {
+  background-color: #f4f5f8;
+  color: #7987a1;
+  cursor: not-allowed;
+}
+
+.modal-sigss .form-control.is-invalid {
+  border-color: #dc3545;
+  background-image: none;
+}
+
+.modal-sigss .form-control.is-valid {
+  border-color: #3bb001;
+  background-image: none;
+}
+
+/* ---------- Mensaje de validación ---------- */
+
+.modal-sigss .alert {
+  padding: 11px 14px;
+  border-radius: 4px;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+/* ---------- Pie y botones ---------- */
+
+.modal-sigss-footer {
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 16px 24px;
+  border-top: 1px solid var(--sigss-border);
+  border-radius: 0;
+  background: #fbfcfd;
+}
+
+.modal-sigss-footer > * {
+  margin: 0;
+}
+
+.modal-sigss .btn {
+  min-height: 41px;
+  padding: 10px 17px;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 650;
+  transition: transform .15s ease, box-shadow .15s ease, background-color .15s ease, border-color .15s ease;
+}
+
+.modal-sigss .btn:hover {
+  transform: translateY(-1px);
+}
+
+.modal-sigss .btn-primary {
+  border-color: var(--sigss-primary);
+  background: var(--sigss-primary);
+  color: #fff;
+  box-shadow: 0 3px 8px rgba(36, 91, 120, .15);
+}
+
+.modal-sigss .btn-primary:hover,
+.modal-sigss .btn-primary:focus {
+  border-color: var(--sigss-primary-dark);
+  background: var(--sigss-primary-dark);
+}
+
+.modal-sigss .btn-primary:focus,
+.modal-sigss .btn-primary:focus-visible {
+  box-shadow: 0 0 0 3px rgba(51, 102, 255, .2);
+}
+
+.modal-sigss .btn-primary:disabled {
+  opacity: .65;
+  transform: none;
+  cursor: not-allowed;
+}
+
+.modal-sigss .btn-outline-secondary {
+  border-color: #dfe3eb;
+  background: #fff;
+  color: #3b4863;
+}
+
+.modal-sigss .btn-outline-secondary:hover,
+.modal-sigss .btn-outline-secondary:focus {
+  border-color: #cbd3e1;
+  background: #e9edf5;
+  color: #031b4e;
+}
+
+/* ---------- Estados accesibles ---------- */
+
+.modal-sigss .form-control:focus-visible,
+.modal-sigss .btn:focus-visible,
+.modal-sigss-header .close:focus-visible {
+  outline: 2px solid var(--sigss-accent);
+  outline-offset: 2px;
+}
+
+/* ---------- Móvil (≤ 575px) ---------- */
+
+@media (max-width: 575.98px) {
+  .modal-sigss-header {
+    padding: 15px 18px;
+  }
+
+  .modal-sigss .modal-body {
+    padding: 18px 18px 8px;
+  }
+
+  .modal-sigss-footer {
+    flex-direction: column-reverse;
+    padding: 14px 18px;
+  }
+
+  .modal-sigss-footer .btn {
+    width: 100%;
+  }
+}
