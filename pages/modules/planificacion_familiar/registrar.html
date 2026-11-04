@@ -1,0 +1,971 @@
+<!doctype html>
+<html lang="es-MX">
+  <head>
+    <!-- Configuración del documento -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta
+      name="description"
+      content="Sistema Integral de Gestión de Servicios de Salud"
+    />
+    <meta name="author" content="SIGSS" />
+    <title>SIGSS | Panel principal</title>
+
+    <!-- Hojas de estilo de iconos -->
+    <link
+      href="../../../lib/fontawesome-free/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link href="../../../lib/ionicons/css/ionicons.min.css" rel="stylesheet" />
+    <link href="../../../lib/typicons.font/typicons.css" rel="stylesheet" />
+    <link
+      href="../../../lib/flag-icon-css/css/flag-icon.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Hojas de estilo de la plantilla -->
+    <link
+      rel="stylesheet"
+      href="../../../lib/bootstrap/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="../../../css/popup.css" />
+    <link rel="stylesheet" href="../../../css/planificacion_familiar.css" />
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="shadow card card-body mt-4" id="identificacion-atencion">
+        <div class="card-title">
+          <h5>Identificación y Atención</h5>
+        </div>
+        <div class="card-body">
+          <div class="form-row">
+            <div class="col-md-4 mb-2">
+              <label for="clues">CLUES</label>
+              <input
+                type="text"
+                class="form-control"
+                id="clues"
+                placeholder="Clues ligado a la unidad"
+                required
+              />
+            </div>
+            <div class="col-md-8 mb-2">
+              <label for="nombre-unidad">Nombre de la unidad</label>
+              <input
+                type="text"
+                class="form-control"
+                id="nombre-unidad"
+                placeholder="Nombre de la unidad"
+                required
+              />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="col-md-4 mb-2">
+              <label for="curp-prestador">CURP del prestador</label>
+              <input
+                type="text"
+                class="form-control"
+                id="curp-prestador"
+                placeholder="CURP del prestador"
+                required
+              />
+            </div>
+            <div class="col-md-8 mb-2">
+              <label for="nombre-prestador">Nombre de la/el prestador</label>
+              <input
+                type="text"
+                class="form-control"
+                id="nombre-prestador"
+                placeholder="Nombre del prestador"
+                required
+              />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="col-md-3">
+              <label for="tipo-personal">Tipo de personal</label>
+              <input
+                type="text"
+                class="form-control"
+                id="tipo-personal"
+                placeholder="Tipo de personal"
+                required
+              />
+            </div>
+            <div class="col-md-3">
+              <label for="cedula-profesional">Cédula profesional</label>
+              <input
+                type="text"
+                class="form-control"
+                id="cedula-profesional"
+                placeholder="Cédula profesional"
+                required
+              />
+            </div>
+            <div class="col-md-3">
+              <label for="fecha-atencion">Fecha de atención</label>
+              <input
+                type="date"
+                class="form-control"
+                id="fecha-atencion"
+                required
+              />
+            </div>
+            <div class="col-md-3">
+              <label for="servicio">Servicio</label>
+              <select class="form-control" id="servicio">
+                <option value="">Selecciona un servicio</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="shadow card card-body mt-4" id="informacion-paciente">
+        <div class="card-title">
+          <h5>Información del Paciente</h5>
+        </div>
+        <div class="card-body">
+          <div class="form-row">
+            <div class="col-md-4 mb-2">
+              <label for="derechohabiencia">Derechohabiencia</label>
+              <select class="form-control" id="derechohabiencia">
+                <option value="">Selecciona una opción</option>
+              </select>
+            </div>
+            <div class="col-md-4 mb-2">
+              <label for="folio-receta">Folio de la receta</label>
+              <input
+                type="text"
+                class="form-control"
+                id="folio-receta"
+                placeholder="Folio de la receta"
+                maxlength="15"
+              />
+            </div>
+            <div class="col-md-4 mb-2">
+              <label for="expediente">Expediente</label>
+              <input
+                type="text"
+                class="form-control"
+                id="expediente"
+                placeholder="Expediente"
+                required
+              />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="col-md-5 mb-2">
+              <label for="curp-paciente"
+                >CURP o Fecha y Entidad/País de nacimiento</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="curp-paciente"
+                placeholder="CURP ligado al paciente"
+                required
+              />
+            </div>
+            <div class="col-md-7 mb-2">
+              <label for="nombre-paciente">Nombre del paciente</label>
+              <input
+                type="text"
+                class="form-control"
+                id="nombre-paciente"
+                placeholder="Nombre del paciente"
+                required
+              />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="col-md-2">
+              <label for="edad">Edad</label>
+              <input
+                type="number"
+                class="form-control"
+                id="edad"
+                placeholder="Edad"
+                min="0"
+              />
+            </div>
+            <div class="col-md-2">
+              <label for="clave-edad">Clave de edad</label>
+              <select class="form-control" id="clave-edad">
+                <option value="">Clave</option>
+              </select>
+            </div>
+            <div class="col-md-2">
+              <label for="sexo">Sexo biológico</label>
+              <select class="form-control" id="sexo">
+                <option value="">Selecciona</option>
+              </select>
+            </div>
+            <div class="col-md-2">
+              <label for="afromexicano">Afromexicano</label>
+              <select class="form-control" id="afromexicano">
+                <option value="">Selecciona</option>
+                <option value="0">No</option>
+                <option value="1">Sí</option>
+              </select>
+            </div>
+            <div class="col-md-2">
+              <label for="indigena">Indígena</label>
+              <select class="form-control" id="indigena">
+                <option value="">Selecciona</option>
+                <option value="0">No</option>
+                <option value="1">Sí</option>
+              </select>
+            </div>
+            <div class="col-md-2">
+              <label for="migrante">Migrante</label>
+              <select class="form-control" id="migrante">
+                <option value="">Selecciona</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="shadow card card-body mt-4" id="mediciones">
+        <div class="card-title">
+          <h5>Mediciones</h5>
+        </div>
+        <div class="card-body">
+          <div class="form-row">
+            <div class="col-md-3 mb-2">
+              <label for="peso">Peso</label>
+              <div class="input-group">
+                <input
+                  type="number"
+                  class="form-control"
+                  id="peso"
+                  placeholder="999 si no se midió"
+                  min="0"
+                  max="999.99"
+                  step="0.01"
+                  inputmode="decimal"
+                  title="Ingresa hasta 3 dígitos enteros y 2 decimales."
+                />
+                <div class="input-group-append">
+                  <span class="input-group-text">kg</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3 mb-2">
+              <label for="talla">Talla</label>
+              <div class="input-group">
+                <input
+                  type="number"
+                  class="form-control"
+                  id="talla"
+                  placeholder="999 si no se midió"
+                  min="0"
+                />
+                <div class="input-group-append">
+                  <span class="input-group-text">cm</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3 mb-2">
+              <label for="circunferencia-cintura"
+                >Circunferencia de cintura</label
+              >
+              <div class="input-group">
+                <input
+                  type="number"
+                  class="form-control"
+                  id="circunferencia-cintura"
+                  placeholder="Cintura"
+                  min="0"
+                />
+                <div class="input-group-append">
+                  <span class="input-group-text">cm</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3 mb-2">
+              <label for="temperatura">Temperatura</label>
+              <div class="input-group">
+                <input
+                  type="number"
+                  class="form-control"
+                  id="temperatura"
+                  placeholder="Temperatura"
+                  min="0"
+                  max="99.9"
+                  step="0.1"
+                  inputmode="decimal"
+                  title="Ingresa hasta 2 dígitos enteros y 1 decimal."
+                />
+                <div class="input-group-append">
+                  <span class="input-group-text">°C</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="col-md-3 mb-2">
+              <label for="presion-sistolica">Presión sistólica</label>
+              <div class="input-group">
+                <input
+                  type="number"
+                  class="form-control"
+                  id="presion-sistolica"
+                  placeholder="Sistólica"
+                  min="0"
+                />
+                <div class="input-group-append">
+                  <span class="input-group-text">mmHg</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3 mb-2">
+              <label for="presion-diastolica">Presión diastólica</label>
+              <div class="input-group">
+                <input
+                  type="number"
+                  class="form-control"
+                  id="presion-diastolica"
+                  placeholder="Diastólica"
+                  min="0"
+                />
+                <div class="input-group-append">
+                  <span class="input-group-text">mmHg</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3 mb-2">
+              <label for="frecuencia-cardiaca">Frecuencia cardíaca</label>
+              <div class="input-group">
+                <input
+                  type="number"
+                  class="form-control"
+                  id="frecuencia-cardiaca"
+                  placeholder="Cardíaca"
+                  min="0"
+                />
+                <div class="input-group-append">
+                  <span class="input-group-text">lpm</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3 mb-2">
+              <label for="frecuencia-respiratoria"
+                >Frecuencia respiratoria</label
+              >
+              <div class="input-group">
+                <input
+                  type="number"
+                  class="form-control"
+                  id="frecuencia-respiratoria"
+                  placeholder="Respiratoria"
+                  min="0"
+                />
+                <div class="input-group-append">
+                  <span class="input-group-text">rpm</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="col-md-4">
+              <label for="saturacion-oxigeno">Saturación de oxígeno</label>
+              <div class="input-group">
+                <input
+                  type="number"
+                  class="form-control"
+                  id="saturacion-oxigeno"
+                  placeholder="Saturación"
+                  min="0"
+                  max="100"
+                />
+                <div class="input-group-append">
+                  <span class="input-group-text">%</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <label for="glucosa">Glucosa</label>
+              <div class="input-group">
+                <input
+                  type="number"
+                  class="form-control"
+                  id="glucosa"
+                  placeholder="Glucosa"
+                  step="any"
+                />
+                <div class="input-group-append">
+                  <span class="input-group-text">mg/dL</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <label for="glucosa-ayuno">¿El paciente estaba en ayuno?</label>
+              <select class="form-control" id="glucosa-ayuno">
+                <option value="">Selecciona una opción</option>
+                <option value="1">Sí</option>
+                <option value="0">No</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="shadow card card-body mt-4" id="cobertura-diagnostico">
+        <div class="card-title">
+          <h5>Cobertura y Diagnóstico</h5>
+        </div>
+        <div class="card-body">
+          <div class="form-row">
+            <div class="col-md-4 mb-2">
+              <label for="primera-vez-anio"
+                >Primera vez en el año (cobertura)</label
+              >
+              <select class="form-control" id="primera-vez-anio">
+                <option value="">Selecciona una opción</option>
+                <option value="1">Sí</option>
+                <option value="0">No</option>
+              </select>
+            </div>
+            <div class="col-md-8 mb-2">
+              <label for="rt-motivo">Relación temporal (RT) por motivo</label>
+              <select class="form-control" id="rt-motivo">
+                <option value="">Selecciona una opción</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="col-md-4 mb-2">
+              <label for="discapacidad-a"
+                >Dificultad para (discapacidad) a)</label
+              >
+              <select class="form-control" id="discapacidad-a">
+                <option value="">Selecciona una discapacidad</option>
+              </select>
+            </div>
+            <div class="col-md-4 mb-2">
+              <label for="discapacidad-b"
+                >Dificultad para (discapacidad) b)</label
+              >
+              <select class="form-control" id="discapacidad-b">
+                <option value="">Selecciona la dificultad</option>
+              </select>
+            </div>
+            <div class="col-md-4 mb-2">
+              <label for="discapacidad-c"
+                >Dificultad para (discapacidad) c)</label
+              >
+              <select class="form-control" id="discapacidad-c">
+                <option value="">Selecciona el motivo</option>
+              </select>
+            </div>
+          </div>
+          <div class="diagnosticos">
+            <div class="form-row mb-2">
+              <div class="col-md-1 d-flex align-items-end">
+                <span class="form-control-plaintext">A&#41;</span>
+              </div>
+              <div class="col-md">
+                <label for="diagnostico-a-cie10">Diagnóstico CIE-10</label>
+                <input
+                  type="search"
+                  class="form-control"
+                  id="diagnostico-a-cie10"
+                  name="diagnostico_a_busqueda"
+                  placeholder="Buscar por clave o nombre..."
+                  autocomplete="off"
+                />
+                <input
+                  type="hidden"
+                  id="diagnostico-a-cie10-id"
+                  name="diagnostico_a_id"
+                />
+                <div
+                  id="diagnostico-a-cie10-resultados"
+                  class="list-group"
+                ></div>
+              </div>
+            </div>
+            <div class="form-row mb-2">
+              <div class="col-md-1 d-flex align-items-end">
+                <span class="form-control-plaintext">B&#41;</span>
+              </div>
+              <div class="col-md">
+                <label for="diagnostico-b-cie10">Diagnóstico CIE-10</label>
+                <input
+                  type="search"
+                  class="form-control"
+                  id="diagnostico-b-cie10"
+                  name="diagnostico_b_busqueda"
+                  placeholder="Buscar por clave o nombre..."
+                  autocomplete="off"
+                />
+                <input
+                  type="hidden"
+                  id="diagnostico-b-cie10-id"
+                  name="diagnostico_b_id"
+                />
+                <div
+                  id="diagnostico-b-cie10-resultados"
+                  class="list-group"
+                ></div>
+              </div>
+              <div class="col-md-3">
+                <label for="diagnostico-b-primera-vez">1ª vez</label>
+                <select class="form-control" id="diagnostico-b-primera-vez">
+                  <option value="">Selecciona una opción</option>
+                  <option value="1">Sí</option>
+                  <option value="0">No</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="col-md-1 d-flex align-items-end">
+                <span class="form-control-plaintext">C&#41;</span>
+              </div>
+              <div class="col-md">
+                <label for="diagnostico-c-cie10">Diagnóstico CIE-10</label>
+                <input
+                  type="search"
+                  class="form-control"
+                  id="diagnostico-c-cie10"
+                  name="diagnostico_c_busqueda"
+                  placeholder="Buscar por clave o nombre..."
+                  autocomplete="off"
+                />
+                <input
+                  type="hidden"
+                  id="diagnostico-c-cie10-id"
+                  name="diagnostico_c_id"
+                />
+                <div
+                  id="diagnostico-c-cie10-resultados"
+                  class="list-group"
+                ></div>
+              </div>
+              <div class="col-md-3">
+                <label for="diagnostico-c-primera-vez">1ª vez</label>
+                <select class="form-control" id="diagnostico-c-primera-vez">
+                  <option value="">Selecciona una opción</option>
+                  <option value="1">Sí</option>
+                  <option value="0">No</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="shadow card card-body mt-4" id="planificacion-familiar">
+        <div class="card-title">
+          <h5>Atenciones de Planificación Familiar</h5>
+        </div>
+        <div class="card-body">
+          <div class="form-row">
+            <div class="col-md-3 mb-2">
+              <label for="puerpera-aceptante">Puérpera aceptante</label>
+              <select class="form-control" id="puerpera-aceptante">
+                <option value="">Selecciona una opción</option>
+                <option value="1">Sí</option>
+                <option value="0">No</option>
+              </select>
+            </div>
+            <div class="col-md-3 mb-2">
+              <label for="anticoncepcion-emergencia"
+                >Anticoncepción de emergencia</label
+              >
+              <select class="form-control" id="anticoncepcion-emergencia">
+                <option value="">Selecciona una opción</option>
+                <option value="1">Sí</option>
+                <option value="0">No</option>
+              </select>
+            </div>
+            <div class="col-md-6 mb-2">
+              <label for="alta-azoospermia"
+                >Alta con azoospermia por vasectomía sin bisturí</label
+              >
+              <select class="form-control" id="alta-azoospermia">
+                <option value="">Selecciona una opción</option>
+                <option value="1">Sí</option>
+                <option value="0">No</option>
+              </select>
+            </div>
+          </div>
+          <p class="font-weight-bold">Métodos entregados</p>
+          <div class="form-row">
+            <div class="col-md-3 mb-2">
+              <label for="metodo-oral">Oral (ciclos)</label>
+              <input
+                type="number"
+                class="form-control"
+                id="metodo-oral"
+                placeholder="0 a 6"
+                min="0"
+                max="6"
+                step="1"
+              />
+            </div>
+            <div class="col-md-3 mb-2">
+              <label for="metodo-inyectable-mensual">Inyectable mensual</label>
+              <input
+                type="number"
+                class="form-control"
+                id="metodo-inyectable-mensual"
+                placeholder="0 a 6"
+                min="0"
+                max="6"
+                step="1"
+              />
+            </div>
+            <div class="col-md-3 mb-2">
+              <label for="metodo-inyectable-bimestral"
+                >Inyectable bimestral</label
+              >
+              <input
+                type="number"
+                class="form-control"
+                id="metodo-inyectable-bimestral"
+                placeholder="0 a 3"
+                min="0"
+                max="3"
+                step="1"
+              />
+            </div>
+            <div class="col-md-3 mb-2">
+              <label for="metodo-inyectable-trimestral"
+                >Inyectable trimestral</label
+              >
+              <input
+                type="number"
+                class="form-control"
+                id="metodo-inyectable-trimestral"
+                placeholder="0 a 3"
+                min="0"
+                max="3"
+                step="1"
+              />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="col-md-3 mb-2">
+              <label for="metodo-parche-dermico">Parche dérmico (ciclos)</label>
+              <input
+                type="number"
+                class="form-control"
+                id="metodo-parche-dermico"
+                placeholder="0 a 6"
+                min="0"
+                max="6"
+                step="1"
+              />
+            </div>
+            <div class="col-md-3 mb-2">
+              <label for="metodo-preservativo">Preservativo</label>
+              <input
+                type="number"
+                class="form-control"
+                id="metodo-preservativo"
+                placeholder="0 a 50"
+                min="0"
+                max="50"
+                step="1"
+              />
+            </div>
+            <div class="col-md-3 mb-2">
+              <label for="metodo-preservativo-femenino"
+                >Preservativo femenino</label
+              >
+              <input
+                type="number"
+                class="form-control"
+                id="metodo-preservativo-femenino"
+                placeholder="0 a 50"
+                min="0"
+                max="50"
+                step="1"
+              />
+            </div>
+            <div class="col-md-3 mb-2">
+              <label for="metodo-otro">Otro método</label>
+              <input
+                type="number"
+                class="form-control"
+                id="metodo-otro"
+                placeholder="0 a 6"
+                min="0"
+                max="6"
+                step="1"
+              />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="col-md-3">
+              <label for="implante-tipo">Implante subdérmico</label>
+              <select class="form-control" id="implante-tipo">
+                <option value="">Selecciona una opción</option>
+              </select>
+            </div>
+            <div class="col-md-3">
+              <label for="implante-accion"
+                >Implante: insertado o revisión</label
+              >
+              <select class="form-control" id="implante-accion">
+                <option value="">Selecciona una opción</option>
+                <option value="1">1 - Insertado</option>
+                <option value="0">0 - Revisión</option>
+              </select>
+            </div>
+            <div class="col-md-2">
+              <label for="metodo-diu">DIU</label>
+              <select class="form-control" id="metodo-diu">
+                <option value="">Selecciona una opción</option>
+                <option value="1">1 - Insertado</option>
+                <option value="0">0 - Revisión</option>
+              </select>
+            </div>
+            <div class="col-md-2">
+              <label for="metodo-diu-medicado">DIU medicado</label>
+              <select class="form-control" id="metodo-diu-medicado">
+                <option value="">Selecciona una opción</option>
+                <option value="1">1 - Insertado</option>
+                <option value="0">0 - Revisión</option>
+              </select>
+            </div>
+            <div class="col-md-2">
+              <label for="metodo-quirurgico">Quirúrgico</label>
+              <select class="form-control" id="metodo-quirurgico">
+                <option value="">Selecciona una opción</option>
+                <option value="1">1 - Vasectomía</option>
+                <option value="0">0 - Revisión</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="shadow card card-body mt-4" id="orientacion-consejeria">
+        <div class="card-title">
+          <h5>Orientación - Consejería</h5>
+        </div>
+        <div class="card-body">
+          <div class="form-row">
+            <div class="col-md-3">
+              <label for="orientacion-planificacion-familiar"
+                >Planificación familiar</label
+              >
+              <select
+                class="form-control"
+                id="orientacion-planificacion-familiar"
+              >
+                <option value="">Selecciona una opción</option>
+                <option value="1">Sí</option>
+                <option value="0">No</option>
+              </select>
+            </div>
+            <div class="col-md-3">
+              <label for="orientacion-prevencion-its">Prevención de ITS</label>
+              <select class="form-control" id="orientacion-prevencion-its">
+                <option value="">Selecciona una opción</option>
+                <option value="1">Sí</option>
+                <option value="0">No</option>
+              </select>
+            </div>
+            <div class="col-md-3">
+              <label for="orientacion-prevencion-embarazo"
+                >Prevención de embarazo</label
+              >
+              <select class="form-control" id="orientacion-prevencion-embarazo">
+                <option value="">Selecciona una opción</option>
+                <option value="1">Sí</option>
+                <option value="0">No</option>
+              </select>
+            </div>
+            <div class="col-md-3">
+              <label for="orientacion-otras-ssra"
+                >Otras atenciones de SSRA</label
+              >
+              <select class="form-control" id="orientacion-otras-ssra">
+                <option value="">Selecciona una opción</option>
+                <option value="1">Sí</option>
+                <option value="0">No</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="shadow card card-body mt-4" id="promocion-salud">
+        <div class="card-title">
+          <h5>Promoción de la Salud</h5>
+        </div>
+        <div class="card-body">
+          <div class="form-row">
+            <div class="col-md-4">
+              <label for="consulta-linea-vida"
+                >Consulta integrada línea de vida</label
+              >
+              <select class="form-control" id="consulta-linea-vida">
+                <option value="">Selecciona una opción</option>
+                <option value="0">No</option>
+                <option value="1">Sí</option>
+              </select>
+            </div>
+            <div class="col-md-4">
+              <label for="presenta-cartilla">Presenta cartilla</label>
+              <select class="form-control" id="presenta-cartilla">
+                <option value="">Selecciona una opción</option>
+                <option value="0">No</option>
+                <option value="1">Sí</option>
+              </select>
+            </div>
+            <div class="col-md-4">
+              <label for="esquema-vacunacion">Esquema de vacunación</label>
+              <select class="form-control" id="esquema-vacunacion">
+                <option value="">Selecciona una opción</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="shadow card card-body mt-4" id="referencias">
+        <div class="card-title">
+          <h5>Referencia y Contrarreferencia</h5>
+        </div>
+        <div class="card-body">
+          <div class="form-row">
+            <div class="col-md-3">
+              <label for="referido-por">Referido por</label>
+              <select class="form-control" id="referido-por">
+                <option value="">Selecciona una opción</option>
+              </select>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-4 d-flex align-items-end">
+                <p
+                  class="form-control-plaintext font-weight-bold"
+                  id="referido-a"
+                >
+                  Referido a
+                </p>
+              </div>
+              <div class="form-group col-md-4">
+                <label for="nivel">Nivel</label>
+                <select class="form-control" id="nivel">
+                  <option value="">Selecciona un nivel</option>
+                </select>
+              </div>
+
+              <div class="form-group col-md-4">
+                <label for="especialidad">Especialidad</label>
+                <select class="form-control" id="especialidad">
+                  <option value="">Selecciona una especialidad</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <label for="contrarreferido">Contrarreferido</label>
+              <select class="form-control" id="contrarreferido">
+                <option value="">Selecciona una opción</option>
+                <option value="0">No</option>
+                <option value="1">Sí</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="shadow card card-body mt-4" id="teleconsulta">
+        <div class="card-title">
+          <h5>Teleconsulta</h5>
+        </div>
+        <div class="card-body">
+          <div class="form-row">
+            <div class="col-md-3">
+              <label for="unidad-consultante">Unidad consultante</label>
+              <select class="form-control" id="unidad-consultante">
+                <option value="">Selecciona una opción</option>
+                <option value="1">Sí</option>
+                <option value="0">No</option>
+              </select>
+            </div>
+            <div class="col-md-3">
+              <label for="teleconsulta-a">A) Teleconsulta</label>
+              <select class="form-control" id="teleconsulta-a">
+                <option value="">Selecciona una opción</option>
+              </select>
+            </div>
+            <div class="col-md-3">
+              <label for="interpretacion-diagnostica"
+                >B) Interpretación diagnóstica</label
+              >
+              <select class="form-control" id="interpretacion-diagnostica">
+                <option value="">Selecciona una opción</option>
+              </select>
+            </div>
+            <div class="col-md-3">
+              <label for="modalidad">Modalidad</label>
+              <select class="form-control" id="modalidad">
+                <option value="">Selecciona una opción</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Seguimiento y acciones -->
+      <div class="shadow card card-body mt-4 mb-4" id="seguimiento">
+        <div class="card-title">
+          <h5>Seguimiento</h5>
+        </div>
+        <div class="card-body">
+          <div class="form-row align-items-end">
+            <div class="col-md-4">
+              <label for="fecha-proxima-consulta"
+                >Fecha de la próxima consulta</label
+              >
+              <input
+                type="date"
+                class="form-control"
+                id="fecha-proxima-consulta"
+              />
+            </div>
+            <div class="col-md-8 text-md-right" id="acciones">
+              <button type="button" class="btn btn-danger" id="cancelar">
+                Cancelar
+              </button>
+              <button
+                type="button"
+                class="btn btn-secondary"
+                id="limpiar-formulario"
+              >
+                Limpiar Formulario
+              </button>
+              <button type="button" class="btn btn-primary" id="guardar-datos">
+                Guardar Datos
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bibliotecas JavaScript -->
+    <script src="../../../lib/jquery/jquery.min.js"></script>
+    <script src="../../../lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../../../lib/ionicons/ionicons.js"></script>
+
+    <!-- Funcionalidad de ventanas emergentes -->
+    <script src="../../../js/popup.js"></script>
+
+    <!-- Bibliotecas de gráficas de Azia -->
+    <script src="../../../lib/jquery.flot/jquery.flot.js"></script>
+    <script src="../../../lib/jquery.flot/jquery.flot.resize.js"></script>
+    <script src="../../../lib/chart.js/Chart.bundle.min.js"></script>
+    <script src="../../../lib/peity/jquery.peity.min.js"></script>
+
+    <!-- Funcionalidad de la plantilla -->
+    <script src="../../../js/azia.js"></script>
+
+    <!-- Lógica personalizada del SIGSS -->
+    <script src="../../../js/planificacion_familiar.js"></script>
+    <script src="../../../js/clock.js"></script>
+  </body>
+</html>

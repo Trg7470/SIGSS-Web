@@ -1,21 +1,20 @@
 import { llenar_select, verificar_nulo } from "./utils.js";
-
-export async function init({ vista, usuario }) {
-    if (vista === "registrar") {
-        seleccionar_paciente(usuario);
-    }
-}
-
 const Usuario = JSON.parse(sessionStorage.getItem("usuario"));
 
-if (!Usuario) {
-    mostrarPopup({
-        tipo: "error",
-        titulo: "Sesión no válida",
-        mensaje: "No fue posible recuperar los datos del usuario.",
-        boton: true
-    });
-}
+document.addEventListener("DOMContentLoaded", async () => {
+    if (!Usuario) {
+        mostrarPopup({
+            tipo: "error",
+            titulo: "Sesión no válida",
+            mensaje: "No fue posible recuperar los datos del usuario.", 
+              boton: true
+        });
+        window.location.href = "../index.html";
+    }
+    document.getElementById("titulo-bienvenida").textContent = `Consulta externa`;
+    document.getElementById("descripcion-bienvenida").textContent = `Módulo de registro de consultas externas.`;
+    seleccionar_paciente(Usuario);
+});
 
 let Paciente;
 

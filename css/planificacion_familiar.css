@@ -1,0 +1,654 @@
+/* =========================================================
+   SIGSS | Planificación familiar (SINBA-SIS-CAPF-P)
+   Hoja autónoma: contiene el mismo tema que consulta_externa.css
+   (inspirado en Azia) adaptado a la estructura de este formulario.
+   Solo necesita enlazarse esta hoja en el HTML.
+   ========================================================= */
+
+@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900");
+
+:root {
+  --sigss-primary: #3366ff;
+  --sigss-primary-dark: #244fe0;
+  --sigss-accent: #5b47fb;
+  --sigss-text: #031b4e;
+  --sigss-muted: #7987a1;
+  --sigss-border: #e2e7f1;
+  --sigss-surface: #ffffff;
+  --sigss-background: #f4f5f8;
+  --sigss-focus: rgba(51, 102, 255, .14);
+  --sigss-radius: 4px;
+  --sigss-shadow: 0 3px 14px rgba(28, 39, 60, .06);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--sigss-background);
+  color: var(--sigss-text);
+  font-family: "Roboto", "Segoe UI", Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+:where(body:not(#pagina-sigss)) .container {
+  max-width: 100%;
+  padding: 26px 24px 44px;
+}
+
+/* =========================================================
+   Tarjetas / secciones
+   ========================================================= */
+
+.container > .card {
+  border: 1px solid var(--sigss-border);
+  border-radius: 5px;
+  background: var(--sigss-surface);
+  box-shadow: var(--sigss-shadow) !important;
+  margin-top: 22px !important;
+  padding: 0;
+  overflow: visible; /* permite que la lista de resultados CIE-10 no se recorte */
+}
+
+.container > .card > .card-title {
+  margin: 0;
+  padding: 19px 24px;
+  border-bottom: 1px solid var(--sigss-border);
+  border-radius: 5px 5px 0 0;
+  background: #fff;
+}
+
+.container > .card > .card-title h5 {
+  position: relative;
+  margin: 0;
+  padding-left: 14px;
+  color: var(--sigss-text);
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -.15px;
+  line-height: 1.35;
+}
+
+.container > .card > .card-title h5::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 2px;
+  bottom: 2px;
+  width: 3px;
+  border-radius: 2px;
+  background: var(--sigss-primary);
+}
+
+/* =========================================================
+   Rejilla base: 12 columnas
+   Cada .form-row (y .diagnosticos) ocupa todo el ancho; dentro,
+   las columnas col-md-* de Bootstrap reparten el espacio.
+   ========================================================= */
+
+.container > .card > .card-body {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 20px 18px;
+  align-items: start;
+  padding: 24px;
+}
+
+.container > .card > .card-body > .form-row,
+.container > .card > .card-body > .diagnosticos,
+.container > .card > .card-body > p.font-weight-bold {
+  grid-column: 1 / -1;
+  min-width: 0;
+}
+
+.container > .card > .card-body > .form-group {
+  grid-column: span 4;
+  min-width: 0;
+  margin: 0;
+}
+
+/* Subtítulos dentro de una sección (p. ej. "Métodos entregados") */
+
+.container > .card > .card-body > p.font-weight-bold {
+  margin: 8px 0 -8px;
+  padding-bottom: 9px;
+  border-bottom: 1px solid var(--sigss-border);
+  color: var(--sigss-primary-dark);
+  font-size: 14px;
+}
+
+/* =========================================================
+   Filas de campos (Bootstrap form-row)
+   ========================================================= */
+
+.form-row {
+  margin-right: -8px;
+  margin-left: -8px;
+  row-gap: 16px;
+}
+
+.form-row > [class*="col-"],
+.form-row > .col {
+  min-width: 0;
+  padding-right: 8px;
+  padding-left: 8px;
+}
+
+.form-row .form-group {
+  margin-bottom: 0;
+}
+
+.container .d-flex {
+  gap: 10px;
+  min-width: 0;
+}
+
+.container .d-flex > .form-control {
+  min-width: 0;
+}
+
+/* =========================================================
+   Etiquetas
+   ========================================================= */
+
+.form-group > label,
+.form-group label,
+.form-row > [class*="col-"] > label,
+.form-row > .col > label {
+  display: block;
+  margin-bottom: 7px;
+  color: #3b4863;
+  font-size: 12px;
+  font-weight: 650;
+  line-height: 1.4;
+  letter-spacing: .05px;
+}
+
+/* =========================================================
+   Controles
+   ========================================================= */
+
+.form-control {
+  display: block;
+  min-height: 42px;
+  padding: 9px 12px;
+  border: 1px solid #d5dfe6;
+  border-radius: 4px;
+  background-color: #fff;
+  color: var(--sigss-text);
+  font-size: 13px;
+  line-height: 1.45;
+  box-shadow: none;
+  transition: border-color .18s ease, box-shadow .18s ease, background-color .18s ease;
+}
+
+.form-control:hover {
+  border-color: #b8cbd5;
+}
+
+.form-control:focus {
+  border-color: var(--sigss-accent);
+  background-color: #fff;
+  box-shadow: 0 0 0 3px var(--sigss-focus);
+  color: var(--sigss-text);
+}
+
+.form-control::placeholder {
+  color: #a0acb6;
+  opacity: 1;
+}
+
+select.form-control {
+  padding-right: 30px;
+}
+
+.form-control-plaintext {
+  color: var(--sigss-primary-dark);
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+.form-control:disabled,
+.form-control[readonly] {
+  background-color: #f4f5f8;
+  color: #7987a1;
+  cursor: not-allowed;
+}
+
+.form-control.is-invalid,
+.was-validated .form-control:invalid {
+  border-color: #dc3545;
+  background-image: none;
+}
+
+.form-control.is-valid,
+.was-validated .form-control:valid {
+  border-color: #3bb001;
+  background-image: none;
+}
+
+/* =========================================================
+   input-group: el input y su unidad siempre en una fila
+   ========================================================= */
+
+.container .input-group {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  width: 100%;
+  min-width: 0;
+  gap: 0;
+}
+
+.container .input-group > .form-control {
+  display: block;
+  flex: 1 1 0%;
+  width: 1%;
+  min-width: 0;
+  margin: 0;
+}
+
+.container .input-group > .input-group-append {
+  display: flex;
+  flex: 0 0 auto;
+  min-width: 0;
+  margin-left: -1px;
+}
+
+.container .input-group > .input-group-append > .input-group-text,
+.container .input-group > .input-group-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  min-height: 42px;
+  padding: 9px 12px;
+  white-space: nowrap;
+  color: #3b4863;
+  background: #f4f5f8;
+  border: 1px solid #d5dfe6;
+  border-radius: 0 4px 4px 0;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.container .input-group > .form-control:first-child {
+  border-radius: 4px 0 0 4px;
+}
+
+/* =========================================================
+   Diagnósticos CIE-10 (A, B y C)
+   ========================================================= */
+
+.diagnosticos {
+  display: grid;
+  gap: 14px;
+}
+
+.diagnosticos > .form-row {
+  align-items: flex-end;
+  margin-right: 0;
+  margin-left: 0;
+  padding: 15px;
+  border: 1px solid var(--sigss-border);
+  border-radius: 4px;
+  background: #f8f9fc;
+}
+
+.diagnosticos .form-row .col-md-1 {
+  max-width: 54px;
+}
+
+.diagnosticos .form-row .form-control-plaintext {
+  padding-bottom: 10px;
+}
+
+/* Contenedor de cada buscador, referencia para la lista de resultados */
+
+.diagnosticos .form-row > .col-md {
+  position: relative;
+}
+
+/* Resultados de búsqueda de diagnósticos CIE-10 */
+
+#diagnostico-a-cie10-resultados,
+#diagnostico-b-cie10-resultados,
+#diagnostico-c-cie10-resultados {
+  max-height: 200px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior-y: contain;
+  scrollbar-width: thin;
+  scrollbar-color: #b8c5d9 #f4f5f8;
+  position: relative;
+  z-index: 1000;
+}
+
+/* Scroll personalizado en Chrome, Edge y Safari */
+
+#diagnostico-a-cie10-resultados::-webkit-scrollbar,
+#diagnostico-b-cie10-resultados::-webkit-scrollbar,
+#diagnostico-c-cie10-resultados::-webkit-scrollbar {
+  width: 7px;
+}
+
+#diagnostico-a-cie10-resultados::-webkit-scrollbar-track,
+#diagnostico-b-cie10-resultados::-webkit-scrollbar-track,
+#diagnostico-c-cie10-resultados::-webkit-scrollbar-track {
+  background: #f4f5f8;
+  border-radius: 4px;
+}
+
+#diagnostico-a-cie10-resultados::-webkit-scrollbar-thumb,
+#diagnostico-b-cie10-resultados::-webkit-scrollbar-thumb,
+#diagnostico-c-cie10-resultados::-webkit-scrollbar-thumb {
+  background: #b8c5d9;
+  border-radius: 4px;
+}
+
+#diagnostico-a-cie10-resultados::-webkit-scrollbar-thumb:hover,
+#diagnostico-b-cie10-resultados::-webkit-scrollbar-thumb:hover,
+#diagnostico-c-cie10-resultados::-webkit-scrollbar-thumb:hover {
+  background: var(--sigss-primary);
+}
+
+/* =========================================================
+   Referencia y Contrarreferencia
+   En el HTML, "Referido a / Nivel / Especialidad" va en un .form-row
+   anidado. Aquí la fila externa pasa a ser una rejilla de 12 columnas y
+   la fila anidada se "disuelve" (display: contents) para que los cuatro
+   bloques queden alineados en una sola línea en escritorio.
+   ========================================================= */
+
+#referencias > .card-body > .form-row {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 16px 18px;
+  align-items: end;
+  margin-right: 0;
+  margin-left: 0;
+}
+
+#referencias .form-row .form-row {
+  display: contents;
+}
+
+#referencias .form-row > [class*="col-"] {
+  flex: none;
+  width: auto;
+  max-width: none;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+}
+
+/* Etiqueta "Referido a": alineada con la altura de los campos */
+
+#referencias .form-group:has(#referido-a) {
+  display: flex;
+  align-items: center !important;
+  min-height: 42px;
+}
+
+#referencias #referido-a {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: 42px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  color: var(--sigss-primary-dark);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+@media (min-width: 992px) {
+  #referencias .form-row > [class*="col-"]:has(#referido-por) {
+    grid-column: span 3;
+  }
+
+  #referencias .form-row .form-row > .form-group:has(#referido-a) {
+    grid-column: span 2;
+  }
+
+  #referencias .form-row .form-row > .form-group:has(#nivel) {
+    grid-column: span 3;
+  }
+
+  #referencias .form-row .form-row > .form-group:has(#especialidad) {
+    grid-column: span 4;
+  }
+
+  #referencias .form-row > [class*="col-"]:has(#contrarreferido) {
+    grid-column: span 3;
+  }
+}
+
+@media (min-width: 576px) and (max-width: 991.98px) {
+  #referencias .form-row > [class*="col-"],
+  #referencias .form-row .form-row > .form-group {
+    grid-column: span 6;
+  }
+
+  #referencias .form-group:has(#referido-a) {
+    grid-column: 1 / -1;
+    min-height: 0;
+  }
+
+  #referencias #referido-a {
+    min-height: 0;
+  }
+}
+
+@media (max-width: 575.98px) {
+  #referencias > .card-body > .form-row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  #referencias .form-row > [class*="col-"],
+  #referencias .form-row .form-row > .form-group {
+    grid-column: 1 / -1;
+  }
+
+  #referencias .form-group:has(#referido-a),
+  #referencias #referido-a {
+    min-height: 0;
+  }
+}
+
+/* =========================================================
+   Seguimiento y botonera
+   ========================================================= */
+
+#seguimiento > .card-body {
+  background: #fbfcfd;
+  border-radius: 0 0 5px 5px;
+}
+
+#seguimiento #acciones {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.btn {
+  min-height: 41px;
+  padding: 10px 17px;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 650;
+  transition: transform .15s ease, box-shadow .15s ease, background-color .15s ease;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+}
+
+.btn-primary {
+  border-color: var(--sigss-primary);
+  background: var(--sigss-primary);
+  color: #fff;
+  box-shadow: 0 3px 8px rgba(36, 91, 120, .15);
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+  border-color: var(--sigss-primary-dark);
+  background: var(--sigss-primary-dark);
+}
+
+.btn-primary:focus,
+.btn-primary:focus-visible {
+  box-shadow: 0 0 0 3px rgba(51, 102, 255, .2);
+}
+
+.btn-secondary {
+  border-color: #dfe3eb;
+  background: #f4f5f8;
+  color: #3b4863;
+}
+
+.btn-secondary:hover,
+.btn-secondary:focus {
+  border-color: #cbd3e1;
+  background: #e9edf5;
+  color: #031b4e;
+}
+
+.btn-danger {
+  border-color: #c74b53;
+  background: #c74b53;
+}
+
+/* =========================================================
+   Estados accesibles
+   ========================================================= */
+
+.form-control:focus-visible,
+.btn:focus-visible {
+  outline: 2px solid var(--sigss-accent);
+  outline-offset: 2px;
+}
+
+::selection {
+  color: #fff;
+  background: #3366ff;
+}
+
+/* =========================================================
+   Tablet (≤ 991px)
+   ========================================================= */
+
+@media (max-width: 991.98px) {
+  .container {
+    max-width: 100%;
+    padding: 16px 16px 30px;
+  }
+
+  .container > .card > .card-body {
+    gap: 18px 14px;
+    padding: 20px;
+  }
+
+  .container > .card > .card-body > .form-group {
+    grid-column: span 6;
+  }
+}
+
+/* =========================================================
+   Móvil (≤ 575px)
+   ========================================================= */
+
+@media (max-width: 575.98px) {
+  .container {
+    padding: 10px 10px 24px;
+  }
+
+  .container > .card {
+    margin-top: 14px !important;
+    border-radius: 5px;
+  }
+
+  .container > .card > .card-title {
+    padding: 17px 18px;
+  }
+
+  .container > .card > .card-body {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 17px;
+    padding: 18px;
+  }
+
+  .container > .card > .card-body > .form-group {
+    grid-column: 1 / -1;
+  }
+
+  .container .d-flex {
+    flex-wrap: wrap;
+  }
+
+  .container .d-flex > .form-control {
+    flex: 1 1 100%;
+  }
+
+  /* El input y su unidad permanecen en la misma fila */
+
+  .container .d-flex.input-group,
+  .container .input-group {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    width: 100%;
+    min-width: 0;
+    gap: 0;
+  }
+
+  .container .input-group > .form-control {
+    flex: 1 1 0%;
+    width: 1%;
+    min-width: 0;
+  }
+
+  .container .input-group > .input-group-append {
+    display: flex;
+    flex: 0 0 auto;
+  }
+
+  .container .input-group > .input-group-text,
+  .container .input-group > .input-group-append > .input-group-text {
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
+
+  /* Diagnósticos: etiqueta A/B/C arriba del buscador */
+
+  .diagnosticos > .form-row {
+    padding: 12px;
+  }
+
+  .diagnosticos .form-row .col-md-1 {
+    max-width: 100%;
+  }
+
+  .diagnosticos .form-row .form-control-plaintext {
+    padding-bottom: 0;
+  }
+
+  /* Botonera */
+
+  #seguimiento #acciones {
+    flex-direction: column;
+  }
+
+  #seguimiento #acciones .btn {
+    width: 100%;
+    margin: 0;
+  }
+}
