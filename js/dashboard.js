@@ -144,7 +144,7 @@ function generar_menu_medico() {
                 >
 
                     <a
-                        href="../modules/consulta-externa/registrar.html"
+                        href="/pages/modules/consulta-externa/registrar.html"
                         id="opcion-registrar-consulta-externa"
                         class="nav-link"
                         data-modulo="consulta-externa"
@@ -155,7 +155,7 @@ function generar_menu_medico() {
                     </a>
 
                     <a
-                        href="../modules/consulta-externa/consultar.html"
+                        href="/pages/modules/consulta-externa/consultar.html"
                         id="opcion-consultar-consulta-externa"
                         class="nav-link"
                         data-modulo="consulta-externa"
