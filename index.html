@@ -60,26 +60,34 @@
       </div><!-- az-signin-header -->
     </div><!-- az-card-signin -->
   </div><!-- az-signin-wrapper -->
-  <!-- Popup global -->
-  <div id="modalPopup" class="popup-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-titulo" aria-describedby="modal-mensaje">
+  <!-- Popup global SIGSS -->
+  <div id="modalPopup" class="popup-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-titulo"
+    aria-describedby="modal-mensaje">
     <div class="popup-card">
       <!-- Botón cerrar -->
-      <button id="popup-cerrar" class="popup-cerrar" type="button" aria-label="Cerrar diálogo" onclick="cerrarPopup()">
+      <button id="popup-cerrar" class="popup-cerrar" type="button" aria-label="Cerrar diálogo">
         &times;
       </button>
       <!-- Icono -->
       <div id="modal-icono" class="popup-icono">
         <i class="fas fa-circle-xmark"></i>
       </div>
-      <!-- Titulo -->
-      <h3 id="modal-titulo">
-        Generando documento
-      </h3>
+      <!-- Título -->
+      <h3 id="modal-titulo">Generando documento</h3>
       <!-- Mensaje -->
       <p id="modal-mensaje">
         Espere un momento, por favor...
       </p>
-      <!-- Boton -->
+      <!-- Botones de confirmación -->
+      <div id="modal-botones-confirmacion" class="popup-botones-confirmacion">
+        <button id="modal-cancelar" type="button">
+          Revisar datos
+        </button>
+        <button id="modal-confirmar" type="button">
+          Sí, registrar
+        </button>
+      </div>
+      <!-- Botón normal -->
       <button id="modal-boton" class="popup-boton" type="button">
         Aceptar
       </button>

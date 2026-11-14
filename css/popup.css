@@ -1,3 +1,9 @@
+
+/* =========================================================
+   SIGSS | POPUP GLOBAL
+========================================================= */
+
+/* CONTENEDOR PRINCIPAL */
 #modalPopup.popup-overlay {
     position: fixed !important;
     inset: 0 !important;
@@ -18,6 +24,7 @@
     visibility: visible !important;
 }
 
+/* TARJETA DEL POPUP */
 #modalPopup .popup-card {
     position: relative;
     width: 430px;
@@ -40,6 +47,7 @@
     opacity: 1;
 }
 
+/* DECORACIÓN SUPERIOR */
 #modalPopup .popup-card::before {
     content: "";
     position: absolute;
@@ -52,6 +60,7 @@
     z-index: 0;
 }
 
+/* BOTÓN CERRAR */
 #modalPopup .popup-cerrar {
     position: absolute;
     top: 10px;
@@ -74,7 +83,7 @@
     transform: scale(1.1);
 }
 
-
+/* ICONO */
 #modalPopup .popup-icono {
     position: relative;
     z-index: 2;
@@ -93,6 +102,7 @@
     font-size: 38px !important;
 }
 
+/* TÍTULO */
 #modalPopup #modal-titulo {
     position: relative;
     z-index: 2;
@@ -104,6 +114,7 @@
     line-height: 1.3;
 }
 
+/* MENSAJE */
 #modalPopup #modal-mensaje {
     position: relative;
     z-index: 2;
@@ -112,8 +123,13 @@
     padding: 0 !important;
     color: #4b6073 !important;
     font-size: 13px !important;
-    line-height: 1.5; 
+    line-height: 1.5;
+    white-space: pre-line;
 }
+
+/* =========================================================
+   BOTÓN NORMAL | ACEPTAR
+========================================================= */
 
 #modalPopup #modal-boton {
     position: relative;
@@ -141,7 +157,71 @@
     box-shadow: 0 5px 12px rgba(15, 76, 129, 0.25);
 }
 
-/* ESTADO: CARGA */
+/* =========================================================
+   BOTONES DE CONFIRMACIÓN
+========================================================= */
+
+#modalPopup .popup-botones-confirmacion {
+    position: relative;
+    z-index: 2;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    margin-top: 20px;
+}
+
+#modalPopup .popup-botones-confirmacion.mostrar {
+    display: flex;
+}
+
+/* BOTÓN CANCELAR */
+#modalPopup #modal-cancelar {
+    min-width: 125px;
+    padding: 9px 20px;
+    border: 1px solid #cbd5df;
+    border-radius: 9px;
+    background: #f3f6f9;
+    color: #40566b;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+#modalPopup #modal-cancelar:hover {
+    background: #e7edf2;
+    border-color: #b7c4cf;
+    color: #17324D;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(23, 50, 77, 0.10);
+}
+
+/* BOTÓN CONFIRMAR */
+#modalPopup #modal-confirmar {
+    min-width: 125px;
+    padding: 9px 20px;
+    border: none;
+    border-radius: 9px;
+    background: #0F4C81;
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+#modalPopup #modal-confirmar:hover {
+    background: #0B3A63;
+    transform: translateY(-1px);
+    box-shadow: 0 5px 12px rgba(15, 76, 129, 0.25);
+}
+
+/* =========================================================
+   ESTADO: CARGA
+========================================================= */
+
 #modalPopup.tipo-carga .popup-card {
     border-color: #7bb5e6;
 }
@@ -150,16 +230,13 @@
     background: #e7f3ff;
 }
 
-#modalPopup.tipo-carga .popup-icono {
-    color: #1976D2;
-}
-
+#modalPopup.tipo-carga .popup-icono,
 #modalPopup.tipo-carga .popup-icono i {
     color: #1976D2;
 }
 
 #modalPopup.tipo-carga #modal-boton {
-    background: #1976D2 !important; 
+    background: #1976D2 !important;
 }
 
 #modalPopup.tipo-carga #modal-boton:hover {
@@ -168,11 +245,14 @@
     box-shadow: 0 5px 12px rgba(25, 118, 210, 0.25);
 }
 
-#modalPopup.tipo-carga .popup-cerrar:hover{
+#modalPopup.tipo-carga .popup-cerrar:hover {
     color: #1976D2;
 }
 
-/* ESTADO: ÉXITO */
+/* =========================================================
+   ESTADO: ÉXITO
+========================================================= */
+
 #modalPopup.tipo-exito .popup-card {
     border-color: #36a269;
 }
@@ -181,16 +261,13 @@
     background: #e4f7ed;
 }
 
-#modalPopup.tipo-exito .popup-icono {
-    color: #159447;
-}
-
+#modalPopup.tipo-exito .popup-icono,
 #modalPopup.tipo-exito .popup-icono i {
     color: #159447;
 }
 
 #modalPopup.tipo-exito #modal-boton {
-    background: #2E7D32 !important; 
+    background: #2E7D32 !important;
 }
 
 #modalPopup.tipo-exito #modal-boton:hover {
@@ -199,11 +276,14 @@
     box-shadow: 0 5px 12px rgba(46, 125, 50, 0.25);
 }
 
-#modalPopup.tipo-exito .popup-cerrar:hover{
+#modalPopup.tipo-exito .popup-cerrar:hover {
     color: #159447;
 }
 
-/* ESTADO: ERROR */
+/* =========================================================
+   ESTADO: ERROR
+========================================================= */
+
 #modalPopup.tipo-error .popup-card {
     border-color: #e56b70;
 }
@@ -212,16 +292,13 @@
     background: #ffe7f8;
 }
 
-#modalPopup.tipo-error .popup-icono {
-    color: #cf3038;
-}
-
+#modalPopup.tipo-error .popup-icono,
 #modalPopup.tipo-error .popup-icono i {
     color: #cf3038;
 }
 
 #modalPopup.tipo-error #modal-boton {
-    background: #C62828 !important; 
+    background: #C62828 !important;
 }
 
 #modalPopup.tipo-error #modal-boton:hover {
@@ -234,7 +311,10 @@
     color: #cf3038;
 }
 
-/* ESTADO: ADVERTENCIA */
+/* =========================================================
+   ESTADO: ADVERTENCIA
+========================================================= */
+
 #modalPopup.tipo-advertencia .popup-card {
     border-color: #e6bd54;
 }
@@ -243,16 +323,13 @@
     background: #fff6d9;
 }
 
-#modalPopup.tipo-advertencia .popup-icono {
-    color: #d99b00;
-}
-
+#modalPopup.tipo-advertencia .popup-icono,
 #modalPopup.tipo-advertencia .popup-icono i {
     color: #d99b00;
 }
 
 #modalPopup.tipo-advertencia #modal-boton {
-    background: #ED8B00 !important; 
+    background: #ED8B00 !important;
 }
 
 #modalPopup.tipo-advertencia #modal-boton:hover {
@@ -265,7 +342,10 @@
     color: #d99b00;
 }
 
-/* ESTADO: INFORMACIÓN */
+/* =========================================================
+   ESTADO: INFORMACIÓN
+========================================================= */
+
 #modalPopup.tipo-informacion .popup-card {
     border-color: #6da9df;
 }
@@ -274,16 +354,13 @@
     background: #e8f3ff;
 }
 
-#modalPopup.tipo-informacion .popup-icono {
-    color: #1976D2;
-}
-
+#modalPopup.tipo-informacion .popup-icono,
 #modalPopup.tipo-informacion .popup-icono i {
     color: #1976D2;
 }
 
 #modalPopup.tipo-informacion #modal-boton {
-    background: #1565C0 !important; 
+    background: #1565C0 !important;
 }
 
 #modalPopup.tipo-informacion #modal-boton:hover {
@@ -296,7 +373,12 @@
     color: #1976D2;
 }
 
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
 @media (max-width: 576px) {
+
     #modalPopup .popup-card {
         width: calc(100% - 30px);
         padding: 38px 25px 28px !important;
@@ -320,202 +402,14 @@
     }
 }
 
-#modalConfirmacion.confirmacion-overlay {
-    position: fixed !important;
-    inset: 0 !important;
-    width: 100% !important;
-    height: 100% !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    background: rgba(20, 35, 50, 0.55) !important;
-    z-index: 100000 !important;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.25s ease, visibility 0.25s ease;
-}
+@media (max-width: 480px) {
 
-#modalConfirmacion.confirmacion-overlay.show {
-    opacity: 1 !important;
-    visibility: visible !important;
-}
-
-#modalConfirmacion .confirmacion-card {
-    position: relative;
-    width: 430px;
-    max-width: calc(100% - 40px);
-    min-height: 300px;
-    background: #ffffff !important;
-    border-radius: 10px !important;
-    padding: 42px 35px 32px !important;
-    text-align: center;
-    overflow: hidden;
-    border: 2px solid #D98A94;
-    box-shadow: 0 18px 45px rgba(15, 40, 65, 0.30);
-    transform: translateY(15px) scale(0.97);
-    opacity: 0;
-    transition: transform 0.25s ease, opacity 0.25s ease;
-}
-
-#modalConfirmacion.show .confirmacion-card {
-    transform: translateY(0) scale(1);
-    opacity: 1;
-}
-
-#modalConfirmacion .confirmacion-card::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 85px;
-    background: #FBEDEF;
-    border-radius: 0 0 50% 50%;
-    z-index: 0;
-}
-
-#modalConfirmacion .confirmacion-cerrar {
-    position: absolute;
-    top: 10px;
-    right: 12px;
-    width: 30px;
-    height: 30px;
-    padding: 0;
-    border: none;
-    background: transparent;
-    color: #17324D;
-    font-size: 24px;
-    line-height: 30px;
-    cursor: pointer;
-    z-index: 5;
-    opacity: 0.9;
-    transition: color 0.2s ease, transform 0.2s ease;
-}
-
-#modalConfirmacion .confirmacion-cerrar:hover {
-    color: #B23A48;
-    transform: scale(1.1);
-}
-
-#modalConfirmacion .confirmacion-icono {
-    position: relative;
-    z-index: 2;
-    width: 68px;
-    height: 68px;
-    margin: 2px auto 18px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    background: #FBEDEF;
-    box-shadow: 0 3px 10px rgba(143, 59, 74, 0.12);
-}
-
-#modalConfirmacion .confirmacion-icono i{
-    color: #B23A48;
-    font-size: 38px;
-}
-
-#modalConfirmacion #confirmacion-titulo {
-    position: relative;
-    z-index: 2;
-    margin: 0 0 10px;
-    padding: 0;
-    color: #17324D;
-    font-size: 18px;
-    font-weight: 700;
-    line-height: 1.3;
-}
-
-#modalConfirmacion #confirmacion-mensaje {
-    position: relative;
-    z-index: 2;
-    max-width: 310px;
-    margin: 0 auto 22px;
-    padding: 0;
-    color: #4b6073;
-    font-size: 13px;
-    line-height: 1.5;
-}
-
-#modalConfirmacion .confirmacion-botones {
-    position: relative;
-    z-index: 2;
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 5px;
-}
-
-#modalConfirmacion #confirmacion-confirmar {
-    min-width: 125px;
-    padding: 9px 20px;
-    border: none;
-    border-radius: 9px;
-    background: #B23A48;
-    color: #ffffff;
-    font-size: 13px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-#modalConfirmacion #confirmacion-confirmar:hover {
-    background: #8F2F3A;
-    transform: translateY(-1px) scale(1.02);
-    box-shadow: 0 5px 12px rgba(178, 58, 72, 0.25);
-}
-
-#modalConfirmacion #confirmacion-cancelar {
-    min-width: 125px;
-    padding: 9px 20px;
-    border: 1px solid #cbd5df;
-    border-radius: 9px;
-    background: #f3f6f9;
-    color: #40566b;
-    font-size: 13px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
-}
-
-#modalConfirmacion #confirmacion-cancelar:hover {
-    background: #e7edf2;
-    border-color: #b7c4cf;
-    color: #17324D;
-    transform: translateY(-1px) scale(1.02);
-    box-shadow: 0 4px 10px rgba(23, 50, 77, 0.10);
-}
-
-@media (max-width: 576px) {
-    #modalConfirmacion .confirmacion-card {
-        width: calc(100% - 30px);
-        padding: 38px 25px 28px !important;
+    #modalPopup .popup-botones-confirmacion {
+        flex-direction: column-reverse;
     }
 
-    #modalConfirmacion .confirmacion-icono {
-        width: 62px;
-        height: 62px;
-    }
-
-    #modalConfirmacion .confirmacion-icono i {
-        font-size: 34px;
-    }
-
-    #modalConfirmacion #confirmacion-titulo {
-        font-size: 17px;
-    }
-
-    #modalConfirmacion #confirmacion-mensaje {
-        font-size: 12px;
-    }
-
-    #modalConfirmacion .confirmacion-botones {
-        flex-direction: column;
-    }
-
-    #modalConfirmacion #confirmacion-confirmar,
-    #modalConfirmacion #confirmacion-cancelar {
+    #modalPopup #modal-cancelar,
+    #modalPopup #modal-confirmar {
         width: 100%;
     }
 }

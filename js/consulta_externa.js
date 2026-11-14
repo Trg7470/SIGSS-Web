@@ -544,14 +544,14 @@ const data = {
             Unidades_Id_Unidad: Usuario.Id_Unidad,
             Prestadores_Id_Prestador: Usuario.Id_Prestador,
             Pacientes_Id_Paciente: Paciente.Id_Paciente,
-            Servicios_Id_Cat_Servicios: verificar_nulo("servicio"),
+            Cat_Servicio_Id_Cat_Servicio: verificar_nulo("servicio"),
             Cat_I_G_Id_Cat_Intervenciones_Gerontologicas: verificar_nulo("intervencion-gerontologica"),
             Cat_Servicio_Id_Cat_Especialidad: verificar_nulo("especialidad"),
             Cat_Referido_Nivel_Id_Cat_Referido_Nivel: verificar_nulo("nivel"),
             Cat_Referido_Motivo_Id_Cat_Referido_Motivo: verificar_nulo("referido-por"),
             Cat_Derechohabiencia_Id_Cat_Derechohabiencia: verificar_nulo("derechohabiencia"),
             Edad: document.getElementById("edad").value,
-            Clave_Edad: clave_edad,
+            Clave_Edad: verificar_nulo("clave-edad"),
             Folio_Receta: verificar_nulo("folio-receta"),
             Primera_Vez_Uneme: verificar_nulo("primera-vez-uneme"),
             Primera_Vez_Anio_Cobertura: verificar_nulo("primera-vez-anio"),
@@ -587,17 +587,20 @@ const data = {
             {
                 Cat_Diagnosticos_Id_Cat_Diagnosticos: verificar_nulo("diagnostico-a-cie10-id"),
                 Cat_Medicina_Tradicional_Id_Cat_Medicina_Tradicional: verificar_nulo("diagnostico-a-medicina-indigena"),
-                Confirmacion_Diagnostica: verificar_nulo("diagnostico-a-confirmacion")
+                Confirmacion_Diagnostica: verificar_nulo("diagnostico-a-confirmacion"),
+                Primera_Vez: null
             },
             {
                 Cat_Diagnosticos_Id_Cat_Diagnosticos: verificar_nulo("diagnostico-b-cie10-id"),
                 Cat_Medicina_Tradicional_Id_Cat_Medicina_Tradicional: verificar_nulo("diagnostico-b-medicina-indigena"),
-                Confirmacion_Diagnostica: verificar_nulo("diagnostico-b-confirmacion")
+                Confirmacion_Diagnostica: verificar_nulo("diagnostico-b-confirmacion"),
+                Primera_Vez: verificar_nulo("diagnostico-b-primera-vez")
             },
             {
                 Cat_Diagnosticos_Id_Cat_Diagnosticos: verificar_nulo("diagnostico-c-cie10-id"),
                 Cat_Medicina_Tradicional_Id_Cat_Medicina_Tradicional: verificar_nulo("diagnostico-c-medicina-indigena"),
-                Confirmacion_Diagnostica: verificar_nulo("diagnostico-c-confirmacion")
+                Confirmacion_Diagnostica: verificar_nulo("diagnostico-c-confirmacion"),
+                Primera_Vez: verificar_nulo("diagnostico-c-primera-vez")
             }
         ],
         salud_reproductiva: {
@@ -643,6 +646,33 @@ const data = {
         }
     };
     console.log(data);
+
+    try {
+        const response = await fetch("http://localhost:3000/api/modules/consulta-externa/registrar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        });
+    if(response.ok){
+        mostrarPopup({
+            tipo: "exito",
+            titulo: "Consulta registrada",
+            mensaje: "La consulta se registró correctamente.",
+            boton: true
+        });
+    }
+    } catch (error) {
+        console.error("Error al registrar consulta:", error);
+        mostrarPopup({
+            tipo: "error",
+            titulo: "Error de registro",
+            mensaje: error.message || "No fue posible registrar la consulta.",
+            boton: true
+        });
+    }
+
 }
 
 const boton_registrar = document.getElementById("guardar-datos");
@@ -652,7 +682,65 @@ boton_registrar.addEventListener("click", async () => {
     boton_registrar.disabled = true;
 
     try {
+        // Validar edad.
+        if (!validar_edad()) return;
+
+        // Validar diagnósticos.
+        const diagnosticos_sin_elegir = [
+            "diagnostico-a-cie10",
+            "diagnostico-b-cie10",
+            "diagnostico-c-cie10"
+        ].filter(diagnostico_pendiente_de_seleccionar);
+
+        if (diagnosticos_sin_elegir.length > 0) {
+            mostrarPopup({
+                tipo: "advertencia",
+                titulo: "Diagnóstico sin confirmar",
+                mensaje: "Elige el diagnóstico de la lista de resultados antes de guardar.",
+                boton: true
+            });
+
+            return;
+        }
+
+        // Mostrar confirmación.
+        const confirmar = await mostrarPopup({
+            tipo: "advertencia",
+            titulo: "Confirmar registro de consulta",
+            mensaje:
+                `¿Estás seguro de registrar esta consulta?\n\n` +
+                `Paciente: ${Paciente.Nombre} ${Paciente.Apellido_Paterno} ${Paciente.Apellido_Materno}\n` +
+                `CURP: ${Paciente.Curp}\n` +
+                `Expediente: ${Paciente.Expediente}\n` +
+                `Fecha de atención: ${document.getElementById("fecha-atencion").value}\n\n` +
+                `Verifique que la información capturada sea correcta.`,
+            confirmar: true,
+            textoConfirmar: "Registrar",
+            textoCancelar: "Cancelar"
+        });
+
+        // Si cancela, no continúa.
+        if (!confirmar) return;
+
+        mostrarPopup({
+            tipo: "carga",
+            titulo: "Registrando consulta",
+            mensaje: "Por favor espera mientras se registra la consulta.",
+            boton: false
+        });
+        await new Promise(resolve => setTimeout(resolve, 2000)); // Simula un retraso para mostrar el popup de carga.
         await registrar_consulta();
+
+    } catch (error) {
+        console.error("Error al registrar consulta:", error);
+
+        mostrarPopup({
+            tipo: "error",
+            titulo: "Error de registro",
+            mensaje: error.message || "No fue posible registrar la consulta.",
+            boton: true
+        });
+
     } finally {
         boton_registrar.disabled = false;
     }

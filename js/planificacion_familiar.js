@@ -1,48 +1,23 @@
 import { llenar_select, verificar_nulo } from "./utils.js";
-
-export async function init({ vista, usuario }) {
-    if (vista === "registrar") {
-        seleccionar_paciente(usuario);
-    }
-}
-
 const Usuario = JSON.parse(sessionStorage.getItem("usuario"));
 
-if (!Usuario) {
-    mostrarPopup({
-        tipo: "error",
-        titulo: "Sesión no válida",
-        mensaje: "No fue posible recuperar los datos del usuario.",
-        boton: true
-    });
-}
+document.addEventListener("DOMContentLoaded", async () => {
+    if (!Usuario) {
+        mostrarPopup({
+            tipo: "error",
+            titulo: "Sesión no válida",
+            mensaje: "No fue posible recuperar los datos del usuario.",
+            boton: true
+        });
+        window.location.href = "/index.html";
+        return;
+    }
+    document.getElementById("titulo-bienvenida").textContent = `Planificación familiar`;
+    document.getElementById("descripcion-bienvenida").textContent = `Módulo de registro de consultas y atenciones de planificación familiar.`;
+    seleccionar_paciente(Usuario);
+});
 
 let Paciente;
-
-
-let Catalogos = {};
-
-// Campos numéricos de "Métodos entregados" (el rango sale de min/max del HTML).
-const METODOS_ENTREGADOS = [
-    "metodo-oral",
-    "metodo-inyectable-mensual",
-    "metodo-inyectable-bimestral",
-    "metodo-inyectable-trimestral",
-    "metodo-parche-dermico",
-    "metodo-preservativo",
-    "metodo-preservativo-femenino",
-    "metodo-otro"
-];
-
-// Inciso del implante en Cat_Implante_Subdermico: a) una varilla, b) doble varilla.
-const TIPOS_IMPLANTE = [
-    { Inciso: "a", Nombre: "UNA VARILLA" },
-    { Inciso: "b", Nombre: "DOBLE VARILLA" }
-];
-
-/* =========================================================
-   Selección de paciente (igual que consulta externa)
-   ========================================================= */
 
 function seleccionar_paciente(usuario) {
     window.modal_manager.mostrar({
@@ -87,7 +62,7 @@ function seleccionar_paciente(usuario) {
             }
         ],
         onSubmit: async (datos) => {
-            const curp = (datos.curp || "").trim();
+            const curp = (datos.curp || "").trim().toUpperCase();
             const nombre = (datos.nombre || "").trim();
             const paterno = (datos.apellido_paterno || "").trim();
             const materno = (datos.apellido_materno || "").trim();
@@ -139,14 +114,18 @@ function seleccionar_paciente(usuario) {
                     throw new Error("El servidor no devolvió los datos del paciente.");
                 }
 
+                const datos_cargados = await cargar_datos();
+
+                if (!datos_cargados) {
+                    return false;
+                }
+
                 mostrarPopup({
                     tipo: "exito",
                     titulo: "Paciente encontrado",
                     mensaje: `Nombre: ${Paciente.Nombre} ${Paciente.Apellido_Paterno} ${Paciente.Apellido_Materno} | CURP: ${Paciente.Curp} | Expediente: ${Paciente.Expediente}`,
                     boton: true
                 });
-
-                await cargar_datos();
             } catch (error) {
                 console.error("Error al buscar paciente:", error);
 
@@ -163,10 +142,6 @@ function seleccionar_paciente(usuario) {
     });
 }
 
-/* =========================================================
-   Búsqueda de diagnósticos CIE-10 (igual que consulta externa)
-   ========================================================= */
-
 function configurar_busqueda_diagnosticos(id) {
     const input = document.getElementById(id);
     const hidden = document.getElementById(`${id}-id`);
@@ -174,16 +149,27 @@ function configurar_busqueda_diagnosticos(id) {
 
     if (!input || !hidden || !resultados) return;
 
-    input.addEventListener("input", async () => {
-        const nombre = input.value.trim();
+    let solicitud_actual = 0;
+    let temporizador = null;
 
+    input.addEventListener("input", () => {
         hidden.value = "";
-        resultados.replaceChildren();
+
+        if (temporizador) clearTimeout(temporizador);
+
+        const nombre = input.value.trim();
 
         if (nombre.length < 2) {
             resultados.style.display = "none";
+            resultados.replaceChildren();
             return;
         }
+
+        temporizador = setTimeout(() => buscar_diagnostico(nombre), 300);
+    });
+
+    async function buscar_diagnostico(nombre) {
+        const mi_solicitud = ++solicitud_actual;
 
         try {
             const response = await fetch(
@@ -192,9 +178,13 @@ function configurar_busqueda_diagnosticos(id) {
 
             const data = await response.json();
 
+            if (mi_solicitud !== solicitud_actual) return; // llegó una búsqueda más reciente, se descarta esta
+
             if (!response.ok) {
                 throw new Error(data.message || "Error al buscar diagnósticos.");
             }
+
+            resultados.replaceChildren();
 
             const diagnosticos = data.diagnosticos || [];
 
@@ -221,10 +211,11 @@ function configurar_busqueda_diagnosticos(id) {
 
             resultados.style.display = "block";
         } catch (error) {
+            if (mi_solicitud !== solicitud_actual) return;
             console.error("Error al buscar diagnósticos:", error);
             resultados.style.display = "none";
         }
-    });
+    }
 
     document.addEventListener("click", event => {
         if (!input.contains(event.target) && !resultados.contains(event.target)) {
@@ -232,10 +223,6 @@ function configurar_busqueda_diagnosticos(id) {
         }
     });
 }
-
-/* =========================================================
-   Edad a partir de la CURP (igual que consulta externa)
-   ========================================================= */
 
 // Obtiene la fecha de nacimiento de la CURP.
 function obtener_fecha_nacimiento_curp(curp) {
@@ -285,7 +272,7 @@ function calcular_edad(fecha_nacimiento, fecha_consulta) {
 
     if (meses === 0) {
         return {
-            edad: Math.floor((consulta - nacimiento) / 86400000),
+            edad: Math.round((consulta - nacimiento) / 86400000),
             clave: "D"
         };
     }
@@ -295,18 +282,25 @@ function calcular_edad(fecha_nacimiento, fecha_consulta) {
         : { edad: Math.floor(meses / 12), clave: "A" };
 }
 
-// Rellena los campos automáticamente o permite capturarlos manualmente.
+// Rellena los campos de edad automáticamente o permite capturarlos manualmente.
 function actualizar_edad() {
     const campo_edad = document.getElementById("edad");
     const campo_clave = document.getElementById("clave-edad");
     const fecha_consulta = document.getElementById("fecha-atencion").value;
     const curp = (Paciente?.Curp || "").trim();
+    const estaba_bloqueado = campo_edad.readOnly;
 
-    if (!curp) {
-        campo_edad.value = "";
+    const desbloquear_para_captura_manual = () => {
         campo_edad.readOnly = false;
         campo_clave.disabled = false;
-        campo_clave.value = "";
+        if (estaba_bloqueado) {
+            campo_edad.value = "";
+            campo_clave.value = "";
+        }
+    };
+
+    if (!curp) {
+        desbloquear_para_captura_manual();
         return;
     }
 
@@ -316,10 +310,7 @@ function actualizar_edad() {
         : null;
 
     if (!resultado) {
-        campo_edad.value = "";
-        campo_edad.readOnly = false;
-        campo_clave.disabled = false;
-        campo_clave.value = "";
+        desbloquear_para_captura_manual();
         return;
     }
 
@@ -349,29 +340,24 @@ function validar_edad() {
             ? calcular_edad(nacimiento, document.getElementById("fecha-atencion").value)
             : null;
 
-        if (!resultado) {
-            mostrarPopup({
-                tipo: "advertencia",
-                titulo: "Edad no válida",
-                mensaje: "No fue posible calcular la edad a partir de la CURP y la fecha de consulta.",
-                boton: true
-            });
-            return false;
+        if (resultado) {
+            actualizar_edad();
+
+            if (!campo_clave.value) {
+                mostrarPopup({
+                    tipo: "error",
+                    titulo: "Clave de edad no disponible",
+                    mensaje: "No se encontró la clave de edad correspondiente en el catálogo.",
+                    boton: true
+                });
+                return false;
+            }
+
+            return true;
         }
-
-        actualizar_edad();
-
-        if (!campo_clave.value) {
-            mostrarPopup({
-                tipo: "error",
-                titulo: "Clave de edad no disponible",
-                mensaje: "No se encontró la clave de edad correspondiente en el catálogo.",
-                boton: true
-            });
-            return false;
-        }
-
-        return true;
+        // La CURP no permite calcular la edad (genérica, extranjera, fecha
+        // de consulta anterior al nacimiento, etc.): se permite capturarla
+        // a mano en vez de bloquear el registro.
     }
 
     const edad = campo_edad.value.trim();
@@ -379,8 +365,7 @@ function validar_edad() {
 
     if (
         edad === "" ||
-        !Number.isInteger(Number(edad)) ||
-        Number(edad) < 0 ||
+        !/^\d{1,3}$/.test(edad) ||
         !["D", "M", "A"].includes(clave) ||
         !campo_clave.value
     ) {
@@ -398,80 +383,10 @@ function validar_edad() {
 
 document.getElementById("fecha-atencion").addEventListener("change", actualizar_edad);
 
-/* =========================================================
-   Validaciones propias de planificación familiar
-   ========================================================= */
-
-// Cada método entregado debe ser un entero dentro del rango del campo.
-function validar_metodos() {
-    for (const id of METODOS_ENTREGADOS) {
-        const campo = document.getElementById(id);
-        const valor = campo.value.trim();
-
-        if (valor === "") continue;
-
-        const numero = Number(valor);
-        const minimo = Number(campo.min || 0);
-        const maximo = Number(campo.max);
-
-        if (!Number.isInteger(numero) || numero < minimo || numero > maximo) {
-            const etiqueta = document.querySelector(`label[for="${id}"]`)?.textContent.trim() || id;
-
-            mostrarPopup({
-                tipo: "advertencia",
-                titulo: "Método entregado no válido",
-                mensaje: `"${etiqueta}" debe ser un número entero entre ${minimo} y ${maximo}.`,
-                boton: true
-            });
-            return false;
-        }
-    }
-
-    return true;
-}
-
-// Tipo (inciso a/b) + acción (0/1) identifican un registro de Cat_Implante_Subdermico.
-function obtener_implante() {
-    const inciso = document.getElementById("implante-tipo").value;
-    const accion = document.getElementById("implante-accion").value;
-
-    if (!inciso && accion === "") {
-        return { valido: true, id: null };
-    }
-
-    if (!inciso || accion === "") {
-        mostrarPopup({
-            tipo: "advertencia",
-            titulo: "Implante incompleto",
-            mensaje: "Selecciona el implante subdérmico y si fue insertado o revisión.",
-            boton: true
-        });
-        return { valido: false };
-    }
-
-    const implante = (Catalogos.implante_subdermico || []).find(
-        i => i.Inciso === inciso && String(i.Clave) === accion
-    );
-
-    if (!implante) {
-        mostrarPopup({
-            tipo: "error",
-            titulo: "Implante no disponible",
-            mensaje: "No se encontró el implante seleccionado en el catálogo.",
-            boton: true
-        });
-        return { valido: false };
-    }
-
-    return { valido: true, id: implante.Id_Cat_Implante_Subdermico };
-}
-
-/* =========================================================
-   Carga de datos y catálogos
-   ========================================================= */
-
 async function cargar_datos() {
     try {
+        // Identificación de unidad y prestador: se autollenan con el perfil
+        // de la sesión (Usuario), igual que en consulta externa.
         document.getElementById("clues").value = Usuario.Clues;
         document.getElementById("nombre-unidad").value = Usuario.Nombre_Unidad;
         document.getElementById("curp-prestador").value = Usuario.Curp;
@@ -497,13 +412,11 @@ async function cargar_datos() {
                 tipo: "error",
                 boton: true
             });
-            return;
+            return false;
         }
 
         const result = await response.json();
         const catalogos = result.catalogos;
-
-        Catalogos = catalogos;
 
         const response_j = await fetch("http://localhost:3000/api/data/catalogos.json");
 
@@ -513,15 +426,11 @@ async function cargar_datos() {
 
         const catalogos_json = await response_j.json();
 
-        // Identificación y paciente
         llenar_select("servicio", catalogos.servicios, "Id_Cat_Servicios", s => `${s.Clave} | ${s.Nombre}`, "Selecciona un servicio", true);
         llenar_select("derechohabiencia", catalogos.derechohabiencia, "Id_Cat_Derechohabiencia", d => `${d.Clave} | ${d.Nombre}`, "Selecciona una opción", true);
         llenar_select("clave-edad", catalogos_json.clave_edad, "Id_Cat_Clave_Edad", c => `${c.Clave} | ${c.Nombre}`, "Selecciona una opción", true);
         llenar_select("sexo", catalogos_json.sexo_biologico, "Id_Cat_Sexo_Biologico", s => `${s.Clave} | ${s.Nombre}`, "Selecciona una opción", true);
         llenar_select("migrante", catalogos_json.migrante, "Id_Cat_Migrante", m => `${m.Clave} | ${m.Nombre}`, "Selecciona una opción", true);
-
-        // Cobertura y diagnóstico
-        llenar_select("rt-motivo", catalogos_json.rt, "Id_Cat_Rt", r => `${r.Clave} | ${r.Nombre}`, "Selecciona una opción", true);
 
         const discapacidades = catalogos.discapacidades || [];
 
@@ -529,30 +438,34 @@ async function cargar_datos() {
         llenar_select("discapacidad-b", discapacidades.filter(d => d.Inciso === "b"), "Id_Cat_Discapacidad", d => `${d.Clave} | ${d.Nombre}`, "Selecciona una opción", true);
         llenar_select("discapacidad-c", discapacidades.filter(d => d.Inciso === "c"), "Id_Cat_Discapacidad", d => `${d.Clave} | ${d.Nombre}`, "Selecciona una opción", true);
 
+        llenar_select("rt-motivo", catalogos_json.rt, "Id_Cat_Rt", r => `${r.Clave} | ${r.Nombre}`, "Selecciona una opción", true);
+
         configurar_busqueda_diagnosticos("diagnostico-a-cie10");
         configurar_busqueda_diagnosticos("diagnostico-b-cie10");
         configurar_busqueda_diagnosticos("diagnostico-c-cie10");
 
-        // Atenciones de planificación familiar
-        llenar_select("implante-tipo", TIPOS_IMPLANTE, "Inciso", t => `${t.Inciso}) ${t.Nombre}`, "Selecciona una opción", true);
+        // Implante subdérmico: catálogo Cat_Implante_Subdermico (Id, Nombre,
+        // Clave 0/1, Inciso a/b). Una sola lista con las 4 combinaciones.
+        const implantes = catalogos.implante_subdermico || [];
 
-        // Promoción de la salud
-        llenar_select("esquema-vacunacion", catalogos_json.esquema_vacunacion, "Id_Cat_Esquema_Vacunacion", e => `${e.Clave} | ${e.Nombre}`, "Selecciona una opción", true);
+        llenar_select("implante-subdermico", implantes, "Id_Cat_Implante_Subdermico", i => `${i.Clave} | ${i.Nombre} (${i.Inciso})`, "Selecciona una opción", true);
 
-        // Referencia y contrarreferencia
         llenar_select("referido-por", catalogos.referido_motivo, "Id_Cat_Referido_Motivo", r => `${r.Clave} | ${r.Nombre}`, "Selecciona una opción", true);
         llenar_select("nivel", catalogos.referido_nivel, "Id_Cat_Referido_Nivel", n => `${n.Clave} | ${n.Nombre}`, "Selecciona una opción", true);
         llenar_select("especialidad", catalogos.servicios, "Id_Cat_Servicios", s => `${s.Clave} | ${s.Nombre}`, "Selecciona una opción", true);
 
-        // Teleconsulta
         const teleconsulta = catalogos.teleconsulta_interpretacion || [];
 
         llenar_select("teleconsulta-a", teleconsulta.filter(t => t.Inciso === "a"), "Id_Cat_Teleconsulta_Interpretacion", t => `${t.Clave} | ${t.Nombre}`, "Selecciona una opción", true);
         llenar_select("interpretacion-diagnostica", teleconsulta.filter(t => t.Inciso === "b"), "Id_Cat_Teleconsulta_Interpretacion", t => `${t.Clave} | ${t.Nombre}`, "Selecciona una opción", true);
         llenar_select("modalidad", catalogos_json.modalidad, "Id_Cat_Modalidad", m => `${m.Clave} | ${m.Nombre}`, "Selecciona una opción", true);
 
+        llenar_select("esquema-vacunacion", catalogos_json.esquema_vacunacion, "Id_Cat_Esquema_Vacunacion", e => `${e.Clave} | ${e.Nombre}`, "Selecciona una opción", true);
+
         // Actualiza la edad al terminar de cargar el catálogo de claves.
         actualizar_edad();
+
+        return true;
     } catch (error) {
         console.error("Error al cargar los datos:", error);
 
@@ -562,25 +475,40 @@ async function cargar_datos() {
             mensaje: error.message || "No fue posible cargar algunos datos. Intente nuevamente",
             boton: true
         });
+
+        return false;
     }
 }
 
-/* =========================================================
-   Registro de la consulta
-   ========================================================= */
+function diagnostico_pendiente_de_seleccionar(id) {
+    const texto = document.getElementById(id).value.trim();
+    const seleccionado = document.getElementById(`${id}-id`).value;
+    return texto !== "" && !seleccionado;
+}
 
 async function registrar_consulta() {
     if (!validar_edad()) return;
-    if (!validar_metodos()) return;
 
-    const implante = obtener_implante();
+    const diagnosticos_sin_elegir = ["diagnostico-a-cie10", "diagnostico-b-cie10", "diagnostico-c-cie10"]
+        .filter(diagnostico_pendiente_de_seleccionar);
 
-    if (!implante.valido) return;
+    if (diagnosticos_sin_elegir.length > 0) {
+        mostrarPopup({
+            tipo: "advertencia",
+            titulo: "Diagnóstico sin confirmar",
+            mensaje: "Elige el diagnóstico de la lista de resultados antes de guardar.",
+            boton: true
+        });
+        return;
+    }
 
     const clave_edad = document.getElementById("clave-edad")
         .selectedOptions[0]?.textContent.split("|")[0].trim();
 
     const data = {
+        usuario: {
+            Id_Usuario: Usuario.Id_Usuario,
+        },
         paciente: {
             Sexo: verificar_nulo("sexo"),
             Es_Afromexicano: verificar_nulo("afromexicano"),
@@ -592,13 +520,13 @@ async function registrar_consulta() {
             Unidades_Id_Unidad: Usuario.Id_Unidad,
             Prestadores_Id_Prestador: Usuario.Id_Prestador,
             Pacientes_Id_Paciente: Paciente.Id_Paciente,
-            Servicios_Id_Cat_Servicios: verificar_nulo("servicio"),
+            Cat_Servicio_Id_Cat_Servicio: verificar_nulo("servicio"),
             Cat_Servicio_Id_Cat_Especialidad: verificar_nulo("especialidad"),
             Cat_Referido_Nivel_Id_Cat_Referido_Nivel: verificar_nulo("nivel"),
             Cat_Referido_Motivo_Id_Cat_Referido_Motivo: verificar_nulo("referido-por"),
             Cat_Derechohabiencia_Id_Cat_Derechohabiencia: verificar_nulo("derechohabiencia"),
             Edad: document.getElementById("edad").value,
-            Clave_Edad: clave_edad,
+            Clave_Edad: verificar_nulo("clave-edad"),
             Folio_Receta: verificar_nulo("folio-receta"),
             Primera_Vez_Anio_Cobertura: verificar_nulo("primera-vez-anio"),
             Contrarreferido: verificar_nulo("contrarreferido"),
@@ -625,7 +553,8 @@ async function registrar_consulta() {
         },
         diagnosticos: [
             {
-                Cat_Diagnosticos_Id_Cat_Diagnosticos: verificar_nulo("diagnostico-a-cie10-id")
+                Cat_Diagnosticos_Id_Cat_Diagnosticos: verificar_nulo("diagnostico-a-cie10-id"),
+                Primera_Vez: null
             },
             {
                 Cat_Diagnosticos_Id_Cat_Diagnosticos: verificar_nulo("diagnostico-b-cie10-id"),
@@ -636,24 +565,26 @@ async function registrar_consulta() {
                 Primera_Vez: verificar_nulo("diagnostico-c-primera-vez")
             }
         ],
+        // PENDIENTE: falta la tabla para los datos propios de Planificación
+        // Familiar (puérpera aceptante, métodos entregados, implante
+        // subdérmico, anticoncepción de emergencia, alta por azoospermia).
+        // No existe todavía en esquema_SIGSS_MySQL.sql — ver aviso en el chat.
         planificacion_familiar: {
             Puerpera_Aceptante: verificar_nulo("puerpera-aceptante"),
             Anticoncepcion_Emergencia: verificar_nulo("anticoncepcion-emergencia"),
-            Vasectomia_Sin_Bisturi: verificar_nulo("alta-azoospermia"),
-            Oral: verificar_nulo("metodo-oral"),
-            Inyectable_Mensual: verificar_nulo("metodo-inyectable-mensual"),
-            Inyectable_Bimestral: verificar_nulo("metodo-inyectable-bimestral"),
-            Inyectable_Trimestral: verificar_nulo("metodo-inyectable-trimestral"),
-            Parche_Dermico: verificar_nulo("metodo-parche-dermico"),
-            Preservativo: verificar_nulo("metodo-preservativo"),
-            Preservativo_Femenino: verificar_nulo("metodo-preservativo-femenino"),
-            Otro_Metodo: verificar_nulo("metodo-otro"),
-            DIU: verificar_nulo("metodo-diu"),
-            DIU_Medicado: verificar_nulo("metodo-diu-medicado"),
-            Quirurgico: verificar_nulo("metodo-quirurgico"),
-        },
-        implante: {
-            Cat_Implante_Subdermico_Id_Cat_Implante_Subdermico: implante.id
+            Alta_Azoospermia: verificar_nulo("alta-azoospermia"),
+            Metodo_Oral: verificar_nulo("metodo-oral"),
+            Metodo_Inyectable_Mensual: verificar_nulo("metodo-inyectable-mensual"),
+            Metodo_Inyectable_Bimestral: verificar_nulo("metodo-inyectable-bimestral"),
+            Metodo_Inyectable_Trimestral: verificar_nulo("metodo-inyectable-trimestral"),
+            Cat_Implante_Subdermico_Id_Cat_Implante_Subdermico: verificar_nulo("implante-subdermico"),
+            Metodo_Parche_Dermico: verificar_nulo("metodo-parche-dermico"),
+            Metodo_DIU: verificar_nulo("metodo-diu"),
+            Metodo_DIU_Medicado: verificar_nulo("metodo-diu-medicado"),
+            Metodo_Quirurgico: verificar_nulo("metodo-quirurgico"),
+            Metodo_Preservativo: verificar_nulo("metodo-preservativo"),
+            Metodo_Preservativo_Femenino: verificar_nulo("metodo-preservativo-femenino"),
+            Metodo_Otro: verificar_nulo("metodo-otro"),
         },
         orientacion_consejeria: {
             Planificacion_Familiar: verificar_nulo("orientacion-planificacion-familiar"),
@@ -673,11 +604,98 @@ async function registrar_consulta() {
             Cat_Teleconsulta_Interpretacion_Id_Interpretacion_Diagnostica: verificar_nulo("interpretacion-diagnostica")
         }
     };
-
     console.log(data);
+
+    try {
+        const response = await fetch("http://localhost:3000/api/modules/planificacion-familiar/registrar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        });
+        if (response.ok) {
+            mostrarPopup({
+                tipo: "exito",
+                titulo: "Consulta registrada",
+                mensaje: "La consulta se registró correctamente.",
+                boton: true
+            });
+        }
+    } catch (error) {
+        console.error("Error al registrar consulta:", error);
+        mostrarPopup({
+            tipo: "error",
+            titulo: "Error de registro",
+            mensaje: error.message || "No fue posible registrar la consulta.",
+            boton: true
+        });
+    }
 }
 
 const boton_registrar = document.getElementById("guardar-datos");
 boton_registrar.addEventListener("click", async () => {
-    await registrar_consulta();
+    if (boton_registrar.disabled) return;
+
+    boton_registrar.disabled = true;
+
+    try {
+        if (!validar_edad()) return;
+
+        const diagnosticos_sin_elegir = [
+            "diagnostico-a-cie10",
+            "diagnostico-b-cie10",
+            "diagnostico-c-cie10"
+        ].filter(diagnostico_pendiente_de_seleccionar);
+
+        if (diagnosticos_sin_elegir.length > 0) {
+            mostrarPopup({
+                tipo: "advertencia",
+                titulo: "Diagnóstico sin confirmar",
+                mensaje: "Elige el diagnóstico de la lista de resultados antes de guardar.",
+                boton: true
+            });
+
+            return;
+        }
+
+        const confirmar = await mostrarPopup({
+            tipo: "advertencia",
+            titulo: "Confirmar registro de consulta",
+            mensaje:
+                `¿Estás seguro de registrar esta consulta?\n\n` +
+                `Paciente: ${Paciente.Nombre} ${Paciente.Apellido_Paterno} ${Paciente.Apellido_Materno}\n` +
+                `CURP: ${Paciente.Curp}\n` +
+                `Expediente: ${Paciente.Expediente}\n` +
+                `Fecha de atención: ${document.getElementById("fecha-atencion").value}\n\n` +
+                `Verifique que la información capturada sea correcta.`,
+            confirmar: true,
+            textoConfirmar: "Registrar",
+            textoCancelar: "Cancelar"
+        });
+
+        if (!confirmar) return;
+
+        mostrarPopup({
+            tipo: "carga",
+            titulo: "Registrando consulta",
+            mensaje: "Por favor espera mientras se registra la consulta.",
+            boton: false
+        });
+        await new Promise(resolve => setTimeout(resolve, 2000)); // Simula un retraso para mostrar el popup de carga.
+        await registrar_consulta();
+
+    } catch (error) {
+        console.error("Error al registrar consulta:", error);
+
+        mostrarPopup({
+            tipo: "error",
+            titulo: "Error de registro",
+            mensaje: error.message || "No fue posible registrar la consulta.",
+            boton: true
+        });
+
+    } finally {
+        boton_registrar.disabled = false;
+    }
 });
