@@ -938,7 +938,11 @@
                 <div class="form-row">
                   <div class="form-group col-md-6">
                     <label for="unidad-consultante">Unidad Consultante</label>
-                    <input type="text" class="form-control" id="unidad-consultante" placeholder="Unidad consultante" />
+                    <select class="form-control" id="unidad-consultante">
+                      <option value="">Selecciona una opción</option>
+                      <option value="1">Sí</option>
+                      <option value="0">No</option>
+                    </select>
                   </div>
                   <div class="form-group col-md-6">
                     <label for="modalidad">Modalidad</label>
@@ -995,50 +999,39 @@
   </footer>
 
 
-<!-- Popup global SIGSS -->
-<div id="modalPopup"
-    class="popup-overlay"
-    role="dialog"
-    aria-modal="true"
-    aria-labelledby="modal-titulo"
+  <!-- Popup global SIGSS -->
+  <div id="modalPopup" class="popup-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-titulo"
     aria-describedby="modal-mensaje">
     <div class="popup-card">
-        <!-- Botón cerrar -->
-        <button
-            id="popup-cerrar"
-            class="popup-cerrar"
-            type="button"
-            aria-label="Cerrar diálogo">
-            &times;
+      <!-- Botón cerrar -->
+      <button id="popup-cerrar" class="popup-cerrar" type="button" aria-label="Cerrar diálogo">
+        &times;
+      </button>
+      <!-- Icono -->
+      <div id="modal-icono" class="popup-icono">
+        <i class="fas fa-circle-xmark"></i>
+      </div>
+      <!-- Título -->
+      <h3 id="modal-titulo">Generando documento</h3>
+      <!-- Mensaje -->
+      <p id="modal-mensaje">
+        Espere un momento, por favor...
+      </p>
+      <!-- Botones de confirmación -->
+      <div id="modal-botones-confirmacion" class="popup-botones-confirmacion">
+        <button id="modal-cancelar" type="button">
+          Revisar datos
         </button>
-        <!-- Icono -->
-        <div id="modal-icono" class="popup-icono">
-            <i class="fas fa-circle-xmark"></i>
-        </div>
-        <!-- Título -->
-        <h3 id="modal-titulo">Generando documento</h3>
-        <!-- Mensaje -->
-        <p id="modal-mensaje">
-            Espere un momento, por favor...
-        </p>
-        <!-- Botones de confirmación -->
-        <div id="modal-botones-confirmacion"
-            class="popup-botones-confirmacion">
-            <button id="modal-cancelar" type="button">
-                Revisar datos
-            </button>
-            <button id="modal-confirmar" type="button">
-                Sí, registrar
-            </button>
-        </div>
-        <!-- Botón normal -->
-        <button id="modal-boton"
-            class="popup-boton"
-            type="button">
-            Aceptar
+        <button id="modal-confirmar" type="button">
+          Sí, registrar
         </button>
+      </div>
+      <!-- Botón normal -->
+      <button id="modal-boton" class="popup-boton" type="button">
+        Aceptar
+      </button>
     </div>
-</div>
+  </div>
 
   <!-- Modal Generico -->
   <div class="modal fade" id="modal_generico" tabindex="-1" role="dialog" aria-labelledby="modal_generico_titulo"

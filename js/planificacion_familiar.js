@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             mensaje: "No fue posible recuperar los datos del usuario.",
             boton: true
         });
-        window.location.href = "/index.html";
+        window.location.href = "../index.html";
         return;
     }
     document.getElementById("titulo-bienvenida").textContent = `Planificación familiar`;
@@ -173,7 +173,7 @@ function configurar_busqueda_diagnosticos(id) {
 
         try {
             const response = await fetch(
-                `http://localhost:3000/api/catalogos/diagnosticos/buscar?nombre=${encodeURIComponent(nombre + "%")}`
+                `http://localhost:3000/api/catalogos/diagnosticos/buscar?nombre=${encodeURIComponent(nombre)}`
             );
 
             const data = await response.json();
@@ -521,6 +521,7 @@ async function registrar_consulta() {
             Prestadores_Id_Prestador: Usuario.Id_Prestador,
             Pacientes_Id_Paciente: Paciente.Id_Paciente,
             Cat_Servicio_Id_Cat_Servicio: verificar_nulo("servicio"),
+            Cat_I_G_Id_Cat_Intervenciones_Gerontologicas: null,
             Cat_Servicio_Id_Cat_Especialidad: verificar_nulo("especialidad"),
             Cat_Referido_Nivel_Id_Cat_Referido_Nivel: verificar_nulo("nivel"),
             Cat_Referido_Motivo_Id_Cat_Referido_Motivo: verificar_nulo("referido-por"),
@@ -528,8 +529,12 @@ async function registrar_consulta() {
             Edad: document.getElementById("edad").value,
             Clave_Edad: verificar_nulo("clave-edad"),
             Folio_Receta: verificar_nulo("folio-receta"),
+            Primera_Vez_Uneme: null,
             Primera_Vez_Anio_Cobertura: verificar_nulo("primera-vez-anio"),
             Contrarreferido: verificar_nulo("contrarreferido"),
+            Intervencion_Salud_Mental_Adicciones: null,
+            Primera_Vez: null,
+            Subsecuente: null,
             RT_Por_Motivo: verificar_nulo("rt-motivo"),
             Fecha_Proxima_Cita: verificar_nulo("fecha-proxima-consulta"),
         },
@@ -544,7 +549,10 @@ async function registrar_consulta() {
             Temperatura: verificar_nulo("temperatura"),
             Saturacion_Oxigeno: verificar_nulo("saturacion-oxigeno"),
             Glucosa: verificar_nulo("glucosa"),
+            Resultado_Glucosa: null,
             Glucosa_Ayuno: verificar_nulo("glucosa-ayuno"),
+            Numero_Tiras: null,
+            Probable_Tb: null,
         },
         discapacidad: {
             discapacidad: { Cat_Discapacidades_Id_Discapacidad: verificar_nulo("discapacidad-a") },
@@ -596,6 +604,8 @@ async function registrar_consulta() {
             Consulta_Integrada_Linea_Vida: verificar_nulo("consulta-linea-vida"),
             Presenta_Cartilla: verificar_nulo("presenta-cartilla"),
             Esquema_Vacunacion: verificar_nulo("esquema-vacunacion"),
+            Promocion_Albendazol: null,
+            Sobres_VSO: null
         },
         teleconsulta: {
             Unidad_Consultante: verificar_nulo("unidad-consultante"),

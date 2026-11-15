@@ -173,7 +173,7 @@ function configurar_busqueda_diagnosticos(id) {
 
         try {
             const response = await fetch(
-                `http://localhost:3000/api/catalogos/diagnosticos/buscar?nombre=${encodeURIComponent(nombre + "%")}`
+                `http://localhost:3000/api/catalogos/diagnosticos/buscar?nombre=${encodeURIComponent(nombre)}`
             );
 
             const data = await response.json();

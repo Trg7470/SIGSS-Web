@@ -255,7 +255,7 @@ function generar_menu_medico() {
                 >
 
                     <a
-                        href="../modules/planificacion-familiar/registrar.html"
+                        href="/pages/modules/planificacion-familiar/registrar.html"
                         id="opcion-registrar-planificacion-familiar"
                         class="nav-link"
                         data-modulo="planificacion-familiar"
@@ -266,7 +266,7 @@ function generar_menu_medico() {
                     </a>
 
                     <a
-                        href="../modules/planificacion-familiar/consultar.html"
+                        href="/pages/modules/planificacion-familiar/consultar.html"
                         id="opcion-consultar-planificacion-familiar"
                         class="nav-link"
                         data-modulo="planificacion-familiar"
