@@ -1,0 +1,32 @@
+/*
+ * SIGSS | Salud bucal
+ * Complementa a consulta_externa.css (cárgalo después de este).
+ * Solo agrega el estilo de las casillas "X" de la hoja diaria.
+ */
+.sigss-formulario .sb-check {
+  display: flex;
+  align-items: center;
+  min-height: 42px;
+}
+
+.sigss-formulario .sb-check .custom-control {
+  padding-left: 1.75rem;
+}
+
+.sigss-formulario .sb-check .custom-control-label {
+  margin: 0;
+  color: #3b4863;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.4;
+  cursor: pointer;
+}
+
+.sigss-formulario .sb-check .custom-control-input:checked ~ .custom-control-label::before {
+  border-color: var(--sigss-primary);
+  background-color: var(--sigss-primary);
+}
+
+.sigss-formulario .sb-check .custom-control-input:focus ~ .custom-control-label::before {
+  box-shadow: 0 0 0 3px var(--sigss-focus);
+}
