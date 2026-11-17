@@ -75,6 +75,8 @@ export async function obtener_mensaje_error(response, mensaje_generico) {
     try {
         const data = await response.json();
         if (data?.message) return data.message;
+        if (data?.mensaje) return data.mensaje;
+        if (data?.error) return data.error;
     } catch {
 
     }

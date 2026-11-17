@@ -231,11 +231,10 @@
                         <td class="hc-celda-paciente"><span class="hc-avatar">PA</span><span class="hc-nombre-paciente">Pérez López Ana María</span></td>
                         <td class="hc-celda-monoespaciada">PELA990101MOCXXX01</td>
                         <td class="text-center">
-                          <button type="button" class="btn btn-sm btn-outline-primary btn-ver-detalles"
-                            aria-label="Ver detalles"
-                            data-id-consulta="145">
-                            <span class="hc-texto-boton">Ver detalles</span>
-                          </button>
+                          <span class="hc-acciones-exportar">
+                          <button type="button" class="btn btn-sm btn-outline-secondary btn-exportar" data-id-consulta="145" data-tipo-salida="xlsx" aria-label="Exportar a Excel"><span class="hc-texto-boton">Excel</span></button>
+                          <button type="button" class="btn btn-sm btn-outline-secondary btn-exportar" data-id-consulta="145" data-tipo-salida="pdf" aria-label="Exportar a PDF"><span class="hc-texto-boton">PDF</span></button>
+                          </span>
                         </td>
                       </tr>
                       <tr data-id-consulta="144">
@@ -245,11 +244,10 @@
                         <td class="hc-celda-paciente"><span class="hc-avatar">HC</span><span class="hc-nombre-paciente">Hernández Ruiz Carlos</span></td>
                         <td class="hc-celda-monoespaciada">HERC970512HOCXXX02</td>
                         <td class="text-center">
-                          <button type="button" class="btn btn-sm btn-outline-primary btn-ver-detalles"
-                            aria-label="Ver detalles"
-                            data-id-consulta="144">
-                            <span class="hc-texto-boton">Ver detalles</span>
-                          </button>
+                          <span class="hc-acciones-exportar">
+                          <button type="button" class="btn btn-sm btn-outline-secondary btn-exportar" data-id-consulta="144" data-tipo-salida="xlsx" aria-label="Exportar a Excel"><span class="hc-texto-boton">Excel</span></button>
+                          <button type="button" class="btn btn-sm btn-outline-secondary btn-exportar" data-id-consulta="144" data-tipo-salida="pdf" aria-label="Exportar a PDF"><span class="hc-texto-boton">PDF</span></button>
+                          </span>
                         </td>
                       </tr>
                       <tr data-id-consulta="143">
@@ -259,11 +257,10 @@
                         <td class="hc-celda-paciente"><span class="hc-avatar">TM</span><span class="hc-nombre-paciente">Torres Díaz María Fernanda</span></td>
                         <td class="hc-celda-monoespaciada">TODF020304MOCXXX03</td>
                         <td class="text-center">
-                          <button type="button" class="btn btn-sm btn-outline-primary btn-ver-detalles"
-                            aria-label="Ver detalles"
-                            data-id-consulta="143">
-                            <span class="hc-texto-boton">Ver detalles</span>
-                          </button>
+                          <span class="hc-acciones-exportar">
+                          <button type="button" class="btn btn-sm btn-outline-secondary btn-exportar" data-id-consulta="143" data-tipo-salida="xlsx" aria-label="Exportar a Excel"><span class="hc-texto-boton">Excel</span></button>
+                          <button type="button" class="btn btn-sm btn-outline-secondary btn-exportar" data-id-consulta="143" data-tipo-salida="pdf" aria-label="Exportar a PDF"><span class="hc-texto-boton">PDF</span></button>
+                          </span>
                         </td>
                       </tr>
                       <tr data-id-consulta="142">
@@ -273,11 +270,10 @@
                         <td class="hc-celda-paciente"><span class="hc-avatar">RJ</span><span class="hc-nombre-paciente">Ramírez Ortega José Luis</span></td>
                         <td class="hc-celda-monoespaciada">RAOJ980720HOCXXX04</td>
                         <td class="text-center">
-                          <button type="button" class="btn btn-sm btn-outline-primary btn-ver-detalles"
-                            aria-label="Ver detalles"
-                            data-id-consulta="142">
-                            <span class="hc-texto-boton">Ver detalles</span>
-                          </button>
+                          <span class="hc-acciones-exportar">
+                          <button type="button" class="btn btn-sm btn-outline-secondary btn-exportar" data-id-consulta="142" data-tipo-salida="xlsx" aria-label="Exportar a Excel"><span class="hc-texto-boton">Excel</span></button>
+                          <button type="button" class="btn btn-sm btn-outline-secondary btn-exportar" data-id-consulta="142" data-tipo-salida="pdf" aria-label="Exportar a PDF"><span class="hc-texto-boton">PDF</span></button>
+                          </span>
                         </td>
                       </tr>
                     </tbody>
@@ -361,37 +357,6 @@
       <button id="modal-boton" class="popup-boton" type="button">
         Aceptar
       </button>
-    </div>
-  </div>
-
-  <!-- Modal de detalle de consulta -->
-  <div class="modal fade" id="modal_detalle_consulta" tabindex="-1" role="dialog"
-    aria-labelledby="modal_detalle_consulta_titulo" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-      <div class="modal-content modal-sigss">
-        <!-- ENCABEZADO -->
-        <div class="modal-header modal-sigss-header">
-          <h5 class="modal-title font-weight-bold" id="modal_detalle_consulta_titulo">
-            <i class="fa-solid fa-notes-medical text-primary mr-2"></i>
-            Detalle de la consulta
-          </h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <!-- CONTENIDO -->
-        <div class="modal-body">
-          <!-- Los datos de la consulta seleccionada se cargan mediante JavaScript -->
-          <div class="row" id="contenido_detalle_consulta"></div>
-        </div>
-        <!-- PIE -->
-        <div class="modal-footer modal-sigss-footer">
-          <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">
-            <i class="fa-solid fa-xmark mr-1"></i>
-            Cerrar
-          </button>
-        </div>
-      </div>
     </div>
   </div>
 
