@@ -1,4 +1,11 @@
-import { llenar_select, verificar_nulo } from "./utils.js";
+import {
+    llenar_select,
+    verificar_nulo,
+    mensaje_por_estado,
+    obtener_mensaje_error,
+    es_error_de_red,
+    MENSAJE_SIN_CONEXION
+} from "./utils.js";
 const Usuario = JSON.parse(sessionStorage.getItem("usuario"));
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -105,7 +112,7 @@ function seleccionar_paciente(usuario) {
                 }
 
                 if (!result.ok || response.success === false) {
-                    throw new Error(response.message || "No fue posible buscar al paciente.");
+                    throw new Error(response.message || mensaje_por_estado(result.status));
                 }
 
                 Paciente = response.paciente;
@@ -132,7 +139,9 @@ function seleccionar_paciente(usuario) {
                 mostrarPopup({
                     tipo: "error",
                     titulo: "Error de búsqueda",
-                    mensaje: error.message || "No fue posible buscar al paciente. Inténtalo nuevamente.",
+                    mensaje: es_error_de_red(error)
+                        ? MENSAJE_SIN_CONEXION
+                        : (error.message || "No fue posible buscar al paciente. Inténtalo nuevamente."),
                     boton: true
                 });
 
@@ -181,7 +190,7 @@ function configurar_busqueda_diagnosticos(id) {
             if (mi_solicitud !== solicitud_actual) return; // llegó una búsqueda más reciente, se descarta esta
 
             if (!response.ok) {
-                throw new Error(data.message || "Error al buscar diagnósticos.");
+                throw new Error(data.message || mensaje_por_estado(response.status));
             }
 
             resultados.replaceChildren();
@@ -406,9 +415,10 @@ async function cargar_datos() {
         const response = await fetch("http://localhost:3000/api/catalogos/");
 
         if (!response.ok) {
+            const mensaje = await obtener_mensaje_error(response, "No fue posible obtener la lista de catálogos.");
             mostrarPopup({
-                titulo: "Error al cargar los catalogos",
-                mensaje: "No fue posible obtener la lista de catalogos. Inténtalo nuevamente.",
+                titulo: "Error al cargar los catálogos",
+                mensaje,
                 tipo: "error",
                 boton: true
             });
@@ -421,7 +431,8 @@ async function cargar_datos() {
         const response_j = await fetch("http://localhost:3000/api/data/catalogos.json");
 
         if (!response_j.ok) {
-            throw new Error("No fue posible cargar los catálogos estáticos.");
+            const mensaje = await obtener_mensaje_error(response_j, "No fue posible cargar los catálogos estáticos.");
+            throw new Error(mensaje);
         }
 
         const catalogos_json = await response_j.json();
@@ -444,11 +455,10 @@ async function cargar_datos() {
         configurar_busqueda_diagnosticos("diagnostico-b-cie10");
         configurar_busqueda_diagnosticos("diagnostico-c-cie10");
 
-        // Implante subdérmico: catálogo Cat_Implante_Subdermico (Id, Nombre,
-        // Clave 0/1, Inciso a/b). Una sola lista con las 4 combinaciones.
         const implantes = catalogos.implante_subdermico || [];
 
-        llenar_select("implante-subdermico", implantes, "Id_Cat_Implante_Subdermico", i => `${i.Clave} | ${i.Nombre} (${i.Inciso})`, "Selecciona una opción", true);
+        llenar_select("implante-subdermico-a", implantes.filter(i => i.Inciso === "a"), "Id_Cat_Implante_Subdermico", i => `${i.Clave} | ${i.Nombre}`, "Selecciona una opción", true);
+        llenar_select("implante-subdermico-b", implantes.filter(i => i.Inciso === "b"), "Id_Cat_Implante_Subdermico", i => `${i.Clave} | ${i.Nombre}`, "Selecciona una opción", true);
 
         llenar_select("referido-por", catalogos.referido_motivo, "Id_Cat_Referido_Motivo", r => `${r.Clave} | ${r.Nombre}`, "Selecciona una opción", true);
         llenar_select("nivel", catalogos.referido_nivel, "Id_Cat_Referido_Nivel", n => `${n.Clave} | ${n.Nombre}`, "Selecciona una opción", true);
@@ -472,7 +482,9 @@ async function cargar_datos() {
         mostrarPopup({
             tipo: "error",
             titulo: "Error",
-            mensaje: error.message || "No fue posible cargar algunos datos. Intente nuevamente",
+            mensaje: es_error_de_red(error)
+                ? MENSAJE_SIN_CONEXION
+                : (error.message || "No fue posible cargar algunos datos. Intente nuevamente"),
             boton: true
         });
 
@@ -585,7 +597,8 @@ async function registrar_consulta() {
             Metodo_Inyectable_Mensual: verificar_nulo("metodo-inyectable-mensual"),
             Metodo_Inyectable_Bimestral: verificar_nulo("metodo-inyectable-bimestral"),
             Metodo_Inyectable_Trimestral: verificar_nulo("metodo-inyectable-trimestral"),
-            Cat_Implante_Subdermico_Id_Cat_Implante_Subdermico: verificar_nulo("implante-subdermico"),
+            Cat_Implante_Subdermico_Id_Cat_Implante_Subdermico_A: verificar_nulo("implante-subdermico-a"),
+            Cat_Implante_Subdermico_Id_Cat_Implante_Subdermico_B: verificar_nulo("implante-subdermico-b"),
             Metodo_Parche_Dermico: verificar_nulo("metodo-parche-dermico"),
             Metodo_DIU: verificar_nulo("metodo-diu"),
             Metodo_DIU_Medicado: verificar_nulo("metodo-diu-medicado"),
@@ -624,20 +637,26 @@ async function registrar_consulta() {
             },
             body: JSON.stringify(data)
         });
-        if (response.ok) {
-            mostrarPopup({
-                tipo: "exito",
-                titulo: "Consulta registrada",
-                mensaje: "La consulta se registró correctamente.",
-                boton: true
-            });
+
+        if (!response.ok) {
+            const mensaje = await obtener_mensaje_error(response);
+            throw new Error(mensaje);
         }
+
+        mostrarPopup({
+            tipo: "exito",
+            titulo: "Consulta registrada",
+            mensaje: "La consulta se registró correctamente.",
+            boton: true
+        });
     } catch (error) {
         console.error("Error al registrar consulta:", error);
         mostrarPopup({
             tipo: "error",
             titulo: "Error de registro",
-            mensaje: error.message || "No fue posible registrar la consulta.",
+            mensaje: es_error_de_red(error)
+                ? MENSAJE_SIN_CONEXION
+                : (error.message || "No fue posible registrar la consulta."),
             boton: true
         });
     }

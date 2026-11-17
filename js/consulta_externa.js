@@ -1,4 +1,11 @@
-import { llenar_select, verificar_nulo } from "./utils.js";
+import {
+    llenar_select,
+    verificar_nulo,
+    mensaje_por_estado,
+    obtener_mensaje_error,
+    es_error_de_red,
+    MENSAJE_SIN_CONEXION
+} from "./utils.js";
 const Usuario = JSON.parse(sessionStorage.getItem("usuario"));
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -6,8 +13,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         mostrarPopup({
             tipo: "error",
             titulo: "Sesión no válida",
-            mensaje: "No fue posible recuperar los datos del usuario.", 
-              boton: true
+            mensaje: "No fue posible recuperar los datos del usuario.",
+            boton: true
         });
         window.location.href = "../index.html";
         return;
@@ -93,8 +100,7 @@ function seleccionar_paciente(usuario) {
                 });
 
                 const response = await result.json();
-
-                if (result.status === 404) {
+                if(result.status === 404) {
                     mostrarPopup({
                         tipo: "informacion",
                         titulo: "Paciente no encontrado",
@@ -105,7 +111,7 @@ function seleccionar_paciente(usuario) {
                 }
 
                 if (!result.ok || response.success === false) {
-                    throw new Error(response.message || "No fue posible buscar al paciente.");
+                    throw new Error(response.message || mensaje_por_estado(result.status));
                 }
 
                 Paciente = response.paciente;
@@ -128,11 +134,12 @@ function seleccionar_paciente(usuario) {
                 });
             } catch (error) {
                 console.error("Error al buscar paciente:", error);
-
                 mostrarPopup({
                     tipo: "error",
                     titulo: "Error de búsqueda",
-                    mensaje: error.message || "No fue posible buscar al paciente. Inténtalo nuevamente.",
+                    mensaje: es_error_de_red(error)
+                        ? MENSAJE_SIN_CONEXION
+                        : (error.message || "No fue posible buscar al paciente. Inténtalo nuevamente."),
                     boton: true
                 });
 
@@ -181,7 +188,7 @@ function configurar_busqueda_diagnosticos(id) {
             if (mi_solicitud !== solicitud_actual) return; // llegó una búsqueda más reciente, se descarta esta
 
             if (!response.ok) {
-                throw new Error(data.message || "Error al buscar diagnósticos.");
+                throw new Error(data.message || mensaje_por_estado(response.status));
             }
 
             resultados.replaceChildren();
@@ -407,9 +414,10 @@ async function cargar_datos() {
         const response = await fetch("http://localhost:3000/api/catalogos/");
 
         if (!response.ok) {
+            const mensaje = await obtener_mensaje_error(response, "No fue posible obtener la lista de catálogos.");
             mostrarPopup({
-                titulo: "Error al cargar los catalogos",
-                mensaje: "No fue posible obtener la lista de catalogos. Inténtalo nuevamente.",
+                titulo: "Error al cargar los catálogos",
+                mensaje,
                 tipo: "error",
                 boton: true
             });
@@ -422,7 +430,8 @@ async function cargar_datos() {
         const response_j = await fetch("http://localhost:3000/api/data/catalogos.json");
 
         if (!response_j.ok) {
-            throw new Error("No fue posible cargar los catálogos estáticos.");
+            const mensaje = await obtener_mensaje_error(response_j, "No fue posible cargar los catálogos estáticos.");
+            throw new Error(mensaje);
         }
 
         const catalogos_json = await response_j.json();
@@ -496,7 +505,9 @@ async function cargar_datos() {
         mostrarPopup({
             tipo: "error",
             titulo: "Error",
-            mensaje: error.message || "No fue posible cargar algunos datos. Intente nuevamente",
+            mensaje: es_error_de_red(error)
+                ? MENSAJE_SIN_CONEXION
+                : (error.message || "No fue posible cargar algunos datos. Intente nuevamente"),
             boton: true
         });
 
@@ -529,8 +540,8 @@ async function registrar_consulta() {
     const clave_edad = document.getElementById("clave-edad")
         .selectedOptions[0]?.textContent.split("|")[0].trim();
 
-const data = {
-        usuario:{
+    const data = {
+        usuario: {
             Id_Usuario: Usuario.Id_Usuario,
         },
         paciente: {
@@ -655,20 +666,26 @@ const data = {
             },
             body: JSON.stringify(data)
         });
-    if(response.ok){
+
+        if (!response.ok) {
+            const mensaje = await obtener_mensaje_error(response);
+            throw new Error(mensaje);
+        }
+
         mostrarPopup({
             tipo: "exito",
             titulo: "Consulta registrada",
             mensaje: "La consulta se registró correctamente.",
             boton: true
         });
-    }
     } catch (error) {
         console.error("Error al registrar consulta:", error);
         mostrarPopup({
             tipo: "error",
             titulo: "Error de registro",
-            mensaje: error.message || "No fue posible registrar la consulta.",
+            mensaje: es_error_de_red(error)
+                ? MENSAJE_SIN_CONEXION
+                : (error.message || "No fue posible registrar la consulta."),
             boton: true
         });
     }

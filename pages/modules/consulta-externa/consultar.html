@@ -1,0 +1,421 @@
+<!doctype html>
+<html lang="es-MX">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="description" content="Sistema Integral de Gestión de Servicios de Salud" />
+  <meta name="author" content="SIGSS" />
+  <title>SIGSS | Historial de consultas</title>
+
+  <!-- Hojas de estilo de iconos (raíz = ../../../) -->
+  <link href="../../../lib/fontawesome-free/css/all.min.css" rel="stylesheet" />
+  <link href="../../../lib/ionicons/css/ionicons.min.css" rel="stylesheet" />
+  <link href="../../../lib/typicons.font/typicons.css" rel="stylesheet" />
+  <link href="../../../lib/flag-icon-css/css/flag-icon.min.css" rel="stylesheet" />
+
+  <!-- Hojas de estilo de la plantilla -->
+  <link rel="stylesheet" href="../../../lib/bootstrap/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="../../../css/popup.css" />
+  <link rel="stylesheet" href="../../../css/consulta_externa.css" />
+  <link rel="stylesheet" href="../../../css/consultas_registros.css" />
+</head>
+
+<body id="pagina-sigss">
+  <!-- ================================================== -->
+  <!-- ENCABEZADO PRINCIPAL                               -->
+  <!-- ================================================== -->
+  <header id="seccion-encabezado" class="az-header">
+    <div id="contenedor-encabezado" class="container">
+      <div id="seccion-logotipo" class="az-header-left">
+        <!-- AJUSTA esta ruta a donde esté tu dashboard -->
+        <a href="../dashboard/index.html" id="logo-sigss" class="az-logo"><span></span> MEDITECH</a>
+        <a href="#" id="boton-menu-movil" class="az-header-menu-icon d-lg-none"
+          aria-label="Abrir menú"><span></span></a>
+      </div>
+
+      <nav id="seccion-navegacion" class="az-header-menu">
+        <div id="encabezado-menu-movil" class="az-header-menu-header">
+          <a href="../dashboard/index.html" id="logo-sigss-movil" class="az-logo"><span></span> SIGSS</a>
+          <a href="#" id="boton-cerrar-menu" class="close" aria-label="Cerrar menú">&times;</a>
+        </div>
+        <ul id="menu-principal" class="nav"></ul>
+      </nav>
+
+      <div id="seccion-acciones-usuario" class="az-header-right">
+        <div id="seccion-mensajes" class="az-header-message">
+          <a href="#" id="boton-mensajes" aria-label="Mensajes"><i class="typcn typcn-messages"></i></a>
+        </div>
+
+        <div id="seccion-notificaciones" class="dropdown az-header-notification">
+          <a href="#" id="boton-notificaciones" class="new" aria-label="Notificaciones"><i
+              class="typcn typcn-bell"></i></a>
+          <div id="menu-notificaciones" class="dropdown-menu">
+            <div id="encabezado-notificaciones-movil" class="az-dropdown-header mg-b-20 d-sm-none">
+              <a href="#" id="volver-notificaciones" class="az-header-arrow" aria-label="Volver"><i
+                  class="icon ion-md-arrow-back"></i></a>
+            </div>
+            <h6 id="titulo-notificaciones" class="az-notification-title">Notificaciones</h6>
+            <p id="texto-notificaciones" class="az-notification-text">Tienes notificaciones pendientes</p>
+            <div id="lista-notificaciones" class="az-notification-list">
+              <div id="notificacion-1" class="media new">
+                <div class="az-img-user"><img src="../../../assets/images/usuario.png" alt="Usuario" /></div>
+                <div class="media-body">
+                  <p><strong>Notificación de ejemplo</strong> Actividad registrada en el sistema.</p>
+                  <span>Fecha y hora</span>
+                </div>
+              </div>
+              <div id="notificacion-2" class="media new">
+                <div class="az-img-user online"><img src="../../../assets/images/usuario.png" alt="Usuario" /></div>
+                <div class="media-body">
+                  <p><strong>Notificación de ejemplo</strong> Se ha registrado una nueva actividad.</p>
+                  <span>Fecha y hora</span>
+                </div>
+              </div>
+              <div id="notificacion-3" class="media">
+                <div class="az-img-user"><img src="../../../assets/images/usuario.png" alt="Usuario" /></div>
+                <div class="media-body">
+                  <p><strong>Notificación de ejemplo</strong> Información pendiente de consultar.</p>
+                  <span>Fecha y hora</span>
+                </div>
+              </div>
+              <div id="notificacion-4" class="media">
+                <div class="az-img-user"><img src="../../../assets/images/usuario.png" alt="Usuario" /></div>
+                <div class="media-body">
+                  <p><strong>Notificación de ejemplo</strong> Se ha actualizado la información.</p>
+                  <span>Fecha y hora</span>
+                </div>
+              </div>
+            </div>
+            <div id="pie-notificaciones" class="dropdown-footer">
+              <a href="#" id="ver-todas-notificaciones">Ver todas las notificaciones</a>
+            </div>
+          </div>
+        </div>
+
+        <div id="seccion-perfil" class="dropdown az-profile-menu">
+          <a href="#" id="boton-perfil" class="az-img-user" aria-label="Perfil del usuario">
+            <img src="../../../assets/images/usuario.png" style="width: 28px; height: 28px" alt="Foto de perfil" />
+          </a>
+          <div id="menu-perfil" class="dropdown-menu">
+            <div id="encabezado-perfil-movil" class="az-dropdown-header d-sm-none">
+              <a href="#" id="volver-perfil" class="az-header-arrow" aria-label="Volver"><i
+                  class="icon ion-md-arrow-back"></i></a>
+            </div>
+            <div id="informacion-perfil" class="az-header-profile">
+              <div id="imagen-perfil" class="az-img-user">
+                <img src="../../../assets/images/usuario.png" alt="Foto de perfil" />
+              </div>
+              <h6 id="nombre-usuario">Nombre del usuario</h6>
+              <span id="rol-usuario">Tipo de usuario</span>
+            </div>
+            <a href="#" id="opcion-mi-perfil" class="dropdown-item"><i class="typcn typcn-user-outline"></i> Mi
+              perfil</a>
+            <a href="#" id="opcion-editar-perfil" class="dropdown-item"><i class="typcn typcn-edit"></i> Editar
+              perfil</a>
+            <a href="#" id="opcion-registro-actividad" class="dropdown-item"><i class="typcn typcn-time"></i> Registro
+              de actividad</a>
+            <a href="#" id="opcion-configuracion" class="dropdown-item"><i class="typcn typcn-cog-outline"></i>
+              Configuración de la cuenta</a>
+            <a href="#" id="opcion-cerrar-sesion" class="dropdown-item"><i class="typcn typcn-power-outline"></i> Cerrar
+              sesión</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================================================== -->
+  <!-- CONTENIDO PRINCIPAL                                -->
+  <!-- ================================================== -->
+  <main id="seccion-contenido" class="az-content az-content-dashboard">
+    <div id="contenedor-contenido" class="container">
+      <div id="contenido-dashboard" class="az-content-body">
+
+        <section id="seccion-bienvenida" class="az-dashboard-one-title">
+          <div id="informacion-bienvenida">
+            <h1 id="titulo-bienvenida" class="az-dashboard-title">Historial de consultas</h1>
+            <p id="descripcion-bienvenida" class="az-dashboard-text">Consulta el historial de consultas externas
+              registradas.</p>
+          </div>
+          <div id="informacion-adicional" class="az-content-header-right">
+            <div id="informacion-fecha" class="media">
+              <div class="media-body">
+                <label id="fecha">Fecha</label>
+                <h6 id="hora">--/--/----</h6>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="seccion-historial-consultas" aria-label="Historial de consultas">
+          <div id="contenedor-historial" class="sigss-formulario">
+
+            <!-- Filtros de búsqueda -->
+            <div class="shadow card hc-card-filtros mt-4" id="tarjeta-filtros">
+              <div class="card-header hc-card-header" id="encabezado-filtros" data-toggle="collapse"
+                href="#cuerpo-filtros" role="button" aria-expanded="true" aria-controls="cuerpo-filtros">
+                <span class="hc-card-header-titulo">
+                  Filtros de búsqueda
+                </span>
+                <i class="fa-solid fa-chevron-up hc-chevron" id="icono-colapso-filtros"></i>
+              </div>
+              <div id="cuerpo-filtros" class="collapse show" aria-labelledby="encabezado-filtros">
+                <div class="card-body">
+                  <form id="form-filtros-historial" novalidate>
+                    <div class="form-row">
+                      <div class="form-group col-md-4">
+                        <label for="filtro-busqueda">Paciente, CURP o folio</label>
+                        <div class="input-group">
+                          <input type="text" class="form-control" id="filtro-busqueda"
+                            placeholder="Ingrese el nombre, CURP o folio" />
+                        </div>
+                      </div>
+                      <div class="form-group col-md-4">
+                        <label for="filtro-fecha-inicial">Fecha inicial</label>
+                        <input type="date" class="form-control" id="filtro-fecha-inicial" />
+                      </div>
+                      <div class="form-group col-md-4">
+                        <label for="filtro-fecha-final">Fecha final</label>
+                        <input type="date" class="form-control" id="filtro-fecha-final" />
+                      </div>
+                    </div>
+                    <div class="form-row justify-content-end hc-fila-botones">
+                      <button type="button" class="btn btn-outline-secondary mr-2" id="boton-limpiar-filtros">
+                        Limpiar
+                      </button>
+                      <button type="submit" class="btn btn-primary" id="boton-buscar-historial">
+                        <i class="fa-solid fa-magnifying-glass mr-1"></i>
+                        Buscar
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+
+            <!-- Resultados -->
+            <div class="shadow card hc-card-resultados mt-4" id="tarjeta-resultados">
+              <div class="card-header hc-card-header">
+                <span class="hc-card-header-titulo">
+                  Resultados
+                  (<span id="contador-resultados">4</span> registros)
+                </span>
+              </div>
+              <div class="card-body p-0">
+                <div class="table-responsive hc-tabla-wrapper">
+                  <table class="table table-hover hc-tabla-resultados mb-0" id="tabla-historial">
+                    <colgroup>
+                      <col style="width: 13%;" />
+                      <col style="width: 13%;" />
+                      <col style="width: 12%;" />
+                      <col style="width: 27%;" />
+                      <col style="width: 21%;" />
+                      <col style="width: 14%;" />
+                    </colgroup>
+                    <thead>
+                      <tr>
+                        <th scope="col">Folio de receta</th>
+                        <th scope="col">Expediente</th>
+                        <th scope="col">Fecha consulta</th>
+                        <th scope="col">Paciente</th>
+                        <th scope="col">CURP del paciente</th>
+                        <th scope="col" class="text-center">Acciones</th>
+                      </tr>
+                    </thead>
+                    <tbody id="cuerpo-tabla-historial">
+                      <tr data-id-consulta="145">
+                        <td class="hc-celda-monoespaciada">RE-000145</td>
+                        <td>EXP-003268</td>
+                        <td>15/11/2026</td>
+                        <td class="hc-celda-paciente"><span class="hc-avatar">PA</span><span class="hc-nombre-paciente">Pérez López Ana María</span></td>
+                        <td class="hc-celda-monoespaciada">PELA990101MOCXXX01</td>
+                        <td class="text-center">
+                          <button type="button" class="btn btn-sm btn-outline-primary btn-ver-detalles"
+                            aria-label="Ver detalles"
+                            data-id-consulta="145">
+                            <span class="hc-texto-boton">Ver detalles</span>
+                          </button>
+                        </td>
+                      </tr>
+                      <tr data-id-consulta="144">
+                        <td class="hc-celda-monoespaciada">RE-000144</td>
+                        <td>EXP-003267</td>
+                        <td>14/11/2026</td>
+                        <td class="hc-celda-paciente"><span class="hc-avatar">HC</span><span class="hc-nombre-paciente">Hernández Ruiz Carlos</span></td>
+                        <td class="hc-celda-monoespaciada">HERC970512HOCXXX02</td>
+                        <td class="text-center">
+                          <button type="button" class="btn btn-sm btn-outline-primary btn-ver-detalles"
+                            aria-label="Ver detalles"
+                            data-id-consulta="144">
+                            <span class="hc-texto-boton">Ver detalles</span>
+                          </button>
+                        </td>
+                      </tr>
+                      <tr data-id-consulta="143">
+                        <td class="hc-celda-monoespaciada">RE-000143</td>
+                        <td>EXP-003266</td>
+                        <td>13/11/2026</td>
+                        <td class="hc-celda-paciente"><span class="hc-avatar">TM</span><span class="hc-nombre-paciente">Torres Díaz María Fernanda</span></td>
+                        <td class="hc-celda-monoespaciada">TODF020304MOCXXX03</td>
+                        <td class="text-center">
+                          <button type="button" class="btn btn-sm btn-outline-primary btn-ver-detalles"
+                            aria-label="Ver detalles"
+                            data-id-consulta="143">
+                            <span class="hc-texto-boton">Ver detalles</span>
+                          </button>
+                        </td>
+                      </tr>
+                      <tr data-id-consulta="142">
+                        <td class="hc-celda-monoespaciada">RE-000142</td>
+                        <td>EXP-003265</td>
+                        <td>12/11/2026</td>
+                        <td class="hc-celda-paciente"><span class="hc-avatar">RJ</span><span class="hc-nombre-paciente">Ramírez Ortega José Luis</span></td>
+                        <td class="hc-celda-monoespaciada">RAOJ980720HOCXXX04</td>
+                        <td class="text-center">
+                          <button type="button" class="btn btn-sm btn-outline-primary btn-ver-detalles"
+                            aria-label="Ver detalles"
+                            data-id-consulta="142">
+                            <span class="hc-texto-boton">Ver detalles</span>
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="card-footer hc-card-footer">
+                <span class="text-muted small" id="texto-paginacion">Mostrando 1 a 4 de 4 registros</span>
+                <nav aria-label="Paginación del historial de consultas">
+                  <ul class="pagination pagination-sm mb-0" id="paginacion-historial">
+                    <li class="page-item disabled" id="pagina-primera">
+                      <a class="page-link" href="#" tabindex="-1" aria-label="Primera página"><i
+                          class="fa-solid fa-angles-left"></i></a>
+                    </li>
+                    <li class="page-item disabled" id="pagina-anterior">
+                      <a class="page-link" href="#" tabindex="-1" aria-label="Página anterior"><i
+                          class="fa-solid fa-angle-left"></i></a>
+                    </li>
+                    <li class="page-item active" aria-current="page"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item disabled" id="pagina-siguiente">
+                      <a class="page-link" href="#" tabindex="-1" aria-label="Página siguiente"><i
+                          class="fa-solid fa-angle-right"></i></a>
+                    </li>
+                    <li class="page-item disabled" id="pagina-ultima">
+                      <a class="page-link" href="#" tabindex="-1" aria-label="Última página"><i
+                          class="fa-solid fa-angles-right"></i></a>
+                    </li>
+                  </ul>
+                </nav>
+              </div>
+            </div>
+
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <!-- ================================================== -->
+  <!-- PIE DE PÁGINA                                      -->
+  <!-- ================================================== -->
+  <footer id="seccion-pie-pagina" class="az-footer ht-40">
+    <div id="contenedor-pie-pagina" class="container ht-100p pd-t-0-f">
+      <span id="texto-pie-pagina" class="text-muted d-block text-center text-sm-left d-sm-inline-block">
+        SIGSS | Sistema Integral de Gestión de Servicios de Salud
+      </span>
+      <span id="version-sistema" class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">
+        Sistema de gestión de servicios de salud
+      </span>
+    </div>
+  </footer>
+
+  <!-- Popup global SIGSS -->
+  <div id="modalPopup" class="popup-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-titulo"
+    aria-describedby="modal-mensaje">
+    <div class="popup-card">
+      <!-- Botón cerrar -->
+      <button id="popup-cerrar" class="popup-cerrar" type="button" aria-label="Cerrar diálogo">
+        &times;
+      </button>
+      <!-- Icono -->
+      <div id="modal-icono" class="popup-icono">
+        <i class="fas fa-circle-xmark"></i>
+      </div>
+      <!-- Título -->
+      <h3 id="modal-titulo">Generando documento</h3>
+      <!-- Mensaje -->
+      <p id="modal-mensaje">
+        Espere un momento, por favor...
+      </p>
+      <!-- Botones de confirmación -->
+      <div id="modal-botones-confirmacion" class="popup-botones-confirmacion">
+        <button id="modal-cancelar" type="button">
+          Revisar datos
+        </button>
+        <button id="modal-confirmar" type="button">
+          Sí, registrar
+        </button>
+      </div>
+      <!-- Botón normal -->
+      <button id="modal-boton" class="popup-boton" type="button">
+        Aceptar
+      </button>
+    </div>
+  </div>
+
+  <!-- Modal de detalle de consulta -->
+  <div class="modal fade" id="modal_detalle_consulta" tabindex="-1" role="dialog"
+    aria-labelledby="modal_detalle_consulta_titulo" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+      <div class="modal-content modal-sigss">
+        <!-- ENCABEZADO -->
+        <div class="modal-header modal-sigss-header">
+          <h5 class="modal-title font-weight-bold" id="modal_detalle_consulta_titulo">
+            <i class="fa-solid fa-notes-medical text-primary mr-2"></i>
+            Detalle de la consulta
+          </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <!-- CONTENIDO -->
+        <div class="modal-body">
+          <!-- Los datos de la consulta seleccionada se cargan mediante JavaScript -->
+          <div class="row" id="contenido_detalle_consulta"></div>
+        </div>
+        <!-- PIE -->
+        <div class="modal-footer modal-sigss-footer">
+          <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">
+            <i class="fa-solid fa-xmark mr-1"></i>
+            Cerrar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================================================== -->
+  <!-- BIBLIOTECAS JAVASCRIPT                             -->
+  <!-- ================================================== -->
+  <script src="../../../lib/jquery/jquery.min.js"></script>
+  <script src="../../../lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../../../lib/ionicons/ionicons.js"></script>
+  <script src="../../../js/popup.js"></script>
+
+  <!-- Bibliotecas de gráficas de Azia -->
+  <script src="../../../lib/jquery.flot/jquery.flot.js"></script>
+  <script src="../../../lib/jquery.flot/jquery.flot.resize.js"></script>
+  <script src="../../../lib/chart.js/Chart.bundle.min.js"></script>
+  <script src="../../../lib/peity/jquery.peity.min.js"></script>
+
+  <!-- Núcleo de la plantilla Azia -->
+  <script src="../../../js/azia.js"></script>
+
+  <!-- Lógica propia de SIGSS -->
+  <script type="module" src="../../../js/consultas_registros.js"></script>
+  <script src="../../../js/dashboard.js"></script>
+  <script src="../../../js/clock.js"></script>
+</body>
+
+</html>
