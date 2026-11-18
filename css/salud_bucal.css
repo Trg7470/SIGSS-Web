@@ -1,32 +1,102 @@
-/*
- * SIGSS | Salud bucal
- * Complementa a consulta_externa.css (cárgalo después de este).
- * Solo agrega el estilo de las casillas "X" de la hoja diaria.
- */
-.sigss-formulario .sb-check {
-  display: flex;
-  align-items: center;
-  min-height: 42px;
+/* SIGSS | Salud Bucal - estilos independientes del modulo.
+   Requiere Bootstrap 4 y Azia (estilos base del dashboard).
+   Cargar despues de ambos. */
+:root {
+  --sigss-primary: #3366ff;
+  --sigss-primary-dark: #244fe0;
+  --sigss-accent: #5b47fb;
+  --sigss-text: #031b4e;
+  --sigss-muted: #7987a1;
+  --sigss-border: #e2e7f1;
+  --sigss-surface: #fff;
+  --sigss-background: #f4f5f8;
+  --sigss-focus: rgba(51,102,255,.14);
+  --sigss-radius: 4px;
+  --sigss-shadow: 0 3px 14px rgba(28,39,60,.06);
 }
 
-.sigss-formulario .sb-check .custom-control {
-  padding-left: 1.75rem;
-}
+body#pagina-sigss { background: var(--sigss-background); color: var(--sigss-text); }
+#seccion-contenido { min-height: calc(100vh - 125px); }
+#contenedor-contenido { padding-top: 20px; padding-bottom: 40px; }
+#contenido-dashboard { min-width: 0; }
+#seccion-bienvenida { margin-bottom: 18px; }
+#titulo-bienvenida { font-weight: 700; color: var(--sigss-text); }
+#descripcion-bienvenida { color: var(--sigss-muted); }
 
-.sigss-formulario .sb-check .custom-control-label {
-  margin: 0;
-  color: #3b4863;
+.sigss-formulario { width: 100%; max-width: 100%; }
+.sigss-formulario > .card {
+  border: 1px solid var(--sigss-border);
+  border-radius: 7px;
+  box-shadow: var(--sigss-shadow) !important;
+  background: var(--sigss-surface);
+  padding: 22px 24px;
+  overflow: visible;
+}
+.sigss-formulario > .card > .card-title { margin-bottom: 0; padding-bottom: 14px; border-bottom: 1px solid var(--sigss-border); }
+.sigss-formulario > .card > .card-title h5 { font-size: 17px; line-height: 1.4; font-weight: 700; color: var(--sigss-text); margin: 0; }
+.sigss-formulario > .card > .card-body { padding: 20px 0 0; }
+.sigss-formulario .card-body > .card-body { padding: 12px 0 0; }
+.sigss-formulario .form-group { margin-bottom: 18px; min-width: 0; }
+.sigss-formulario label { display: inline-block; margin-bottom: 7px; font-size: 13px; font-weight: 600; color: #3b4863; }
+.sigss-formulario .form-control {
+  min-height: 40px;
+  height: auto;
+  border: 1px solid #dce3ef;
+  border-radius: var(--sigss-radius);
+  color: var(--sigss-text);
   font-size: 13px;
-  font-weight: 500;
-  line-height: 1.4;
-  cursor: pointer;
+  background-color: #fff;
+  transition: border-color .18s ease, box-shadow .18s ease;
 }
+.sigss-formulario select.form-control { height: 40px; }
+.sigss-formulario .form-control:focus { border-color: var(--sigss-primary); box-shadow: 0 0 0 3px var(--sigss-focus); outline: none; }
+.sigss-formulario .form-control[readonly],
+.sigss-formulario .form-control:disabled { background: #f5f7fb; color: #566581; opacity: 1; }
+.sigss-formulario .form-control::placeholder { color: #a2adc0; }
+.sigss-formulario .input-group-text { border-color: #dce3ef; background: #f5f7fb; color: #60708d; font-size: 12px; }
+.sigss-formulario .font-weight-bold { color: var(--sigss-text); }
+.sigss-formulario .form-control-plaintext { color: #3b4863; }
 
-.sigss-formulario .sb-check .custom-control-input:checked ~ .custom-control-label::before {
-  border-color: var(--sigss-primary);
-  background-color: var(--sigss-primary);
+/* Casillas de actividades que se marcan con X en el formato oficial */
+.sigss-formulario .sb-check { display: flex; align-items: center; min-height: 42px; }
+.sigss-formulario .sb-check .custom-control { padding-left: 1.75rem; }
+.sigss-formulario .custom-control-label { margin: 0; color: #3b4863; font-size: 13px; font-weight: 500; line-height: 1.5; cursor: pointer; }
+.sigss-formulario .custom-control-label::before,
+.sigss-formulario .custom-control-label::after { top: .16rem; }
+.sigss-formulario .custom-control-input:checked ~ .custom-control-label::before { border-color: var(--sigss-primary); background-color: var(--sigss-primary); }
+.sigss-formulario .custom-control-input:focus ~ .custom-control-label::before { box-shadow: 0 0 0 3px var(--sigss-focus); }
+.sigss-formulario .custom-control-input:disabled ~ .custom-control-label { opacity: .6; cursor: not-allowed; }
+
+/* Resultados del autocompletado CIE-10 */
+.sigss-formulario .col-md:has(> input[type="search"]) { position: relative; }
+.sigss-formulario [id$="-cie10-resultados"] {
+  display: none;
+  position: absolute;
+  z-index: 25;
+  top: 100%; left: 5px; right: 5px;
+  max-height: 220px; overflow-y: auto;
+  background: #fff;
+  border: 1px solid var(--sigss-border);
+  box-shadow: 0 8px 20px rgba(28,39,60,.12);
+  border-radius: 4px;
 }
+.sigss-formulario [id$="-cie10-resultados"] .list-group-item { font-size: 12px; line-height: 1.5; padding: 9px 12px; }
+.sigss-formulario [id$="-cie10-resultados"] .list-group-item:hover { background: #f0f4ff; }
 
-.sigss-formulario .sb-check .custom-control-input:focus ~ .custom-control-label::before {
-  box-shadow: 0 0 0 3px var(--sigss-focus);
+/* Mensajes de ayuda y campos adicionales */
+.sigss-formulario .text-muted, .sigss-formulario small { color: var(--sigss-muted) !important; }
+.sigss-formulario .alert { font-size: 13px; border-radius: 5px; }
+.sigss-formulario .btn { font-size: 13px; font-weight: 600; border-radius: 4px; padding: 10px 16px; }
+.sigss-formulario .btn-primary { background: var(--sigss-primary); border-color: var(--sigss-primary); }
+.sigss-formulario .btn-primary:hover { background: var(--sigss-primary-dark); border-color: var(--sigss-primary-dark); }
+#acciones .card-body { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 9px; }
+#acciones .btn { margin: 0 !important; }
+
+@media (max-width: 767.98px) {
+  #contenedor-contenido { padding-top: 14px; }
+  .sigss-formulario > .card { padding: 17px 15px; }
+  .sigss-formulario > .card > .card-body { padding-top: 16px; }
+  .sigss-formulario .form-group { margin-bottom: 14px; }
+  #acciones .card-body { flex-direction: column; align-items: stretch; width: 100%; }
+  #acciones .btn { width: 100%; }
 }

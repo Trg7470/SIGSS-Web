@@ -14,7 +14,7 @@
 
 <link rel="stylesheet" href="../../../lib/bootstrap/css/bootstrap.min.css" />
 <link rel="stylesheet" href="../../../css/popup.css" />
-<link rel="stylesheet" href="../../../css/consulta_externa.css" />
+<link rel="stylesheet" href="../../../css/azia.css" />
 <link rel="stylesheet" href="../../../css/salud_bucal.css" />
 </head>
 
@@ -274,7 +274,7 @@
 </div>
 </div>
 <div class="shadow card card-body mt-4 mb-4" id="diagnostico">
-<div class="card-title"><h5>Primera Vez, Discapacidad y Diagnóstico</h5></div>
+<div class="card-title"><h5>Primera vez, discapacidad y diagnósticos</h5></div>
 <div class="card-body">
 <div class="form-row">
 <div class="form-group col-md-4">
@@ -286,7 +286,8 @@
 <select class="form-control" id="rt-motivo"><option value="">Selecciona una opción</option></select>
 </div>
 </div>
-<p class="font-weight-bold mb-1">Dificultad para: (discapacidad)</p>
+<p class="font-weight-bold mb-1">Dificultad para (discapacidad)</p>
+<p class="text-muted small">Registra esta información cuando corresponda conforme al instructivo de la hoja diaria.</p>
 <div class="form-row">
 <div class="form-group col-md-4">
 <label for="discapacidad-a">a) Dificultad para</label>
@@ -302,7 +303,8 @@
 </div>
 </div>
 <div class="form-group">
-<p class="font-weight-bold">Diagnóstico</p>
+<p class="font-weight-bold">Diagnósticos CIE-10</p>
+<p class="text-muted small">Selecciona al menos el diagnóstico principal (A). Los diagnósticos B y C son adicionales.</p>
 <div class="form-row mb-3">
 <div class="col-md-1 d-flex align-items-end"><span class="form-control-plaintext">A&#41;</span></div>
 <div class="col-md">
@@ -326,6 +328,10 @@
 <input type="search" class="form-control" id="diagnostico-b-cie10" name="diagnostico_b_busqueda" placeholder="Buscar por clave o nombre..." autocomplete="off" />
 <input type="hidden" id="diagnostico-b-cie10-id" name="diagnostico_b_id" />
 <div id="diagnostico-b-cie10-resultados" class="list-group"></div>
+<div class="custom-control custom-checkbox mt-2">
+<input type="checkbox" class="custom-control-input" id="diagnostico-b-primera-vez" />
+<label class="custom-control-label" for="diagnostico-b-primera-vez">Diagnóstico de primera vez</label>
+</div>
 </div>
 <div class="col-md">
 <label for="diagnostico-b-medicina-indigena">Medicina Tradicional Indígena</label>
@@ -342,6 +348,10 @@
 <input type="search" class="form-control" id="diagnostico-c-cie10" name="diagnostico_c_busqueda" placeholder="Buscar por clave o nombre..." autocomplete="off" />
 <input type="hidden" id="diagnostico-c-cie10-id" name="diagnostico_c_id" />
 <div id="diagnostico-c-cie10-resultados" class="list-group"></div>
+<div class="custom-control custom-checkbox mt-2">
+<input type="checkbox" class="custom-control-input" id="diagnostico-c-primera-vez" />
+<label class="custom-control-label" for="diagnostico-c-primera-vez">Diagnóstico de primera vez</label>
+</div>
 </div>
 <div class="col-md">
 <label for="diagnostico-c-medicina-indigena">Medicina Tradicional Indígena</label>
@@ -530,7 +540,7 @@
 <div class="form-group col-md-4 sb-check">
 <div class="custom-control custom-checkbox">
 <input type="checkbox" class="custom-control-input" id="consulta-linea-vida" />
-<label class="custom-control-label" for="consulta-linea-vida">Consulta integrada de línea de vida</label>
+<label class="custom-control-label" for="consulta-linea-vida">Consulta integrada de línea de vida (cuando corresponda)</label>
 </div>
 </div>
 <div class="form-group col-md-4 sb-check">
@@ -548,6 +558,7 @@
 </div>
 <div class="shadow card card-body mt-4 mb-4" id="referencias">
 <div class="card-title"><h5>Referencias</h5></div>
+<p class="text-muted small mb-2">Selecciona el motivo de referencia y completa los datos de destino únicamente cuando correspondan.</p>
 <div class="card-body">
 <div class="form-row">
 <div class="form-group col-md-6">
@@ -574,6 +585,7 @@
 </div>
 <div class="shadow card card-body mt-4 mb-4" id="teleconsulta">
 <div class="card-title"><h5>Teleconsulta</h5></div>
+<p class="text-muted small mb-2">Completa este apartado únicamente si se brindó atención mediante telemedicina.</p>
 <div class="card-body">
 <div class="form-row">
 <div class="form-group col-md-6">
@@ -599,6 +611,7 @@
 </div>
 <div class="shadow card card-body mt-4 mb-4" id="seguimiento">
 <div class="card-title"><h5>Seguimiento</h5></div>
+<p class="text-muted small mb-2">Dato de seguimiento interno de SIGSS; no se incorporará automáticamente a la hoja diaria oficial.</p>
 <div class="card-body">
 <div class="form-row">
 <div class="form-group col-md-4">
@@ -612,7 +625,7 @@
 <div class="card-body">
 <button type="button" class="btn btn-danger" id="cancelar">Cancelar</button>
 <button type="button" class="btn btn-secondary mr-2" id="limpiar-formulario">Limpiar Formulario</button>
-<button type="button" class="btn btn-primary mr-2" id="guardar-datos">Guardar Datos</button>
+<button type="button" class="btn btn-primary mr-2" id="guardar-datos">Revisar y guardar consulta</button>
 </div>
 </div>
 
