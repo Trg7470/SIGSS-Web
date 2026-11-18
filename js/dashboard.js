@@ -191,7 +191,7 @@ function generar_menu_medico() {
                 >
 
                     <a
-                        href="../modules/salud-bucal/registrar.html"
+                        href="/pages/modules/salud-bucal/registrar.html"
                         id="opcion-registrar-salud-bucal"
                         class="nav-link"
                         data-modulo="salud-bucal"
@@ -202,7 +202,7 @@ function generar_menu_medico() {
                     </a>
 
                     <a
-                        href="../modules/salud-bucal/consultar.html"
+                        href="/pages/modules/salud-bucal/consultar.html"
                         id="opcion-consultar-salud-bucal"
                         class="nav-link"
                         data-modulo="salud-bucal"
