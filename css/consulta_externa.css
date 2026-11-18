@@ -1306,11 +1306,24 @@ body {
   }
 }
 .az-dashboard-title {
+  position: relative;
+  padding-left: 14px;
   font-size: 22px;
   font-weight: 700;
   color: #1c273c;
   letter-spacing: -1px;
   margin-bottom: 3px;
+}
+
+.az-dashboard-title::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 2px;
+  bottom: 2px;
+  width: 3px;
+  border-radius: 2px;
+  background: var(--sigss-primary);
 }
 .az-dashboard-text {
   font-size: 13px;

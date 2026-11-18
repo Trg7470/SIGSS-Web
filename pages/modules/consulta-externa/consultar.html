@@ -156,7 +156,7 @@
               <div class="card-header hc-card-header" id="encabezado-filtros" data-toggle="collapse"
                 href="#cuerpo-filtros" role="button" aria-expanded="true" aria-controls="cuerpo-filtros">
                 <span class="hc-card-header-titulo">
-                  Filtros de búsqueda
+                  <i class="fa-solid fa-filter mr-2"></i>Filtros de búsqueda
                 </span>
                 <i class="fa-solid fa-chevron-up hc-chevron" id="icono-colapso-filtros"></i>
               </div>
@@ -173,18 +173,29 @@
                       </div>
                       <div class="form-group col-md-4">
                         <label for="filtro-fecha-inicial">Fecha inicial</label>
-                        <input type="date" class="form-control" id="filtro-fecha-inicial" />
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fa-solid fa-calendar-days"></i></span>
+                          </div>
+                          <input type="date" class="form-control" id="filtro-fecha-inicial" />
+                        </div>
                       </div>
                       <div class="form-group col-md-4">
                         <label for="filtro-fecha-final">Fecha final</label>
-                        <input type="date" class="form-control" id="filtro-fecha-final" />
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fa-solid fa-calendar-days"></i></span>
+                          </div>
+                          <input type="date" class="form-control" id="filtro-fecha-final" />
+                        </div>
                       </div>
                     </div>
                     <div class="form-row justify-content-end hc-fila-botones">
                       <button type="button" class="btn btn-outline-secondary mr-2" id="boton-limpiar-filtros">
-                        Limpiar
+                        <i class="fa-solid fa-eraser mr-1"></i>Limpiar
                       </button>
-                      <button type="submit" class="btn btn-primary" id="boton-buscar-historial">
+                      <button type="submit" class="btn btn-primary" id="boton-buscar-historial"
+                        data-modulo="consulta-externa">
                         <i class="fa-solid fa-magnifying-glass mr-1"></i>
                         Buscar
                       </button>
@@ -199,7 +210,7 @@
               <div class="card-header hc-card-header">
                 <span class="hc-card-header-titulo">
                   Resultados
-                  (<span id="contador-resultados">4</span> registros)
+                  (<span id="contador-resultados">0</span> registros)
                 </span>
               </div>
               <div class="card-body p-0">
@@ -223,65 +234,12 @@
                         <th scope="col" class="text-center">Acciones</th>
                       </tr>
                     </thead>
-                    <tbody id="cuerpo-tabla-historial">
-                      <tr data-id-consulta="145">
-                        <td class="hc-celda-monoespaciada">RE-000145</td>
-                        <td>EXP-003268</td>
-                        <td>15/11/2026</td>
-                        <td class="hc-celda-paciente"><span class="hc-avatar">PA</span><span class="hc-nombre-paciente">Pérez López Ana María</span></td>
-                        <td class="hc-celda-monoespaciada">PELA990101MOCXXX01</td>
-                        <td class="text-center">
-                          <span class="hc-acciones-exportar">
-                          <button type="button" class="btn btn-sm btn-outline-secondary btn-exportar" data-id-consulta="145" data-tipo-salida="xlsx" aria-label="Exportar a Excel"><span class="hc-texto-boton">Excel</span></button>
-                          <button type="button" class="btn btn-sm btn-outline-secondary btn-exportar" data-id-consulta="145" data-tipo-salida="pdf" aria-label="Exportar a PDF"><span class="hc-texto-boton">PDF</span></button>
-                          </span>
-                        </td>
-                      </tr>
-                      <tr data-id-consulta="144">
-                        <td class="hc-celda-monoespaciada">RE-000144</td>
-                        <td>EXP-003267</td>
-                        <td>14/11/2026</td>
-                        <td class="hc-celda-paciente"><span class="hc-avatar">HC</span><span class="hc-nombre-paciente">Hernández Ruiz Carlos</span></td>
-                        <td class="hc-celda-monoespaciada">HERC970512HOCXXX02</td>
-                        <td class="text-center">
-                          <span class="hc-acciones-exportar">
-                          <button type="button" class="btn btn-sm btn-outline-secondary btn-exportar" data-id-consulta="144" data-tipo-salida="xlsx" aria-label="Exportar a Excel"><span class="hc-texto-boton">Excel</span></button>
-                          <button type="button" class="btn btn-sm btn-outline-secondary btn-exportar" data-id-consulta="144" data-tipo-salida="pdf" aria-label="Exportar a PDF"><span class="hc-texto-boton">PDF</span></button>
-                          </span>
-                        </td>
-                      </tr>
-                      <tr data-id-consulta="143">
-                        <td class="hc-celda-monoespaciada">RE-000143</td>
-                        <td>EXP-003266</td>
-                        <td>13/11/2026</td>
-                        <td class="hc-celda-paciente"><span class="hc-avatar">TM</span><span class="hc-nombre-paciente">Torres Díaz María Fernanda</span></td>
-                        <td class="hc-celda-monoespaciada">TODF020304MOCXXX03</td>
-                        <td class="text-center">
-                          <span class="hc-acciones-exportar">
-                          <button type="button" class="btn btn-sm btn-outline-secondary btn-exportar" data-id-consulta="143" data-tipo-salida="xlsx" aria-label="Exportar a Excel"><span class="hc-texto-boton">Excel</span></button>
-                          <button type="button" class="btn btn-sm btn-outline-secondary btn-exportar" data-id-consulta="143" data-tipo-salida="pdf" aria-label="Exportar a PDF"><span class="hc-texto-boton">PDF</span></button>
-                          </span>
-                        </td>
-                      </tr>
-                      <tr data-id-consulta="142">
-                        <td class="hc-celda-monoespaciada">RE-000142</td>
-                        <td>EXP-003265</td>
-                        <td>12/11/2026</td>
-                        <td class="hc-celda-paciente"><span class="hc-avatar">RJ</span><span class="hc-nombre-paciente">Ramírez Ortega José Luis</span></td>
-                        <td class="hc-celda-monoespaciada">RAOJ980720HOCXXX04</td>
-                        <td class="text-center">
-                          <span class="hc-acciones-exportar">
-                          <button type="button" class="btn btn-sm btn-outline-secondary btn-exportar" data-id-consulta="142" data-tipo-salida="xlsx" aria-label="Exportar a Excel"><span class="hc-texto-boton">Excel</span></button>
-                          <button type="button" class="btn btn-sm btn-outline-secondary btn-exportar" data-id-consulta="142" data-tipo-salida="pdf" aria-label="Exportar a PDF"><span class="hc-texto-boton">PDF</span></button>
-                          </span>
-                        </td>
-                      </tr>
-                    </tbody>
+                    <tbody id="cuerpo-tabla-historial"></tbody>
                   </table>
                 </div>
               </div>
               <div class="card-footer hc-card-footer">
-                <span class="text-muted small" id="texto-paginacion">Mostrando 1 a 4 de 4 registros</span>
+                <span class="text-muted small" id="texto-paginacion">Mostrando 0 a 0 de 0 registros</span>
                 <nav aria-label="Paginación del historial de consultas">
                   <ul class="pagination pagination-sm mb-0" id="paginacion-historial">
                     <li class="page-item disabled" id="pagina-primera">

@@ -1,0 +1,66 @@
+/* ==========================================================================
+   Generación de reportes (hoja diaria)
+   Reaprovecha las tarjetas/tabla de "Historial de consultas" (clases hc-*,
+   definidas en consultas_registros.css). Aquí solo se agrega lo propio de
+   esta pantalla: el aviso de cuántas hojas se generarán y el bloque de
+   botones de exportación. Mismas variables --hc-* que esa hoja.
+   ========================================================================== */
+
+/* Encabezado de la tarjeta de resultados: título a la izquierda, aviso de
+   hojas a la derecha (en vez del simple título de "Historial"). */
+.rd-card-header-resultados {
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.rd-info-hojas {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.65rem;
+  border-radius: 999px;
+  background-color: var(--hc-fondo-suave);
+  color: var(--hc-texto-secundario);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+/* Pie de la tarjeta: resumen de módulo + fecha a la izquierda, botones de
+   exportación a la derecha. */
+.rd-card-footer-acciones {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  background-color: #fff;
+}
+
+.rd-botones-exportar {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.rd-botones-exportar .btn {
+  display: inline-flex;
+  align-items: center;
+  transition: transform var(--hc-transicion), box-shadow var(--hc-transicion);
+}
+
+.rd-botones-exportar .btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+@media (max-width: 575.98px) {
+  .rd-card-footer-acciones {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .rd-botones-exportar {
+    flex-direction: column;
+  }
+
+  .rd-botones-exportar .btn {
+    justify-content: center;
+  }
+}

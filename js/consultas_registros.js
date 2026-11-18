@@ -2,17 +2,31 @@ import {
     mensaje_por_estado,
     obtener_mensaje_error,
     es_error_de_red,
-    MENSAJE_SIN_CONEXION
+    MENSAJE_SIN_CONEXION,
+    crear_paginador
 } from "./utils.js";
 
 const Usuario = JSON.parse(sessionStorage.getItem("usuario"));
 
-const URL_HISTORIAL = "http://localhost:3000/api/modules/consulta-externa/historial";
-const URL_EXPORTAR = "http://localhost:3000/api/documentos/exportar";
+const BASE_API = "http://localhost:3000/api";
+const URL_EXPORTAR = `${BASE_API}/documentos/exportar`;
 const LIMITE_POR_PAGINA = 10;
 
-let pagina_actual = 1;
-let total_paginas_actual = 1;
+/** Arma la URL del historial para el módulo que se esté consultando. */
+function url_historial(modulo) {
+    return `${BASE_API}/modules/${modulo}/historial`;
+}
+
+// Controlador de paginación (ver crear_paginador en utils.js); se crea
+// en DOMContentLoaded, una vez que el HTML de los botones ya existe.
+let paginador = null;
+
+// Módulo que esta página consulta (p. ej. "consulta-externa",
+// "planificacion-familiar"). Se toma del atributo data-modulo del botón
+// de búsqueda, así que cada página solo tiene que declararlo ahí:
+//   <button id="boton-buscar-historial" data-modulo="consulta-externa" ...>
+// El resto del script es el mismo para cualquier módulo.
+let modulo_actual = null;
 
 document.addEventListener("DOMContentLoaded", () => {
     if (!Usuario) {
@@ -26,46 +40,33 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
     }
 
-    establecer_fechas_por_defecto();
-    buscar_historial(1);
-
+    modulo_actual = document.getElementById("boton-buscar-historial")?.dataset.modulo || null;
+    if (!modulo_actual) {
+        console.error(
+            "Falta el atributo data-modulo en #boton-buscar-historial; " +
+            "no se puede determinar qué historial consultar."
+        );
+    }
     document.getElementById("form-filtros-historial")
         .addEventListener("submit", (evento) => {
             evento.preventDefault();
-            buscar_historial(1);
+            buscar_historial(modulo_actual, 1);
         });
 
     document.getElementById("boton-limpiar-filtros")
         .addEventListener("click", () => {
             document.getElementById("filtro-busqueda").value = "";
-            establecer_fechas_por_defecto();
-            buscar_historial(1);
+            buscar_historial(modulo_actual, 1);
         });
 
     document.getElementById("cuerpo-tabla-historial")
         .addEventListener("click", manejar_click_tabla);
-
-    configurar_paginacion();
+    paginador = crear_paginador((nueva_pagina) => buscar_historial(modulo_actual, nueva_pagina));
+    document.getElementById("titulo-bienvenida").textContent = `Consulta de Registros`;
+    document.getElementById("descripcion-bienvenida").textContent = `Módulo para consultar los registros de consultas realizadas en el sistema.`;
 });
 
 // ======================= FECHAS =======================
-
-function fecha_hoy_como_texto() {
-    const hoy = new Date();
-    const anio = hoy.getFullYear();
-    const mes = String(hoy.getMonth() + 1).padStart(2, "0");
-    const dia = String(hoy.getDate()).padStart(2, "0");
-    return `${anio}-${mes}-${dia}`;
-}
-
-function establecer_fechas_por_defecto() {
-    // Por defecto se busca "hoy": fecha inicial = fecha final. Un rango de
-    // varios días es simplemente que el usuario cambie una de las dos.
-    const hoy = fecha_hoy_como_texto();
-    document.getElementById("filtro-fecha-inicial").value = hoy;
-    document.getElementById("filtro-fecha-final").value = hoy;
-}
-
 function formatear_fecha_para_mostrar(valor_fecha) {
     if (!valor_fecha) return "—";
     // El valor puede llegar como 'YYYY-MM-DD' o como ISO completo
@@ -78,7 +79,24 @@ function formatear_fecha_para_mostrar(valor_fecha) {
 
 // ======================= BÚSQUEDA =======================
 
-async function buscar_historial(pagina = 1) {
+/**
+ * @param {string} modulo  Módulo a consultar (p. ej. "consulta-externa").
+ *                         Si se omite, se reutiliza el último usado.
+ * @param {number} pagina
+ */
+async function buscar_historial(modulo, pagina = 1) {
+    if (modulo) modulo_actual = modulo;
+
+    if (!modulo_actual) {
+        mostrarPopup({
+            tipo: "error",
+            titulo: "Módulo no especificado",
+            mensaje: "No se indicó qué módulo consultar.",
+            boton: true
+        });
+        return;
+    }
+
     const fecha_inicial = document.getElementById("filtro-fecha-inicial").value;
     const fecha_final = document.getElementById("filtro-fecha-final").value;
     const busqueda = document.getElementById("filtro-busqueda").value.trim();
@@ -103,7 +121,12 @@ async function buscar_historial(pagina = 1) {
         return;
     }
 
-    mostrar_estado_cargando();
+    mostrarPopup({
+        tipo: "carga",
+        titulo: "Buscando",
+        mensaje: "Buscando consultas...",
+        boton: false
+    });
 
     const parametros = new URLSearchParams({
         fecha_inicial,
@@ -114,7 +137,7 @@ async function buscar_historial(pagina = 1) {
     if (busqueda) parametros.set("busqueda", busqueda);
 
     try {
-        const response = await fetch(`${URL_HISTORIAL}?${parametros.toString()}`);
+        const response = await fetch(`${url_historial(modulo_actual)}?${parametros.toString()}`);
 
         if (!response.ok) {
             const mensaje = await obtener_mensaje_error(response);
@@ -122,12 +145,11 @@ async function buscar_historial(pagina = 1) {
         }
 
         const datos = await response.json();
-        pagina_actual = datos.pagina || pagina;
         pintar_resultados(datos);
     } catch (error) {
         console.error("Error al buscar el historial de consultas:", error);
-        mostrar_mensaje_tabla("fa-triangle-exclamation", "No fue posible obtener el historial de consultas.");
-        actualizar_contador_y_paginacion(0, 1, LIMITE_POR_PAGINA);
+        obtener_cuerpo_tabla().replaceChildren();
+        paginador.actualizar(0, 1, LIMITE_POR_PAGINA);
         mostrarPopup({
             tipo: "error",
             titulo: "Error al buscar",
@@ -145,41 +167,6 @@ function obtener_cuerpo_tabla() {
     return document.getElementById("cuerpo-tabla-historial");
 }
 
-function mostrar_estado_cargando() {
-    const cuerpo = obtener_cuerpo_tabla();
-    cuerpo.replaceChildren();
-
-    const fila = document.createElement("tr");
-    const celda = document.createElement("td");
-    celda.colSpan = 6;
-
-    const contenedor = document.createElement("div");
-    contenedor.className = "hc-cargando";
-    contenedor.innerHTML = `<i class="fa-solid fa-circle-notch fa-spin"></i><br>Buscando consultas...`;
-
-    celda.appendChild(contenedor);
-    fila.appendChild(celda);
-    cuerpo.appendChild(fila);
-}
-
-function mostrar_mensaje_tabla(icono, texto) {
-    const cuerpo = obtener_cuerpo_tabla();
-    cuerpo.replaceChildren();
-
-    const fila = document.createElement("tr");
-    const celda = document.createElement("td");
-    celda.colSpan = 6;
-
-    const contenedor = document.createElement("div");
-    contenedor.className = "hc-sin-resultados";
-    contenedor.innerHTML = `<i class="fa-solid ${icono}"></i>`;
-    contenedor.append(texto);
-
-    celda.appendChild(contenedor);
-    fila.appendChild(celda);
-    cuerpo.appendChild(fila);
-}
-
 function iniciales_de_nombre(nombre) {
     const palabras = String(nombre || "").trim().split(/\s+/).filter(Boolean);
     const primera = palabras[0]?.[0] || "";
@@ -187,12 +174,17 @@ function iniciales_de_nombre(nombre) {
     return (primera + segunda).toUpperCase() || "--";
 }
 
-function construir_boton_exportar(id_consulta, tipo_salida, texto, etiqueta) {
+function construir_boton_exportar(registro, tipo_salida, texto, etiqueta) {
     const boton = document.createElement("button");
     boton.type = "button";
     boton.className = "btn btn-sm btn-outline-secondary btn-exportar";
-    boton.dataset.idConsulta = id_consulta;
+    boton.dataset.idConsulta = registro.id_consulta;
     boton.dataset.tipoSalida = tipo_salida;
+    // Para armar el nombre de descarga en el cliente:
+    // Apellido_Paterno_Apellido_Materno_Modulo_FechaConsulta.
+    boton.dataset.apellidoPaterno = registro.apellido_paterno || "";
+    boton.dataset.apellidoMaterno = registro.apellido_materno || "";
+    boton.dataset.fecha = registro.fecha || "";
     boton.setAttribute("aria-label", etiqueta);
 
     const texto_boton = document.createElement("span");
@@ -224,10 +216,10 @@ function construir_fila(registro) {
     celda_paciente.className = "hc-celda-paciente";
     const avatar = document.createElement("span");
     avatar.className = "hc-avatar";
-    avatar.textContent = iniciales_de_nombre(registro.nombre);
+    avatar.textContent = iniciales_de_nombre(registro.nombre_paciente);
     const nombre_paciente = document.createElement("span");
     nombre_paciente.className = "hc-nombre-paciente";
-    nombre_paciente.textContent = registro.nombre || "—";
+    nombre_paciente.textContent = registro.nombre_paciente || "—";
     celda_paciente.append(avatar, nombre_paciente);
     fila.appendChild(celda_paciente);
 
@@ -241,8 +233,8 @@ function construir_fila(registro) {
     const contenedor_acciones = document.createElement("span");
     contenedor_acciones.className = "hc-acciones-exportar";
     contenedor_acciones.append(
-        construir_boton_exportar(registro.id_consulta, "xlsx", "Excel", "Exportar a Excel"),
-        construir_boton_exportar(registro.id_consulta, "pdf", "PDF", "Exportar a PDF")
+        construir_boton_exportar(registro, "xlsx", "Excel", "Exportar a Excel"),
+        construir_boton_exportar(registro, "pdf", "PDF", "Exportar a PDF")
     );
     celda_acciones.appendChild(contenedor_acciones);
     fila.appendChild(celda_acciones);
@@ -257,62 +249,20 @@ function pintar_resultados(datos) {
     cuerpo.replaceChildren();
 
     if (registros.length === 0) {
-        mostrar_mensaje_tabla("fa-folder-open", "No se encontraron consultas con esos filtros.");
+        mostrarPopup({
+            tipo: "advertencia",
+            titulo: "Sin resultados",
+            mensaje: "No se encontraron consultas con esos filtros.",
+            boton: true
+        });
     } else {
         for (const registro of registros) {
             cuerpo.appendChild(construir_fila(registro));
         }
+        cerrarPopup();
     }
 
-    actualizar_contador_y_paginacion(total, pagina, limite);
-}
-
-// ======================= CONTADOR Y PAGINACIÓN =======================
-
-function actualizar_contador_y_paginacion(total, pagina, limite) {
-    document.getElementById("contador-resultados").textContent = total;
-
-    const inicio = total === 0 ? 0 : (pagina - 1) * limite + 1;
-    const fin = Math.min(pagina * limite, total);
-    document.getElementById("texto-paginacion").textContent =
-        `Mostrando ${inicio} a ${fin} de ${total} registros`;
-
-    total_paginas_actual = Math.max(1, Math.ceil(total / limite));
-    pagina_actual = Math.min(pagina, total_paginas_actual);
-
-    const elemento_pagina_activa = document.querySelector("#paginacion-historial .page-item.active .page-link");
-    if (elemento_pagina_activa) elemento_pagina_activa.textContent = String(pagina_actual);
-
-    alternar_deshabilitado("pagina-primera", pagina_actual === 1);
-    alternar_deshabilitado("pagina-anterior", pagina_actual === 1);
-    alternar_deshabilitado("pagina-siguiente", pagina_actual === total_paginas_actual);
-    alternar_deshabilitado("pagina-ultima", pagina_actual === total_paginas_actual);
-}
-
-function alternar_deshabilitado(id_elemento, deshabilitado) {
-    const elemento = document.getElementById(id_elemento);
-    if (!elemento) return;
-    elemento.classList.toggle("disabled", deshabilitado);
-    const enlace = elemento.querySelector(".page-link");
-    if (enlace) enlace.tabIndex = deshabilitado ? -1 : 0;
-}
-
-function configurar_paginacion() {
-    const botones = {
-        "pagina-primera": () => 1,
-        "pagina-anterior": () => Math.max(1, pagina_actual - 1),
-        "pagina-siguiente": () => Math.min(total_paginas_actual, pagina_actual + 1),
-        "pagina-ultima": () => total_paginas_actual
-    };
-
-    for (const [id_elemento, calcular_pagina] of Object.entries(botones)) {
-        document.getElementById(id_elemento)?.addEventListener("click", (evento) => {
-            evento.preventDefault();
-            if (evento.currentTarget.classList.contains("disabled")) return;
-            const nueva_pagina = calcular_pagina();
-            if (nueva_pagina !== pagina_actual) buscar_historial(nueva_pagina);
-        });
-    }
+    paginador.actualizar(total, pagina, limite);
 }
 
 // ======================= EXPORTAR (EXCEL / PDF) =======================
@@ -328,8 +278,24 @@ function manejar_click_tabla(evento) {
     exportar_consulta(boton);
 }
 
+/** Arma "Apellido_Paterno_Apellido_Materno_Modulo_FechaConsulta" para el
+ *  nombre de descarga, sin espacios y con la fecha en formato AAAA-MM-DD. */
+function armar_nombre_archivo(apellido_paterno, apellido_materno, modulo, fecha) {
+    const solo_fecha = fecha ? String(fecha).slice(0, 10) : "";
+    return [apellido_paterno, apellido_materno, modulo, solo_fecha]
+        .filter(Boolean)
+        .join("_")
+        .replace(/\s+/g, "_");
+}
+
 async function exportar_consulta(boton) {
-    const { idConsulta: id_consulta, tipoSalida: tipo_salida } = boton.dataset;
+    const {
+        idConsulta: id_consulta,
+        tipoSalida: tipo_salida,
+        apellidoPaterno: apellido_paterno,
+        apellidoMaterno: apellido_materno,
+        fecha
+    } = boton.dataset;
     if (!id_consulta || !tipo_salida) return;
 
     const etiqueta_formato = tipo_salida === "pdf" ? "PDF" : "Excel";
@@ -342,10 +308,13 @@ async function exportar_consulta(boton) {
         boton: false
     });
 
+    const nombre_archivo_solicitado = armar_nombre_archivo(apellido_paterno, apellido_materno, modulo_actual, fecha);
+
     const parametros = new URLSearchParams({
-        formato: "consulta-externa",
+        formato: modulo_actual,
         tipo_salida,
-        id_consulta
+        id_consulta,
+        nombre_archivo: nombre_archivo_solicitado
     });
 
     try {
@@ -357,9 +326,10 @@ async function exportar_consulta(boton) {
         }
 
         const blob = await response.blob();
+        const extension = tipo_salida === "pdf" ? "pdf" : "xlsx";
         const nombre_archivo =
             extraer_nombre_archivo(response.headers.get("Content-Disposition")) ||
-            `consulta-externa-${id_consulta}.${tipo_salida === "pdf" ? "pdf" : "xlsx"}`;
+            `${nombre_archivo_solicitado || `${modulo_actual}-${id_consulta}`}.${extension}`;
 
         descargar_blob(blob, nombre_archivo);
 
