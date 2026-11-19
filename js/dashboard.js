@@ -116,7 +116,6 @@ function generar_menu_medico() {
 
     const menu =
         document.getElementById("menu-principal");
-
     if (!menu) {
         console.error(
             "No se encontró #menu-principal."
@@ -125,10 +124,8 @@ function generar_menu_medico() {
     }
 
     menu.innerHTML = `
-
         <!-- HOME -->
         <li id="nav-home" class="nav-item">
-
             <a
                 href="/pages/dashboard/dashboard.html"
                 id="enlace-home"
@@ -139,15 +136,10 @@ function generar_menu_medico() {
                 <i class="typcn typcn-home"></i>
                 Home
             </a>
-
         </li>
-
-
         <!-- CONSULTA EXTERNA -->
         <li id="nav-consulta-externa" class="nav-item">
-
             <details id="grupo-consulta-externa">
-
                 <summary
                     id="enlace-consulta-externa"
                     class="nav-link"
@@ -155,12 +147,10 @@ function generar_menu_medico() {
                     <i class="typcn typcn-clipboard"></i>
                     Consulta Externa
                 </summary>
-
                 <nav
                     id="submenu-consulta-externa"
                     class="az-menu-sub"
                 >
-
                     <a
                         href="/pages/modules/consulta-externa/registrar.html"
                         id="opcion-registrar-consulta-externa"
@@ -171,7 +161,6 @@ function generar_menu_medico() {
                         <i class="typcn typcn-plus-outline"></i>
                         Registrar consulta
                     </a>
-
                     <a
                         href="/pages/modules/consulta-externa/consultar.html"
                         id="opcion-consultar-consulta-externa"
@@ -182,19 +171,12 @@ function generar_menu_medico() {
                         <i class="typcn typcn-notes-outline"></i>
                         Consultar registros
                     </a>
-
                 </nav>
-
             </details>
-
         </li>
-
-
         <!-- SALUD BUCAL -->
         <li id="nav-salud-bucal" class="nav-item">
-
             <details id="grupo-salud-bucal">
-
                 <summary
                     id="enlace-salud-bucal"
                     class="nav-link"
@@ -202,12 +184,10 @@ function generar_menu_medico() {
                     <i class="typcn typcn-heart-outline"></i>
                     Salud Bucal
                 </summary>
-
                 <nav
                     id="submenu-salud-bucal"
                     class="az-menu-sub"
                 >
-
                     <a
                         href="../modules/salud-bucal/registrar.html"
                         id="opcion-registrar-salud-bucal"
@@ -218,7 +198,6 @@ function generar_menu_medico() {
                         <i class="typcn typcn-plus-outline"></i>
                         Registrar consulta
                     </a>
-
                     <a
                         href="../modules/salud-bucal/consultar.html"
                         id="opcion-consultar-salud-bucal"
@@ -229,17 +208,11 @@ function generar_menu_medico() {
                         <i class="typcn typcn-notes-outline"></i>
                         Consultar registros
                     </a>
-
                 </nav>
-
             </details>
-
         </li>
-
-
         <!-- DETECCIONES -->
         <li id="nav-detecciones" class="nav-item">
-
             <a
                 href="../modules/detecciones/index.html"
                 id="enlace-detecciones"
@@ -250,15 +223,10 @@ function generar_menu_medico() {
                 <i class="typcn typcn-beaker"></i>
                 Detecciones
             </a>
-
         </li>
-
-
         <!-- PLANIFICACIÓN FAMILIAR -->
         <li id="nav-planificacion-familiar" class="nav-item">
-
             <details id="grupo-planificacion-familiar">
-
                 <summary
                     id="enlace-planificacion-familiar"
                     class="nav-link"
@@ -266,12 +234,10 @@ function generar_menu_medico() {
                     <i class="typcn typcn-clipboard"></i>
                     Planificación Familiar
                 </summary>
-
                 <nav
                     id="submenu-planificacion-familiar"
                     class="az-menu-sub"
                 >
-
                     <a
                         href="/pages/modules/planificacion-familiar/registrar.html"
                         id="opcion-registrar-planificacion-familiar"
@@ -282,7 +248,6 @@ function generar_menu_medico() {
                         <i class="typcn typcn-plus-outline"></i>
                         Registrar consulta
                     </a>
-
                     <a
                         href="/pages/modules/planificacion-familiar/consultar.html"
                         id="opcion-consultar-planificacion-familiar"
@@ -293,17 +258,11 @@ function generar_menu_medico() {
                         <i class="typcn typcn-notes-outline"></i>
                         Consultar registros
                     </a>
-
                 </nav>
-
             </details>
-
         </li>
-
-
         <!-- REPORTES -->
         <li id="nav-reportes" class="nav-item">
-
             <a
                 href="/pages/modules/reportes/hoja_diaria.html"
                 id="enlace-reportes"
@@ -314,12 +273,9 @@ function generar_menu_medico() {
                 <i class="typcn typcn-document-text"></i>
                 Reportes
             </a>
-
         </li>
-
     `;
-
-}
+} 
 
 
 /* =========================================================
