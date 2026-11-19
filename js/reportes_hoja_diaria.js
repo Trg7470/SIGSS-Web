@@ -50,6 +50,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     document.getElementById("boton-generar-pdf")
         .addEventListener("click", () => generar_documento("pdf"));
+    document.getElementById("titulo-bienvenida").textContent = `Reporte de Hoja Diaria`;
+    document.getElementById("descripcion-bienvenida").textContent = `Módulo de generación de reportes diarios.`;
 });
 
 /**
@@ -151,8 +153,8 @@ function mostrar_resultados(registros, modulo, fecha) {
             <td>${escapar(registro.expediente)}</td>
             <td>${formatear_fecha(registro.fecha) || fecha_formateada}</td>
             <td class="hc-celda-paciente">
-                <span class="hc-avatar">${iniciales(registro.nombre)}</span>
-                <span class="hc-nombre-paciente">${escapar(registro.nombre)}</span>
+                <span class="hc-avatar">${iniciales(registro.nombre_paciente)}</span>
+                <span class="hc-nombre-paciente">${escapar(registro.nombre_paciente)}</span>
             </td>
             <td class="hc-celda-monoespaciada">${escapar(registro.curp)}</td>
         `;

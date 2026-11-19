@@ -111,6 +111,7 @@ async function cargar_dashboard() {
    3. GENERAR MENÚ DEL MÉDICO
    ========================================================= */
 
+
 function generar_menu_medico() {
 
     const menu =
@@ -124,6 +125,23 @@ function generar_menu_medico() {
     }
 
     menu.innerHTML = `
+
+        <!-- HOME -->
+        <li id="nav-home" class="nav-item">
+
+            <a
+                href="/pages/dashboard/dashboard.html"
+                id="enlace-home"
+                class="nav-link"
+                data-modulo="home"
+                data-vista="inicio"
+            >
+                <i class="typcn typcn-home"></i>
+                Home
+            </a>
+
+        </li>
+
 
         <!-- CONSULTA EXTERNA -->
         <li id="nav-consulta-externa" class="nav-item">
@@ -191,7 +209,7 @@ function generar_menu_medico() {
                 >
 
                     <a
-                        href="/pages/modules/salud-bucal/registrar.html"
+                        href="../modules/salud-bucal/registrar.html"
                         id="opcion-registrar-salud-bucal"
                         class="nav-link"
                         data-modulo="salud-bucal"
@@ -202,7 +220,7 @@ function generar_menu_medico() {
                     </a>
 
                     <a
-                        href="/pages/modules/salud-bucal/consultar.html"
+                        href="../modules/salud-bucal/consultar.html"
                         id="opcion-consultar-salud-bucal"
                         class="nav-link"
                         data-modulo="salud-bucal"
@@ -286,35 +304,16 @@ function generar_menu_medico() {
         <!-- REPORTES -->
         <li id="nav-reportes" class="nav-item">
 
-            <details id="grupo-reportes">
-
-                <summary
-                    id="enlace-reportes"
-                    class="nav-link"
-                >
-                    <i class="typcn typcn-document-text"></i>
-                    Reportes
-                </summary>
-
-                <nav
-                    id="submenu-reportes"
-                    class="az-menu-sub"
-                >
-
-                    <a
-                        href="/pages/modules/reportes/hoja_diaria.html"
-                        id="opcion-hoja-diaria-reportes"
-                        class="nav-link"
-                        data-modulo="reportes"
-                        data-vista="hoja-diaria"
-                    >
-                        <i class="typcn typcn-calendar-outline"></i>
-                        Hoja diaria
-                    </a>
-
-                </nav>
-
-            </details>
+            <a
+                href="/pages/modules/reportes/hoja_diaria.html"
+                id="enlace-reportes"
+                class="nav-link"
+                data-modulo="reportes"
+                data-vista="hoja-diaria"
+            >
+                <i class="typcn typcn-document-text"></i>
+                Reportes
+            </a>
 
         </li>
 
