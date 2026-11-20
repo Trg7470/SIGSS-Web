@@ -189,7 +189,7 @@ function generar_menu_medico() {
                     class="az-menu-sub"
                 >
                     <a
-                        href="../modules/salud-bucal/registrar.html"
+                        href="/pages/modules/salud-bucal/registrar.html"
                         id="opcion-registrar-salud-bucal"
                         class="nav-link"
                         data-modulo="salud-bucal"
@@ -199,7 +199,7 @@ function generar_menu_medico() {
                         Registrar consulta
                     </a>
                     <a
-                        href="../modules/salud-bucal/consultar.html"
+                        href="/pages/modules/salud-bucal/consultar.html"
                         id="opcion-consultar-salud-bucal"
                         class="nav-link"
                         data-modulo="salud-bucal"
@@ -214,7 +214,7 @@ function generar_menu_medico() {
         <!-- DETECCIONES -->
         <li id="nav-detecciones" class="nav-item">
             <a
-                href="../modules/detecciones/index.html"
+                href="/pages/modules/detecciones/index.html"
                 id="enlace-detecciones"
                 class="nav-link"
                 data-modulo="detecciones"

@@ -1122,6 +1122,10 @@ async function registrar_consulta() {
 
     const data = {
 
+        usuario: {
+            Id_Usuario: Usuario.Id_Usuario
+        },
+
         /* -----------------------------------------
            PACIENTE
            ----------------------------------------- */
@@ -1455,28 +1459,51 @@ async function registrar_consulta() {
         }
     };
 
-    /* -----------------------------------------
-       CONFIRMACIÓN
-       ----------------------------------------- */
+    try {
 
-    const confirmar = window.confirm(
-        "¿Confirmas que los datos de la consulta son correctos?"
-    );
+        const response = await fetch(
+            "http://localhost:3000/api/modules/salud-bucal/registrar",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+            }
+        );
 
-    if (!confirmar) return;
+        if (!response.ok) {
+            const mensaje = await obtener_mensaje_error(response);
+            throw new Error(mensaje);
+        }
 
-    console.log(
-        "SIGSS | Salud bucal | JSON listo para integrar con API:",
-        data
-    );
+        const resultado = await response.json();
 
-    mostrarPopup({
-        tipo: "informacion",
-        titulo: "Registro pendiente de integración",
-        mensaje:
-            "Los datos fueron validados y preparados, pero todavía no se han guardado en la base de datos. Falta implementar el endpoint de Salud Bucal.",
-        boton: true
-    });
+        mostrarPopup({
+            tipo: "exito",
+            titulo: "Consulta registrada",
+            mensaje:
+                "La consulta se registró correctamente. A continuación se abrirá el formulario de la nota médica.",
+            boton: true,
+            redireccion: `/pages/modules/nota-medica/formulario.html?id_consulta=${resultado.Id_Consulta}`
+        });
+
+    } catch (error) {
+
+        console.error(
+            "Error al registrar la consulta de salud bucal:",
+            error
+        );
+
+        mostrarPopup({
+            tipo: "error",
+            titulo: "Error de registro",
+            mensaje: es_error_de_red(error)
+                ? MENSAJE_SIN_CONEXION
+                : (error.message || "No fue posible registrar la consulta."),
+            boton: true
+        });
+    }
 }
 
 /* =========================================================
@@ -1633,12 +1660,62 @@ document.getElementById(
     actualizar_edad
 );
 
-document.getElementById(
-    "guardar-datos"
-).addEventListener(
-    "click",
-    registrar_consulta
-);
+const boton_registrar = document.getElementById("guardar-datos");
+
+boton_registrar.addEventListener("click", async () => {
+
+    if (boton_registrar.disabled) return;
+
+    boton_registrar.disabled = true;
+
+    try {
+
+        if (!validar_consulta()) return;
+
+        const confirmar = await mostrarPopup({
+            tipo: "advertencia",
+            titulo: "Confirmar registro de consulta",
+            mensaje:
+                `¿Estás seguro de registrar esta consulta?\n\n` +
+                `Paciente: ${Paciente.Nombre} ${Paciente.Apellido_Paterno} ${Paciente.Apellido_Materno}\n` +
+                `CURP: ${Paciente.Curp}\n` +
+                `Expediente: ${Paciente.Expediente}\n` +
+                `Fecha de atención: ${document.getElementById("fecha-atencion").value}\n\n` +
+                `Verifique que la información capturada sea correcta.`,
+            confirmar: true,
+            textoConfirmar: "Registrar",
+            textoCancelar: "Cancelar"
+        });
+
+        if (!confirmar) return;
+
+        mostrarPopup({
+            tipo: "carga",
+            titulo: "Registrando consulta",
+            mensaje: "Por favor espera mientras se registra la consulta.",
+            boton: false
+        });
+
+        await registrar_consulta();
+
+    } catch (error) {
+
+        console.error(
+            "Error al registrar la consulta de salud bucal:",
+            error
+        );
+
+        mostrarPopup({
+            tipo: "error",
+            titulo: "Error de registro",
+            mensaje: error.message || "No fue posible registrar la consulta.",
+            boton: true
+        });
+
+    } finally {
+        boton_registrar.disabled = false;
+    }
+});
 
 document.getElementById(
     "limpiar-formulario"

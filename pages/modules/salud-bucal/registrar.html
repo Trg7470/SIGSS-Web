@@ -14,7 +14,6 @@
 
 <link rel="stylesheet" href="../../../lib/bootstrap/css/bootstrap.min.css" />
 <link rel="stylesheet" href="../../../css/popup.css" />
-<link rel="stylesheet" href="../../../css/azia.css" />
 <link rel="stylesheet" href="../../../css/salud_bucal.css" />
 </head>
 
@@ -644,10 +643,14 @@
 
 <div id="modalPopup" class="popup-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-titulo" aria-describedby="modal-mensaje">
 <div class="popup-card">
-<button id="popup-cerrar" class="popup-cerrar" type="button" aria-label="Cerrar diálogo" onclick="cerrarPopup()">&times;</button>
+<button id="popup-cerrar" class="popup-cerrar" type="button" aria-label="Cerrar diálogo">&times;</button>
 <div id="modal-icono" class="popup-icono"><i class="fas fa-circle-xmark"></i></div>
 <h3 id="modal-titulo">Generando documento</h3>
 <p id="modal-mensaje">Espere un momento, por favor...</p>
+<div id="modal-botones-confirmacion" class="popup-botones-confirmacion">
+<button id="modal-cancelar" type="button">Revisar datos</button>
+<button id="modal-confirmar" type="button">Sí, registrar</button>
+</div>
 <button id="modal-boton" class="popup-boton" type="button">Aceptar</button>
 </div>
 </div>
