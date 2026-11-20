@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="es-MX">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="description" content="Sistema Integral de Gestión de Servicios de Salud" />
+  <meta name="author" content="SIGSS" />
+  <title>SIGSS | Nota médica</title>
+
+  <!-- Hojas de estilo de iconos (raíz = ../../../) -->
+  <link href="../../../lib/fontawesome-free/css/all.min.css" rel="stylesheet" />
+  <link href="../../../lib/ionicons/css/ionicons.min.css" rel="stylesheet" />
+  <link href="../../../lib/typicons.font/typicons.css" rel="stylesheet" />
+  <link href="../../../lib/flag-icon-css/css/flag-icon.min.css" rel="stylesheet" />
+
+  <!-- Hojas de estilo de la plantilla -->
+  <link rel="stylesheet" href="../../../lib/bootstrap/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="../../../css/popup.css" />
+  <link rel="stylesheet" href="../../../css/consulta_externa.css" />
+</head>
+
+<body id="pagina-sigss">
+  <!-- ================================================== -->
+  <!-- ENCABEZADO PRINCIPAL                               -->
+  <!-- ================================================== -->
+  <header id="seccion-encabezado" class="az-header">
+    <div id="contenedor-encabezado" class="container">
+      <div id="seccion-logotipo" class="az-header-left">
+        <a href="../dashboard/index.html" id="logo-sigss" class="az-logo"><span></span> MEDITECH</a>
+        <a href="#" id="boton-menu-movil" class="az-header-menu-icon d-lg-none"
+          aria-label="Abrir menú"><span></span></a>
+      </div>
+
+      <nav id="seccion-navegacion" class="az-header-menu">
+        <div id="encabezado-menu-movil" class="az-header-menu-header">
+          <a href="../dashboard/index.html" id="logo-sigss-movil" class="az-logo"><span></span> SIGSS</a>
+          <a href="#" id="boton-cerrar-menu" class="close" aria-label="Cerrar menú">&times;</a>
+        </div>
+        <ul id="menu-principal" class="nav"></ul>
+      </nav>
+
+      <div id="seccion-acciones-usuario" class="az-header-right">
+        <div id="seccion-mensajes" class="az-header-message">
+          <a href="#" id="boton-mensajes" aria-label="Mensajes"><i class="typcn typcn-messages"></i></a>
+        </div>
+
+        <div id="seccion-notificaciones" class="dropdown az-header-notification">
+          <a href="#" id="boton-notificaciones" class="new" aria-label="Notificaciones"><i
+              class="typcn typcn-bell"></i></a>
+          <div id="menu-notificaciones" class="dropdown-menu">
+            <div id="encabezado-notificaciones-movil" class="az-dropdown-header mg-b-20 d-sm-none">
+              <a href="#" id="volver-notificaciones" class="az-header-arrow" aria-label="Volver"><i
+                  class="icon ion-md-arrow-back"></i></a>
+            </div>
+            <h6 id="titulo-notificaciones" class="az-notification-title">Notificaciones</h6>
+            <p id="texto-notificaciones" class="az-notification-text">Tienes notificaciones pendientes</p>
+            <div id="lista-notificaciones" class="az-notification-list"></div>
+          </div>
+        </div>
+
+        <div id="seccion-perfil" class="dropdown az-profile-menu">
+          <a href="#" id="boton-perfil" class="az-img-user" aria-label="Perfil del usuario">
+            <img src="../../../assets/images/usuario.png" style="width: 28px; height: 28px" alt="Foto de perfil" />
+          </a>
+          <div id="menu-perfil" class="dropdown-menu">
+            <div id="encabezado-perfil-movil" class="az-dropdown-header d-sm-none">
+              <a href="#" id="volver-perfil" class="az-header-arrow" aria-label="Volver"><i
+                  class="icon ion-md-arrow-back"></i></a>
+            </div>
+            <div id="informacion-perfil" class="az-header-profile">
+              <div id="imagen-perfil" class="az-img-user">
+                <img src="../../../assets/images/usuario.png" alt="Foto de perfil" />
+              </div>
+              <h6 id="nombre-usuario">Nombre del usuario</h6>
+              <span id="rol-usuario">Tipo de usuario</span>
+            </div>
+            <a href="#" id="opcion-mi-perfil" class="dropdown-item"><i class="typcn typcn-user-outline"></i> Mi
+              perfil</a>
+            <a href="#" id="opcion-editar-perfil" class="dropdown-item"><i class="typcn typcn-edit"></i> Editar
+              perfil</a>
+            <a href="#" id="opcion-registro-actividad" class="dropdown-item"><i class="typcn typcn-time"></i> Registro
+              de actividad</a>
+            <a href="#" id="opcion-configuracion" class="dropdown-item"><i class="typcn typcn-cog-outline"></i>
+              Configuración de la cuenta</a>
+            <a href="#" id="opcion-cerrar-sesion" class="dropdown-item"><i class="typcn typcn-power-outline"></i> Cerrar
+              sesión</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================================================== -->
+  <!-- CONTENIDO PRINCIPAL                                -->
+  <!-- ================================================== -->
+  <main id="seccion-contenido" class="az-content az-content-dashboard">
+    <div id="contenedor-contenido" class="container">
+      <div id="contenido-dashboard" class="az-content-body">
+
+        <section id="seccion-bienvenida" class="az-dashboard-one-title">
+          <div id="informacion-bienvenida">
+            <h1 id="titulo-bienvenida" class="az-dashboard-title">Nota médica</h1>
+            <p id="descripcion-bienvenida" class="az-dashboard-text">
+              Consulta #<span id="folio-consulta-titulo">—</span> · los datos marcados como
+              "autollenado" vienen de la consulta recién registrada.
+            </p>
+          </div>
+        </section>
+
+        <section id="seccion-panel-usuario" aria-label="Formulario de nota médica">
+          <div id="contenedor-modulos" class="sigss-formulario">
+
+            <div class="shadow card card-body mt-4" id="datos-unidad-paciente">
+              <div class="card-title">
+                <h5>Datos de la unidad y del paciente <small class="text-muted">(autollenado)</small></h5>
+              </div>
+              <div class="card-body">
+                <div class="form-row">
+                  <div class="form-group col-md-3">
+                    <label for="nm-clues">CLUES</label>
+                    <input type="text" class="form-control" id="nm-clues"/>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="nm-nombre-unidad">Unidad de salud</label>
+                    <input type="text" class="form-control" id="nm-nombre-unidad"/>
+                  </div>
+                  <div class="form-group col-md-3">
+                    <label for="nm-expediente">Expediente</label>
+                    <input type="text" class="form-control" id="nm-expediente"/>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-3">
+                    <label for="nm-folio-receta">Folio de receta</label>
+                    <input type="text" class="form-control" id="nm-folio-receta"/>
+                  </div>
+                  <div class="form-group col-md-3">
+                    <label for="nm-fecha">Fecha</label>
+                    <input type="text" class="form-control" id="nm-fecha"/>
+                  </div>
+                  <div class="form-group col-md-3">
+                    <label for="nm-hora">Hora <small class="text-muted">(captúrala aquí)</small></label>
+                    <input type="time" class="form-control" id="nm-hora" />
+                  </div>
+                  <div class="form-group col-md-3">
+                    <label for="nm-proxima-cita">Próxima cita</label>
+                    <input type="date" class="form-control" id="nm-proxima-cita" />
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label for="nm-paciente">Paciente</label>
+                    <input type="text" class="form-control" id="nm-paciente"/>
+                  </div>
+                  <div class="form-group col-md-3">
+                    <label for="nm-curp">CURP</label>
+                    <input type="text" class="form-control" id="nm-curp"/>
+                  </div>
+                  <div class="form-group col-md-3">
+                    <label for="nm-sexo">Sexo</label>
+                    <input type="text" class="form-control" id="nm-sexo"/>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-3">
+                    <label for="nm-edad">Edad</label>
+                    <input type="text" class="form-control" id="nm-edad"/>
+                  </div>
+                  <div class="form-group col-md-3">
+                    <label for="nm-fecha-nacimiento">Fecha de nacimiento <small class="text-muted">(captúrala aquí)</small></label>
+                    <input type="date" class="form-control" id="nm-fecha-nacimiento" />
+                  </div>
+                  <div class="form-group col-md-3">
+                    <label for="nm-medico">Médico</label>
+                    <input type="text" class="form-control" id="nm-medico" />
+                  </div>
+                  <div class="form-group col-md-3">
+                    <label for="nm-cedula-profesional">Cédula profesional</label>
+                    <input type="text" class="form-control" id="nm-cedula-profesional"/>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Signos vitales (autollenado) -->
+            <div class="shadow card card-body mt-4" id="signos-vitales">
+              <div class="card-title">
+                <h5>Signos vitales <small class="text-muted">(autollenado)</small></h5>
+              </div>
+              <div class="card-body">
+                <div class="form-row">
+                  <div class="form-group col-md-2">
+                    <label for="nm-peso">Peso (Kg)</label>
+                    <input type="text" class="form-control" id="nm-peso"/>
+                  </div>
+                  <div class="form-group col-md-2">
+                    <label for="nm-talla">Talla (cm)</label>
+                    <input type="text" class="form-control" id="nm-talla"/>
+                  </div>
+                  <div class="form-group col-md-2">
+                    <label for="nm-imc">IMC <small class="text-muted">(calculado)</small></label>
+                    <input type="text" class="form-control" id="nm-imc"/>
+                  </div>
+                  <div class="form-group col-md-2">
+                    <label for="nm-fc">FC (lpm)</label>
+                    <input type="text" class="form-control" id="nm-fc"/>
+                  </div>
+                  <div class="form-group col-md-2">
+                    <label for="nm-fr">FR (rpm)</label>
+                    <input type="text" class="form-control" id="nm-fr"/>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-2">
+                    <label for="nm-temp">Temp (°C)</label>
+                    <input type="text" class="form-control" id="nm-temp"/>
+                  </div>
+                  <div class="form-group col-md-2">
+                    <label for="nm-ta">TA (mmHg)</label>
+                    <input type="text" class="form-control" id="nm-ta"/>
+                  </div>
+                  <div class="form-group col-md-2">
+                    <label for="nm-sat-o2">Sat O2 (%)</label>
+                    <input type="text" class="form-control" id="nm-sat-o2"/>
+                  </div>
+                  <div class="form-group col-md-3">
+                    <label for="nm-glucosa">Glucosa capilar</label>
+                    <input type="text" class="form-control" id="nm-glucosa"/>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Evaluación clínica (captúrala aquí) -->
+            <div class="shadow card card-body mt-4" id="evaluacion-clinica">
+              <div class="card-title">
+                <h5>Evaluación clínica <small class="text-muted">(captúrala aquí, no viene de Registrar Consulta)</small></h5>
+              </div>
+              <div class="card-body">
+                <div class="form-group">
+                  <label for="nm-motivo-consulta">Motivo de consulta</label>
+                  <textarea class="form-control" id="nm-motivo-consulta" rows="2"></textarea>
+                </div>
+                <div class="form-group">
+                  <label for="nm-padecimiento-actual">Padecimiento actual</label>
+                  <textarea class="form-control" id="nm-padecimiento-actual" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                  <label for="nm-exploracion-fisica">Exploración física</label>
+                  <textarea class="form-control" id="nm-exploracion-fisica" rows="3"></textarea>
+                </div>
+                <div class="form-group mb-0">
+                  <label for="nm-resultado-estudios">Resultado de estudios aux. de diagnóstico y tratamiento</label>
+                  <textarea class="form-control" id="nm-resultado-estudios" rows="2"></textarea>
+                </div>
+              </div>
+            </div>
+
+            <!-- Diagnóstico (prellenado desde Registrar Consulta, editable) -->
+            <div class="shadow card card-body mt-4" id="diagnostico">
+              <div class="card-title">
+                <h5>Diagnóstico(s) <small class="text-muted">(nombre prellenado desde Registrar Consulta; agrega la clave CIE-10)</small></h5>
+              </div>
+              <div class="card-body">
+                <div class="form-group mb-0">
+                  <textarea class="form-control" id="nm-diagnosticos" rows="3"
+                    placeholder="Clave CIE-10 | Descripción (uno por línea)"></textarea>
+                </div>
+              </div>
+            </div>
+
+            <!-- Plan de tratamiento y cierre (captúrala aquí) -->
+            <div class="shadow card card-body mt-4" id="plan-cierre">
+              <div class="card-title">
+                <h5>Plan de tratamiento y cierre <small class="text-muted">(captúrala aquí)</small></h5>
+              </div>
+              <div class="card-body">
+                <div class="form-group">
+                  <label for="nm-plan-tratamiento">Plan de estudios y/o tratamiento (indicaciones terapéuticas)</label>
+                  <textarea class="form-control" id="nm-plan-tratamiento" rows="3"></textarea>
+                </div>
+                <div class="form-group mb-0">
+                  <label for="nm-pronostico">Pronóstico</label>
+                  <input type="text" class="form-control" id="nm-pronostico" />
+                </div>
+              </div>
+            </div>
+
+            <!-- Acciones -->
+            <div class="shadow card card-body mt-4 mb-4 align-items-end" id="acciones">
+              <div class="card-body">
+                <button type="button" class="btn btn-danger" id="cancelar">Cancelar</button>
+                <button type="button" class="btn btn-primary mr-2" id="generar-nota">
+                  <i class="fa-solid fa-file-medical mr-1"></i> Generar nota médica
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- ================================================== -->
+  <!-- PIE DE PÁGINA                                      -->
+  <!-- ================================================== -->
+  <footer id="seccion-pie-pagina" class="az-footer ht-40">
+    <div id="contenedor-pie-pagina" class="container ht-100p pd-t-0-f">
+      <span id="texto-pie-pagina" class="text-muted d-block text-center text-sm-left d-sm-inline-block">
+        SIGSS | Sistema Integral de Gestión de Servicios de Salud
+      </span>
+      <span id="version-sistema" class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">
+        Sistema de gestión de servicios de salud
+      </span>
+    </div>
+  </footer>
+
+  <!-- Popup global SIGSS -->
+  <div id="modalPopup" class="popup-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-titulo"
+    aria-describedby="modal-mensaje">
+    <div class="popup-card">
+      <button id="popup-cerrar" class="popup-cerrar" type="button" aria-label="Cerrar diálogo">
+        &times;
+      </button>
+      <div id="modal-icono" class="popup-icono">
+        <i class="fas fa-circle-xmark"></i>
+      </div>
+      <h3 id="modal-titulo">Generando documento</h3>
+      <p id="modal-mensaje">
+        Espere un momento, por favor...
+      </p>
+      <div id="modal-botones-confirmacion" class="popup-botones-confirmacion">
+        <button id="modal-cancelar" type="button">
+          Revisar datos
+        </button>
+        <button id="modal-confirmar" type="button">
+          Sí, registrar
+        </button>
+      </div>
+      <button id="modal-boton" class="popup-boton" type="button">
+        Aceptar
+      </button>
+    </div>
+  </div>
+
+  <!-- ================================================== -->
+  <!-- BIBLIOTECAS JAVASCRIPT                             -->
+  <!-- ================================================== -->
+  <script src="../../../lib/jquery/jquery.min.js"></script>
+  <script src="../../../lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../../../lib/ionicons/ionicons.js"></script>
+  <script src="../../../js/popup.js"></script>
+
+  <!-- Funcionalidad de la plantilla -->
+  <script src="../../../js/azia.js"></script>
+
+  <!-- Lógica personalizada del SIGSS -->
+  <script type="module" src="../../../js/nota_medica.js"></script>
+  <script src="../../../js/dashboard.js"></script>
+  <script src="../../../js/clock.js"></script>
+</body>
+
+</html>

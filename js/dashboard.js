@@ -263,20 +263,33 @@ function generar_menu_medico() {
         </li>
         <!-- REPORTES -->
         <li id="nav-reportes" class="nav-item">
-            <a
-                href="/pages/modules/reportes/hoja_diaria.html"
-                id="enlace-reportes"
-                class="nav-link"
-                data-modulo="reportes"
-                data-vista="hoja-diaria"
-            >
-                <i class="typcn typcn-document-text"></i>
-                Reportes
-            </a>
+            <details id="grupo-reportes">
+                <summary
+                    id="enlace-reportes"
+                    class="nav-link"
+                >
+                    <i class="typcn typcn-document-text"></i>
+                    Reportes
+                </summary>
+                <nav
+                    id="submenu-reportes"
+                    class="az-menu-sub"
+                >
+                    <a
+                        href="/pages/modules/reportes/hoja_diaria.html"
+                        id="opcion-hoja-diaria"
+                        class="nav-link"
+                        data-modulo="reportes"
+                        data-vista="hoja-diaria"
+                    >
+                        <i class="typcn typcn-calendar"></i>
+                        Hoja diaria
+                    </a>
+                </nav>
+            </details>
         </li>
     `;
 } 
-
 
 /* =========================================================
    4. ACTUALIZAR NAVEGACIÓN ACTIVA
