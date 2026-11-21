@@ -43,6 +43,7 @@
 }
 
 .az-body {
+  position: relative;
   margin: 0;
   min-height: 100vh;
   min-height: 100dvh;
@@ -53,13 +54,31 @@
   background-color: var(--bg-page);
 }
 
+/* Fondo decorativo del login: la fachada del CESSA Dr. Isauro Venzor,
+   casi imperceptible (opacidad muy baja) detrás del contenido. */
+.az-body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url('/assets/images/Fondo_Isauro_Venzor.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.06;
+  z-index: 0;
+  pointer-events: none;
+}
+
 /* ----------------------------------------------------------
    3. ENCABEZADO / HEADER SUPERIOR (+25% MÁS GRANDE)
    ---------------------------------------------------------- */
 .header-superior {
+  position: relative;
+  z-index: 1;
   width: 100%;
   background-color: var(--bg-header);
-  border-bottom: 1px solid var(--border-color);
+  border-top: 4px solid var(--color-az-blue);
+  border-bottom: 3px solid var(--color-az-blue);
   padding: 0.95rem 1.875rem; /* +25% padding */
   box-shadow: var(--shadow-header);
 }
@@ -91,7 +110,7 @@
       margin: 0;
       font-size: 1.4rem;
       font-weight: 700;
-      color: var(--color-text-dark);
+      color: var(--color-az-blue);
       line-height: 1.2;
     }
 
@@ -108,6 +127,8 @@
    4. CONTENEDOR DE LOGIN Y TARJETA
    ---------------------------------------------------------- */
 .az-signin-wrapper {
+  position: relative;
+  z-index: 1;
   flex: 1;
   display: grid;
   place-items: center;
@@ -159,8 +180,8 @@
   }
 
   h3 {
-    margin: 0.7rem 0;
-    color: black;
+    margin: 0;
+    color: var(--color-text-dark);
     font-size: 0.95rem;
     font-weight: 500;
     line-height: 1.2;
