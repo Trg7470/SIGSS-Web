@@ -104,6 +104,12 @@ async function cargar_dashboard() {
     // Marcar la página actual en el menú.
     actualizar_navegacion();
 
+    // Mostrar/ocultar los submenús de los módulos al pasar el cursor.
+    inicializar_submenus();
+
+    // Mostrar/ocultar notificaciones y perfil (incluye cerrar sesión) al pasar el cursor.
+    inicializar_menus_cabecera();
+
     // Vincular el botón de cerrar sesión.
     const botonCerrarSesion =
         document.getElementById("opcion-cerrar-sesion");
@@ -397,6 +403,140 @@ function actualizar_navegacion() {
             }
 
         }
+
+    });
+
+}
+
+
+/* =========================================================
+   5. SUBMENÚS Y DESPLEGABLES (hover con margen para seleccionar)
+   ========================================================= */
+
+// Milisegundos de margen antes de ocultar, para dar tiempo a mover
+// el cursor desde el botón hasta la lista sin que se cierre sola.
+const RETARDO_CIERRE_HOVER = 350;
+
+// Solo aplica el comportamiento de "hover" en escritorio; en móvil
+// los desplegables se siguen abriendo con un toque (clic).
+const esEscritorio = window.matchMedia("(min-width: 992px)");
+
+/**
+ * Activa mostrar/ocultar por hover (con margen de tiempo) sobre un
+ * elemento, usando las funciones que se le pasan para leer y cambiar
+ * su estado de "abierto".
+ */
+function activar_hover_con_retardo(elemento, { estaAbierto, establecerAbierto }) {
+
+    let temporizador = null;
+
+    const cancelarCierre = () => {
+        if (temporizador) {
+            clearTimeout(temporizador);
+            temporizador = null;
+        }
+    };
+
+    elemento.addEventListener("mouseenter", () => {
+        if (!esEscritorio.matches) return;
+        cancelarCierre();
+        establecerAbierto(true);
+    });
+
+    elemento.addEventListener("mouseleave", () => {
+        if (!esEscritorio.matches) return;
+        cancelarCierre();
+        temporizador = setTimeout(() => {
+            establecerAbierto(false);
+            temporizador = null;
+        }, RETARDO_CIERRE_HOVER);
+    });
+
+    // Si el elemento vuelve a recibir el foco (teclado) mientras
+    // estaba por cerrarse, cancelar el cierre.
+    elemento.addEventListener("focusin", cancelarCierre);
+}
+
+
+function inicializar_submenus() {
+
+    const menu =
+        document.getElementById("menu-principal");
+
+    if (!menu) return;
+
+    const detalles =
+        menu.querySelectorAll(".nav-item > details");
+
+    detalles.forEach(detalle => {
+
+        activar_hover_con_retardo(detalle, {
+            estaAbierto: () => detalle.open,
+            establecerAbierto: (abierto) => {
+
+                if (abierto) {
+                    // Cerrar cualquier otro submenú que haya quedado abierto.
+                    detalles.forEach(otro => {
+                        if (otro !== detalle) otro.open = false;
+                    });
+                }
+
+                detalle.open = abierto;
+            }
+        });
+
+        // Ocultarlo automáticamente al seleccionar una opción.
+        detalle.querySelectorAll(".az-menu-sub .nav-link")
+            .forEach(enlace => {
+                enlace.addEventListener("click", () => {
+                    detalle.open = false;
+                });
+            });
+
+    });
+
+}
+
+
+/* =========================================================
+   6. NOTIFICACIONES Y PERFIL (hover con margen para seleccionar)
+   ========================================================= */
+
+function inicializar_menus_cabecera() {
+
+    const notificaciones =
+        document.getElementById("seccion-notificaciones");
+
+    const perfil =
+        document.getElementById("seccion-perfil");
+
+    const contenedores =
+        [notificaciones, perfil].filter(Boolean);
+
+    contenedores.forEach(contenedor => {
+
+        activar_hover_con_retardo(contenedor, {
+            estaAbierto: () => contenedor.classList.contains("show"),
+            establecerAbierto: (abierto) => {
+
+                if (abierto) {
+                    // Cerrar el otro desplegable si estaba abierto.
+                    contenedores.forEach(otro => {
+                        if (otro !== contenedor) otro.classList.remove("show");
+                    });
+                }
+
+                contenedor.classList.toggle("show", abierto);
+            }
+        });
+
+        // Ocultarlo automáticamente al seleccionar una opción.
+        contenedor.querySelectorAll(".dropdown-item")
+            .forEach(opcion => {
+                opcion.addEventListener("click", () => {
+                    contenedor.classList.remove("show");
+                });
+            });
 
     });
 
