@@ -1,4 +1,3 @@
-
 /* =========================================================
    SIGSS | DASHBOARD
    Navegación tradicional mediante archivos HTML
@@ -104,6 +103,54 @@ async function cargar_dashboard() {
 
     // Marcar la página actual en el menú.
     actualizar_navegacion();
+
+    // Vincular el botón de cerrar sesión.
+    const botonCerrarSesion =
+        document.getElementById("opcion-cerrar-sesion");
+
+    if (botonCerrarSesion) {
+        botonCerrarSesion.addEventListener("click", cerrar_sesion);
+    }
+}
+
+
+/* =========================================================
+   2.1 CERRAR SESIÓN
+   ========================================================= */
+
+async function cerrar_sesion(evento) {
+
+    if (evento) evento.preventDefault();
+
+    let confirmado = true;
+
+    if (typeof mostrarPopup === "function") {
+        confirmado = await mostrarPopup({
+            titulo: "Cerrar sesión",
+            mensaje: "¿Seguro que deseas cerrar tu sesión?",
+            tipo: "advertencia",
+            confirmar: true,
+            textoConfirmar: "Sí, cerrar sesión",
+            textoCancelar: "Cancelar"
+        });
+    }
+
+    if (!confirmado) return;
+
+    // Eliminar por completo los datos de la sesión del navegador.
+    sessionStorage.clear();
+
+    if (typeof mostrarPopup === "function") {
+        mostrarPopup({
+            titulo: "Sesión cerrada",
+            mensaje: "Redirigiendo a la página de inicio de sesión...",
+            tipo: "exito"
+        });
+
+        await new Promise(resolve => setTimeout(resolve, 1200));
+    }
+
+    window.location.href = "../../index.html";
 }
 
 
