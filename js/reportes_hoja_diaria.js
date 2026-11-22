@@ -15,7 +15,9 @@ const LIMITE_SIN_PAGINACION = 50;
 
 const NOMBRES_MODULO = {
     "consulta-externa": "Consulta externa",
-    "planificacion-familiar": "Planificación familiar"
+    "planificacion-familiar": "Planificación familiar",
+    "salud-bucal": "Salud bucal",
+    "detecciones": "Detecciones"
 };
 
 const Usuario = JSON.parse(sessionStorage.getItem("usuario"));

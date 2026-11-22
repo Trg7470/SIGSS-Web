@@ -920,6 +920,15 @@ async function cargar_datos() {
             true
         );
 
+        llenar_select(
+            "migrante",
+            catalogos_json.migrante,
+            "Id_Cat_Migrante",
+            opcion,
+            placeholder,
+            true
+        );
+
         // Discapacidades.
         const discapacidades =
             catalogos.discapacidades || [];
@@ -1485,7 +1494,7 @@ async function registrar_consulta() {
             mensaje:
                 "La consulta se registró correctamente. A continuación se abrirá el formulario de la nota médica.",
             boton: true,
-            redireccion: `/pages/modules/nota-medica/formulario.html?id_consulta=${resultado.Id_Consulta}`
+            redireccion: `/pages/modules/nota-medica/registrar.html?id_consulta=${resultado.Id_Consulta}`
         });
 
     } catch (error) {
