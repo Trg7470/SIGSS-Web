@@ -111,33 +111,34 @@
         <section id="seccion-panel-usuario" aria-label="Formulario de nota médica">
           <div id="contenedor-modulos" class="sigss-formulario">
 
+            <!-- Datos de la unidad y del paciente (autollenado) -->
             <div class="shadow card card-body mt-4" id="datos-unidad-paciente">
               <div class="card-title">
-                <h5>Datos de la unidad y del paciente <small class="text-muted">(autollenado)</small></h5>
+                <h5>Datos de la unidad y del paciente</h5>
               </div>
               <div class="card-body">
                 <div class="form-row">
                   <div class="form-group col-md-3">
                     <label for="nm-clues">CLUES</label>
-                    <input type="text" class="form-control" id="nm-clues"/>
+                    <input type="text" class="form-control" id="nm-clues" readonly />
                   </div>
                   <div class="form-group col-md-6">
                     <label for="nm-nombre-unidad">Unidad de salud</label>
-                    <input type="text" class="form-control" id="nm-nombre-unidad"/>
+                    <input type="text" class="form-control" id="nm-nombre-unidad" readonly />
                   </div>
                   <div class="form-group col-md-3">
                     <label for="nm-expediente">Expediente</label>
-                    <input type="text" class="form-control" id="nm-expediente"/>
+                    <input type="text" class="form-control" id="nm-expediente" readonly />
                   </div>
                 </div>
                 <div class="form-row">
                   <div class="form-group col-md-3">
                     <label for="nm-folio-receta">Folio de receta</label>
-                    <input type="text" class="form-control" id="nm-folio-receta"/>
+                    <input type="text" class="form-control" id="nm-folio-receta" readonly />
                   </div>
                   <div class="form-group col-md-3">
                     <label for="nm-fecha">Fecha</label>
-                    <input type="text" class="form-control" id="nm-fecha"/>
+                    <input type="text" class="form-control" id="nm-fecha" readonly />
                   </div>
                   <div class="form-group col-md-3">
                     <label for="nm-hora">Hora <small class="text-muted">(captúrala aquí)</small></label>
@@ -151,21 +152,21 @@
                 <div class="form-row">
                   <div class="form-group col-md-6">
                     <label for="nm-paciente">Paciente</label>
-                    <input type="text" class="form-control" id="nm-paciente"/>
+                    <input type="text" class="form-control" id="nm-paciente" readonly />
                   </div>
                   <div class="form-group col-md-3">
                     <label for="nm-curp">CURP</label>
-                    <input type="text" class="form-control" id="nm-curp"/>
+                    <input type="text" class="form-control" id="nm-curp" readonly />
                   </div>
                   <div class="form-group col-md-3">
                     <label for="nm-sexo">Sexo</label>
-                    <input type="text" class="form-control" id="nm-sexo"/>
+                    <input type="text" class="form-control" id="nm-sexo" readonly />
                   </div>
                 </div>
                 <div class="form-row">
                   <div class="form-group col-md-3">
                     <label for="nm-edad">Edad</label>
-                    <input type="text" class="form-control" id="nm-edad"/>
+                    <input type="text" class="form-control" id="nm-edad" readonly />
                   </div>
                   <div class="form-group col-md-3">
                     <label for="nm-fecha-nacimiento">Fecha de nacimiento <small class="text-muted">(captúrala aquí)</small></label>
@@ -173,11 +174,11 @@
                   </div>
                   <div class="form-group col-md-3">
                     <label for="nm-medico">Médico</label>
-                    <input type="text" class="form-control" id="nm-medico" />
+                    <input type="text" class="form-control" id="nm-medico" readonly />
                   </div>
                   <div class="form-group col-md-3">
                     <label for="nm-cedula-profesional">Cédula profesional</label>
-                    <input type="text" class="form-control" id="nm-cedula-profesional"/>
+                    <input type="text" class="form-control" id="nm-cedula-profesional" readonly />
                   </div>
                 </div>
               </div>
@@ -192,41 +193,41 @@
                 <div class="form-row">
                   <div class="form-group col-md-2">
                     <label for="nm-peso">Peso (Kg)</label>
-                    <input type="text" class="form-control" id="nm-peso"/>
+                    <input type="text" class="form-control" id="nm-peso" readonly />
                   </div>
                   <div class="form-group col-md-2">
                     <label for="nm-talla">Talla (cm)</label>
-                    <input type="text" class="form-control" id="nm-talla"/>
+                    <input type="text" class="form-control" id="nm-talla" readonly />
                   </div>
                   <div class="form-group col-md-2">
                     <label for="nm-imc">IMC <small class="text-muted">(calculado)</small></label>
-                    <input type="text" class="form-control" id="nm-imc"/>
+                    <input type="text" class="form-control" id="nm-imc" readonly />
                   </div>
                   <div class="form-group col-md-2">
                     <label for="nm-fc">FC (lpm)</label>
-                    <input type="text" class="form-control" id="nm-fc"/>
+                    <input type="text" class="form-control" id="nm-fc" readonly />
                   </div>
                   <div class="form-group col-md-2">
                     <label for="nm-fr">FR (rpm)</label>
-                    <input type="text" class="form-control" id="nm-fr"/>
+                    <input type="text" class="form-control" id="nm-fr" readonly />
                   </div>
                 </div>
                 <div class="form-row">
                   <div class="form-group col-md-2">
                     <label for="nm-temp">Temp (°C)</label>
-                    <input type="text" class="form-control" id="nm-temp"/>
+                    <input type="text" class="form-control" id="nm-temp" readonly />
                   </div>
                   <div class="form-group col-md-2">
                     <label for="nm-ta">TA (mmHg)</label>
-                    <input type="text" class="form-control" id="nm-ta"/>
+                    <input type="text" class="form-control" id="nm-ta" readonly />
                   </div>
                   <div class="form-group col-md-2">
                     <label for="nm-sat-o2">Sat O2 (%)</label>
-                    <input type="text" class="form-control" id="nm-sat-o2"/>
+                    <input type="text" class="form-control" id="nm-sat-o2" readonly />
                   </div>
                   <div class="form-group col-md-3">
                     <label for="nm-glucosa">Glucosa capilar</label>
-                    <input type="text" class="form-control" id="nm-glucosa"/>
+                    <input type="text" class="form-control" id="nm-glucosa" readonly />
                   </div>
                 </div>
               </div>
@@ -276,9 +277,67 @@
                 <h5>Plan de tratamiento y cierre <small class="text-muted">(captúrala aquí)</small></h5>
               </div>
               <div class="card-body">
+                <div class="form-group" id="nm-grupo-medicamentos">
+                  <label for="nm-buscar-medicamento">Medicamentos</label>
+                  <div style="position: relative;">
+                    <input type="text" class="form-control" id="nm-buscar-medicamento" autocomplete="off"
+                      placeholder="Escribe el nombre del medicamento para buscarlo en el catálogo..." />
+                    <div id="nm-resultados-medicamento" class="list-group"
+                      style="position: absolute; z-index: 10; width: 100%; max-height: 240px; overflow-y: auto; display: none;">
+                    </div>
+                  </div>
+
+                  <div class="form-row mt-2" id="nm-campos-dosis" style="display: none;">
+                    <div class="form-group col-md-12">
+                      <small class="text-muted">Agregando: <strong id="nm-medicamento-elegido">—</strong></small>
+                    </div>
+                    <div class="form-group col-md-3">
+                      <label for="nm-dosis">Dosis</label>
+                      <input type="text" class="form-control" id="nm-dosis" placeholder="Ej. 500 Mg" />
+                    </div>
+                    <div class="form-group col-md-3">
+                      <label for="nm-via">Vía de administración</label>
+                      <input type="text" class="form-control" id="nm-via" placeholder="Ej. Oral" />
+                    </div>
+                    <div class="form-group col-md-2">
+                      <label for="nm-frecuencia">Frecuencia</label>
+                      <input type="text" class="form-control" id="nm-frecuencia" placeholder="Ej. Cada 8 h" />
+                    </div>
+                    <div class="form-group col-md-2">
+                      <label for="nm-duracion">Duración</label>
+                      <input type="text" class="form-control" id="nm-duracion" placeholder="Ej. 7 días" />
+                    </div>
+                    <div class="form-group col-md-2 d-flex align-items-end">
+                      <button type="button" class="btn btn-success btn-block" id="nm-agregar-medicamento">
+                        <i class="fa-solid fa-plus mr-1"></i> Agregar
+                      </button>
+                    </div>
+                    <div class="form-group col-md-12">
+                      <label for="nm-instrucciones-especificas">Instrucciones específicas <small
+                          class="text-muted">(opcional)</small></label>
+                      <input type="text" class="form-control" id="nm-instrucciones-especificas" />
+                    </div>
+                  </div>
+
+                  <table class="table table-sm table-bordered mt-2" id="nm-tabla-tratamientos" style="display: none;">
+                    <thead class="thead-light">
+                      <tr>
+                        <th>Medicamento</th>
+                        <th>Dosis</th>
+                        <th>Vía</th>
+                        <th>Frecuencia</th>
+                        <th>Duración</th>
+                        <th>Instrucciones</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody id="nm-lista-tratamientos"></tbody>
+                  </table>
+                  <p id="nm-sin-medicamentos" class="text-muted mb-0">Aún no se ha agregado ningún medicamento.</p>
+                </div>
                 <div class="form-group">
-                  <label for="nm-plan-tratamiento">Plan de estudios y/o tratamiento (indicaciones terapéuticas)</label>
-                  <textarea class="form-control" id="nm-plan-tratamiento" rows="3"></textarea>
+                  <label for="nm-indicaciones-generales">Indicaciones generales <small class="text-muted">(reposo, dieta, referencia... lo que no sea un medicamento)</small></label>
+                  <textarea class="form-control" id="nm-indicaciones-generales" rows="2"></textarea>
                 </div>
                 <div class="form-group mb-0">
                   <label for="nm-pronostico">Pronóstico</label>

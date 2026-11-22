@@ -16,17 +16,17 @@ document.addEventListener("DOMContentLoaded", async () => {
             mensaje: "No fue posible recuperar los datos del usuario.",
             boton: true
         });
-        window.location.href = "../index.html";
+        window.location.href = "/index.html";
         return;
     }
     document.getElementById("titulo-bienvenida").textContent = `Consulta externa`;
     document.getElementById("descripcion-bienvenida").textContent = `Módulo de registro de consultas externas.`;
-    seleccionar_paciente(Usuario);
+    seleccionar_paciente();
 });
 
 let Paciente;
 
-function seleccionar_paciente(usuario) {
+function seleccionar_paciente() {
     window.modal_manager.mostrar({
         titulo: "Seleccionar paciente",
         icono: "fas fa-hospital-user",
@@ -104,7 +104,7 @@ function seleccionar_paciente(usuario) {
                     mostrarPopup({
                         tipo: "informacion",
                         titulo: "Paciente no encontrado",
-                        mensaje: response.message || "No se encontró ningún paciente con esos datos.",
+                        mensaje: "No se encontró ningún paciente con esos datos. Puedes registrar al paciente en el módulo de pacientes o pedir ayuda al personal administrativo.",
                         boton: true
                     });
                     return false;
@@ -679,7 +679,7 @@ async function registrar_consulta() {
             titulo: "Consulta registrada",
             mensaje: "La consulta se registró correctamente. A continuación se abrirá el formulario de la nota médica.",
             boton: true,
-            redireccion: `/pages/modules/nota-medica/formulario.html?id_consulta=${resultado.Id_Consulta}`
+            redireccion: `/pages/modules/nota-medica/registrar.html?id_consulta=${resultado.Id_Consulta}`
         });
     } catch (error) {
         console.error("Error al registrar consulta:", error);

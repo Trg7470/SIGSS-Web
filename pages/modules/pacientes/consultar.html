@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="es-MX">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="description" content="Sistema Integral de Gestión de Servicios de Salud" />
+  <meta name="author" content="SIGSS" />
+  <title>SIGSS | Gestión de pacientes</title>
+
+  <!-- Hojas de estilo de iconos (raíz = ../../../) -->
+  <link href="../../../lib/fontawesome-free/css/all.min.css" rel="stylesheet" />
+  <link href="../../../lib/ionicons/css/ionicons.min.css" rel="stylesheet" />
+  <link href="../../../lib/typicons.font/typicons.css" rel="stylesheet" />
+  <link href="../../../lib/flag-icon-css/css/flag-icon.min.css" rel="stylesheet" />
+
+  <!-- Hojas de estilo de la plantilla -->
+  <link rel="stylesheet" href="../../../lib/bootstrap/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="../../../css/popup.css" />
+  <link rel="stylesheet" href="../../../css/modal.css" />
+  <link rel="stylesheet" href="../../../css/consulta_externa.css" />
+</head>
+
+<body id="pagina-sigss">
+  <!-- ================================================== -->
+  <!-- ENCABEZADO PRINCIPAL                               -->
+  <!-- ================================================== -->
+  <header id="seccion-encabezado" class="az-header">
+    <div id="contenedor-encabezado" class="container">
+      <div id="seccion-logotipo" class="az-header-left">
+        <a href="../dashboard/index.html" id="logo-sigss" class="az-logo"><span></span> MEDITECH</a>
+        <a href="#" id="boton-menu-movil" class="az-header-menu-icon d-lg-none"
+          aria-label="Abrir menú"><span></span></a>
+      </div>
+
+      <nav id="seccion-navegacion" class="az-header-menu">
+        <div id="encabezado-menu-movil" class="az-header-menu-header">
+          <a href="../dashboard/index.html" id="logo-sigss-movil" class="az-logo"><span></span> SIGSS</a>
+          <a href="#" id="boton-cerrar-menu" class="close" aria-label="Cerrar menú">&times;</a>
+        </div>
+        <ul id="menu-principal" class="nav"></ul>
+      </nav>
+
+      <div id="seccion-acciones-usuario" class="az-header-right">
+        <div id="seccion-perfil" class="dropdown az-profile-menu">
+          <a href="#" id="boton-perfil" class="az-img-user" aria-label="Perfil del usuario">
+            <img src="../../../assets/images/usuario.png" style="width: 28px; height: 28px" alt="Foto de perfil" />
+          </a>
+          <div id="menu-perfil" class="dropdown-menu">
+            <div id="informacion-perfil" class="az-header-profile">
+              <div id="imagen-perfil" class="az-img-user">
+                <img src="../../../assets/images/usuario.png" alt="Foto de perfil" />
+              </div>
+              <h6 id="nombre-usuario">Nombre del usuario</h6>
+              <span id="rol-usuario">Tipo de usuario</span>
+            </div>
+            <a href="#" id="opcion-cerrar-sesion" class="dropdown-item"><i class="typcn typcn-power-outline"></i> Cerrar
+              sesión</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================================================== -->
+  <!-- CONTENIDO PRINCIPAL                                -->
+  <!-- ================================================== -->
+  <main id="seccion-contenido" class="az-content az-content-dashboard">
+    <div id="contenedor-contenido" class="container">
+      <div id="contenido-dashboard" class="az-content-body">
+
+        <section id="seccion-bienvenida" class="az-dashboard-one-title">
+          <div id="informacion-bienvenida">
+            <h1 id="titulo-bienvenida" class="az-dashboard-title">Gestión de pacientes</h1>
+            <p id="descripcion-bienvenida" class="az-dashboard-text">Alta, edición y consulta de pacientes.</p>
+          </div>
+        </section>
+
+        <section id="seccion-pacientes" aria-label="Gestión de pacientes">
+          <div id="contenedor-pacientes" class="sigss-formulario">
+
+            <!-- Filtros de búsqueda -->
+            <div class="shadow card hc-card-filtros mt-4" id="tarjeta-filtros">
+              <div class="card-header hc-card-header" id="encabezado-filtros" data-toggle="collapse"
+                href="#cuerpo-filtros" role="button" aria-expanded="true" aria-controls="cuerpo-filtros">
+                <span class="hc-card-header-titulo">
+                  <i class="fa-solid fa-filter mr-2"></i>Filtros de búsqueda
+                </span>
+                <i class="fa-solid fa-chevron-up hc-chevron" id="icono-colapso-filtros"></i>
+              </div>
+              <div id="cuerpo-filtros" class="collapse show" aria-labelledby="encabezado-filtros">
+                <div class="card-body">
+                  <form id="form-filtros-pacientes" novalidate>
+                    <div class="form-row">
+                      <div class="form-group col-md-8">
+                        <label for="filtro-busqueda-pacientes">Paciente, CURP o expediente</label>
+                        <div class="input-group">
+                          <input type="text" class="form-control" id="filtro-busqueda-pacientes"
+                            placeholder="Ingresa el nombre, CURP o expediente" />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-row justify-content-end hc-fila-botones">
+                      <button type="button" class="btn btn-outline-secondary mr-2" id="boton-limpiar-filtros-pacientes">
+                        <i class="fa-solid fa-eraser mr-1"></i>Limpiar
+                      </button>
+                      <button type="submit" class="btn btn-primary">
+                        <i class="fa-solid fa-magnifying-glass mr-1"></i>
+                        Buscar
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+
+            <!-- Resultados -->
+            <div class="shadow card hc-card-resultados mt-4" id="tarjeta-resultados">
+              <div class="card-header hc-card-header d-flex justify-content-between align-items-center">
+                <span class="hc-card-header-titulo">
+                  Resultados
+                  (<span id="contador-resultados">0</span> registros)
+                </span>
+                <button type="button" class="btn btn-sm btn-primary" id="boton-nuevo-paciente">
+                  <i class="fa-solid fa-user-plus mr-1"></i>Nuevo paciente
+                </button>
+              </div>
+              <div class="card-body p-0">
+                <div class="table-responsive hc-tabla-wrapper">
+                  <table class="table table-hover hc-tabla-resultados mb-0" id="tabla-pacientes">
+                    <colgroup>
+                      <col style="width: 18%;" />
+                      <col style="width: 42%;" />
+                      <col style="width: 25%;" />
+                      <col style="width: 15%;" />
+                    </colgroup>
+                    <thead>
+                      <tr>
+                        <th scope="col">Expediente</th>
+                        <th scope="col">Paciente</th>
+                        <th scope="col">CURP</th>
+                        <th scope="col" class="text-center">Acciones</th>
+                      </tr>
+                    </thead>
+                    <tbody id="cuerpo-tabla-pacientes"></tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="card-footer hc-card-footer">
+                <span class="text-muted small" id="texto-paginacion">Mostrando 0 a 0 de 0 registros</span>
+                <nav aria-label="Paginación de pacientes">
+                  <ul class="pagination pagination-sm mb-0" id="paginacion-historial">
+                    <li class="page-item disabled" id="pagina-primera">
+                      <a class="page-link" href="#" tabindex="-1" aria-label="Primera página"><i
+                          class="fa-solid fa-angles-left"></i></a>
+                    </li>
+                    <li class="page-item disabled" id="pagina-anterior">
+                      <a class="page-link" href="#" tabindex="-1" aria-label="Página anterior"><i
+                          class="fa-solid fa-angle-left"></i></a>
+                    </li>
+                    <li class="page-item active" aria-current="page"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item disabled" id="pagina-siguiente">
+                      <a class="page-link" href="#" tabindex="-1" aria-label="Página siguiente"><i
+                          class="fa-solid fa-angle-right"></i></a>
+                    </li>
+                    <li class="page-item disabled" id="pagina-ultima">
+                      <a class="page-link" href="#" tabindex="-1" aria-label="Última página"><i
+                          class="fa-solid fa-angles-right"></i></a>
+                    </li>
+                  </ul>
+                </nav>
+              </div>
+            </div>
+
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <!-- ================================================== -->
+  <!-- PIE DE PÁGINA                                      -->
+  <!-- ================================================== -->
+  <footer id="seccion-pie-pagina" class="az-footer ht-40">
+    <div id="contenedor-pie-pagina" class="container ht-100p pd-t-0-f">
+      <span id="texto-pie-pagina" class="text-muted d-block text-center text-sm-left d-sm-inline-block">
+        SIGSS | Sistema Integral de Gestión de Servicios de Salud
+      </span>
+      <span id="version-sistema" class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">
+        Sistema de gestión de servicios de salud
+      </span>
+    </div>
+  </footer>
+
+  <!-- Popup global SIGSS -->
+  <div id="modalPopup" class="popup-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-titulo"
+    aria-describedby="modal-mensaje">
+    <div class="popup-card">
+      <button id="popup-cerrar" class="popup-cerrar" type="button" aria-label="Cerrar diálogo">
+        &times;
+      </button>
+      <div id="modal-icono" class="popup-icono">
+        <i class="fas fa-circle-xmark"></i>
+      </div>
+      <h3 id="modal-titulo">Buscando</h3>
+      <p id="modal-mensaje">
+        Espere un momento, por favor...
+      </p>
+      <div id="modal-botones-confirmacion" class="popup-botones-confirmacion">
+        <button id="modal-cancelar" type="button">
+          Cancelar
+        </button>
+        <button id="modal-confirmar" type="button">
+          Confirmar
+        </button>
+      </div>
+      <button id="modal-boton" class="popup-boton" type="button">
+        Aceptar
+      </button>
+    </div>
+  </div>
+
+  <!-- Modal genérico (alta / edición de paciente) -->
+  <div class="modal fade" id="modal_generico" tabindex="-1" role="dialog" aria-labelledby="modal_generico_titulo"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" id="modal_generico_dialogo" role="document">
+      <div class="modal-content modal-sigss">
+        <div class="modal-header modal-sigss-header">
+          <h5 class="modal-title font-weight-bold" id="modal_generico_titulo">
+            <i class="fa-solid fa-pen text-primary mr-2" id="modal_generico_icono"></i>
+            <span id="modal_generico_titulo_texto">
+              Formulario
+            </span>
+          </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form id="form_modal_generico" novalidate>
+          <div class="modal-body">
+            <p class="text-muted small mb-3 d-none" id="modal_generico_descripcion"></p>
+            <input type="hidden" id="modal_generico_id">
+            <div class="row" id="modal_generico_campos"></div>
+            <div class="alert alert-danger mt-3 mb-0 d-none" id="modal_generico_error" role="alert">
+            </div>
+          </div>
+          <div class="modal-footer modal-sigss-footer">
+            <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">
+              <i class="fa-solid fa-xmark mr-1"></i>
+              Cancelar
+            </button>
+            <button type="submit" class="btn btn-primary" id="modal_generico_guardar">
+              <i class="fa-solid fa-floppy-disk mr-1" id="modal_generico_guardar_icono"></i>
+              <span id="modal_generico_guardar_texto">
+                Guardar
+              </span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================================================== -->
+  <!-- BIBLIOTECAS JAVASCRIPT                             -->
+  <!-- ================================================== -->
+  <script src="../../../lib/jquery/jquery.min.js"></script>
+  <script src="../../../lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../../../lib/ionicons/ionicons.js"></script>
+  <script src="../../../js/popup.js"></script>
+
+  <!-- Núcleo de la plantilla Azia -->
+  <script src="../../../js/azia.js"></script>
+
+  <!-- Lógica propia de SIGSS -->
+  <script src="../../../js/modal_manager.js"></script>
+  <script type="module" src="../../../js/pacientes.js"></script>
+  <script src="../../../js/dashboard.js"></script>
+  <script src="../../../js/clock.js"></script>
+</body>
+
+</html>
