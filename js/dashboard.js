@@ -350,6 +350,19 @@ function generar_menu_medico() {
                 </nav>
             </details>
         </li>
+        <!-- PACIENTES -->
+        <li id="nav-pacientes" class="nav-item">
+            <a
+                href="/pages/modules/pacientes/index.html"
+                id="opcion-registrar-pacientes"
+                class="nav-link"
+                data-modulo="pacientes"
+                data-vista="pacientes"
+            >
+                <i class="typcn typcn-user"></i>
+                Pacientes
+            </a>
+        </li>
     `;
 }
 /* =========================================================

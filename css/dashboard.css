@@ -998,11 +998,19 @@ body {
   }
 }
 
-.az-header-menu .nav-item.active details > summary.nav-link {
+/* FIX: el selector debe apuntar solo al <details> de PRIMER nivel
+   (el hijo directo de .nav-item, es decir "Módulos"), no a
+   cualquier <details> anidado dentro de él. Con un espacio en vez
+   de ">" aquí, la barrita/el color de "activo" se aplicaba a los
+   tres grupos anidados (Consulta Externa, Salud Bucal,
+   Planificación Familiar) al mismo tiempo en vez de solo al que
+   corresponde, y la barra horizontal de escritorio terminaba
+   cruzando el texto de los demás módulos. */
+.az-header-menu .nav-item.active > details > summary.nav-link {
   color: #5b47fb;
 }
 
-.az-header-menu .nav-item.active details > summary.nav-link::before {
+.az-header-menu .nav-item.active > details > summary.nav-link::before {
   content: '';
   position: absolute;
   bottom: 0;
@@ -1014,7 +1022,7 @@ body {
 }
 
 @media (min-width: 992px) {
-  .az-header-menu .nav-item.active details > summary.nav-link::before {
+  .az-header-menu .nav-item.active > details > summary.nav-link::before {
     top: auto;
     bottom: -22px;
     left: 0;
