@@ -643,11 +643,14 @@ async function registrar_consulta() {
             throw new Error(mensaje);
         }
 
-        mostrarPopup({
+        const resultado = await response.json();
+
+          mostrarPopup({
             tipo: "exito",
             titulo: "Consulta registrada",
-            mensaje: "La consulta se registró correctamente.",
-            boton: true
+            mensaje: "La consulta se registró correctamente. A continuación se abrirá el formulario de la nota médica.",
+            boton: true,
+            redireccion: `/pages/modules/nota-medica/registrar.html?id_consulta=${resultado.Id_Consulta}`
         });
     } catch (error) {
         console.error("Error al registrar consulta:", error);

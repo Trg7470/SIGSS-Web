@@ -190,127 +190,136 @@ function generar_menu_medico() {
                 Home
             </a>
         </li>
-        <!-- CONSULTA EXTERNA -->
-        <li id="nav-consulta-externa" class="nav-item">
-            <details id="grupo-consulta-externa">
+        <!-- MODULOS (agrupa consulta externa, salud bucal, detecciones y planificacion familiar) -->
+        <li id="nav-modulos" class="nav-item">
+            <details id="grupo-modulos">
                 <summary
-                    id="enlace-consulta-externa"
+                    id="enlace-modulos"
                     class="nav-link"
                 >
-                    <i class="typcn typcn-clipboard"></i>
-                    Consulta Externa
+                    <i class="typcn typcn-th-list"></i>
+                    Módulos
                 </summary>
                 <nav
-                    id="submenu-consulta-externa"
+                    id="submenu-modulos"
                     class="az-menu-sub"
                 >
+                    <!-- CONSULTA EXTERNA -->
+                    <details id="grupo-consulta-externa" name="grupo-modulos-items">
+                        <summary
+                            id="enlace-consulta-externa"
+                            class="nav-link"
+                        >
+                            <i class="typcn typcn-clipboard"></i>
+                            Consulta Externa
+                        </summary>
+                        <nav
+                            id="submenu-consulta-externa"
+                            class="az-menu-sub"
+                        >
+                            <a
+                                href="/pages/modules/consulta-externa/registrar.html"
+                                id="opcion-registrar-consulta-externa"
+                                class="nav-link"
+                                data-modulo="consulta-externa"
+                                data-vista="registrar"
+                            >
+                                <i class="typcn typcn-plus-outline"></i>
+                                Registrar consulta
+                            </a>
+                            <a
+                                href="/pages/modules/consulta-externa/consultar.html"
+                                id="opcion-consultar-consulta-externa"
+                                class="nav-link"
+                                data-modulo="consulta-externa"
+                                data-vista="consultar"
+                            >
+                                <i class="typcn typcn-notes-outline"></i>
+                                Consultar registros
+                            </a>
+                        </nav>
+                    </details>
+                    <!-- SALUD BUCAL -->
+                    <details id="grupo-salud-bucal" name="grupo-modulos-items">
+                        <summary
+                            id="enlace-salud-bucal"
+                            class="nav-link"
+                        >
+                            <i class="typcn typcn-heart-outline"></i>
+                            Salud Bucal
+                        </summary>
+                        <nav
+                            id="submenu-salud-bucal"
+                            class="az-menu-sub"
+                        >
+                            <a
+                                href="/pages/modules/salud-bucal/registrar.html"
+                                id="opcion-registrar-salud-bucal"
+                                class="nav-link"
+                                data-modulo="salud-bucal"
+                                data-vista="registrar"
+                            >
+                                <i class="typcn typcn-plus-outline"></i>
+                                Registrar consulta
+                            </a>
+                            <a
+                                href="/pages/modules/salud-bucal/consultar.html"
+                                id="opcion-consultar-salud-bucal"
+                                class="nav-link"
+                                data-modulo="salud-bucal"
+                                data-vista="consultar"
+                            >
+                                <i class="typcn typcn-notes-outline"></i>
+                                Consultar registros
+                            </a>
+                        </nav>
+                    </details>
+                    <!-- DETECCIONES -->
                     <a
-                        href="/pages/modules/consulta-externa/registrar.html"
-                        id="opcion-registrar-consulta-externa"
+                        href="/pages/modules/detecciones/index.html"
+                        id="enlace-detecciones"
                         class="nav-link"
-                        data-modulo="consulta-externa"
-                        data-vista="registrar"
+                        data-modulo="detecciones"
+                        data-vista="inicio"
                     >
-                        <i class="typcn typcn-plus-outline"></i>
-                        Registrar consulta
+                        <i class="typcn typcn-beaker"></i>
+                        Detecciones
                     </a>
-                    <a
-                        href="/pages/modules/consulta-externa/consultar.html"
-                        id="opcion-consultar-consulta-externa"
-                        class="nav-link"
-                        data-modulo="consulta-externa"
-                        data-vista="consultar"
-                    >
-                        <i class="typcn typcn-notes-outline"></i>
-                        Consultar registros
-                    </a>
-                </nav>
-            </details>
-        </li>
-        <!-- SALUD BUCAL -->
-        <li id="nav-salud-bucal" class="nav-item">
-            <details id="grupo-salud-bucal">
-                <summary
-                    id="enlace-salud-bucal"
-                    class="nav-link"
-                >
-                    <i class="typcn typcn-heart-outline"></i>
-                    Salud Bucal
-                </summary>
-                <nav
-                    id="submenu-salud-bucal"
-                    class="az-menu-sub"
-                >
-                    <a
-                        href="/pages/modules/salud-bucal/registrar.html"
-                        id="opcion-registrar-salud-bucal"
-                        class="nav-link"
-                        data-modulo="salud-bucal"
-                        data-vista="registrar"
-                    >
-                        <i class="typcn typcn-plus-outline"></i>
-                        Registrar consulta
-                    </a>
-                    <a
-                        href="/pages/modules/salud-bucal/consultar.html"
-                        id="opcion-consultar-salud-bucal"
-                        class="nav-link"
-                        data-modulo="salud-bucal"
-                        data-vista="consultar"
-                    >
-                        <i class="typcn typcn-notes-outline"></i>
-                        Consultar registros
-                    </a>
-                </nav>
-            </details>
-        </li>
-        <!-- DETECCIONES -->
-        <li id="nav-detecciones" class="nav-item">
-            <a
-                href="/pages/modules/detecciones/index.html"
-                id="enlace-detecciones"
-                class="nav-link"
-                data-modulo="detecciones"
-                data-vista="inicio"
-            >
-                <i class="typcn typcn-beaker"></i>
-                Detecciones
-            </a>
-        </li>
-        <!-- PLANIFICACIÓN FAMILIAR -->
-        <li id="nav-planificacion-familiar" class="nav-item">
-            <details id="grupo-planificacion-familiar">
-                <summary
-                    id="enlace-planificacion-familiar"
-                    class="nav-link"
-                >
-                    <i class="typcn typcn-clipboard"></i>
-                    Planificación Familiar
-                </summary>
-                <nav
-                    id="submenu-planificacion-familiar"
-                    class="az-menu-sub"
-                >
-                    <a
-                        href="/pages/modules/planificacion-familiar/registrar.html"
-                        id="opcion-registrar-planificacion-familiar"
-                        class="nav-link"
-                        data-modulo="planificacion-familiar"
-                        data-vista="registrar"
-                    >
-                        <i class="typcn typcn-plus-outline"></i>
-                        Registrar consulta
-                    </a>
-                    <a
-                        href="/pages/modules/planificacion-familiar/consultar.html"
-                        id="opcion-consultar-planificacion-familiar"
-                        class="nav-link"
-                        data-modulo="planificacion-familiar"
-                        data-vista="consultar"
-                    >
-                        <i class="typcn typcn-notes-outline"></i>
-                        Consultar registros
-                    </a>
+                    <!-- PLANIFICACIÓN FAMILIAR -->
+                    <details id="grupo-planificacion-familiar" name="grupo-modulos-items">
+                        <summary
+                            id="enlace-planificacion-familiar"
+                            class="nav-link"
+                        >
+                            <i class="typcn typcn-clipboard"></i>
+                            Planificación Familiar
+                        </summary>
+                        <nav
+                            id="submenu-planificacion-familiar"
+                            class="az-menu-sub"
+                        >
+                            <a
+                                href="/pages/modules/planificacion-familiar/registrar.html"
+                                id="opcion-registrar-planificacion-familiar"
+                                class="nav-link"
+                                data-modulo="planificacion-familiar"
+                                data-vista="registrar"
+                            >
+                                <i class="typcn typcn-plus-outline"></i>
+                                Registrar consulta
+                            </a>
+                            <a
+                                href="/pages/modules/planificacion-familiar/consultar.html"
+                                id="opcion-consultar-planificacion-familiar"
+                                class="nav-link"
+                                data-modulo="planificacion-familiar"
+                                data-vista="consultar"
+                            >
+                                <i class="typcn typcn-notes-outline"></i>
+                                Consultar registros
+                            </a>
+                        </nav>
+                    </details>
                 </nav>
             </details>
         </li>
@@ -342,8 +351,7 @@ function generar_menu_medico() {
             </details>
         </li>
     `;
-} 
-
+}
 /* =========================================================
    4. ACTUALIZAR NAVEGACIÓN ACTIVA
    ========================================================= */
@@ -394,12 +402,17 @@ function actualizar_navegacion() {
                 elemento_menu.classList.add("active");
             }
 
-            // Mantener abierto el submenú correspondiente.
-            const detalle =
+            // Mantener abierto el submenú correspondiente (y, si aplica,
+            // también el/los <details> ancestro(s), como "Módulos").
+            let detalle_ancestro =
                 enlace.closest("details");
 
-            if (detalle) {
-                detalle.open = true;
+            while (detalle_ancestro) {
+                detalle_ancestro.open = true;
+                detalle_ancestro =
+                    detalle_ancestro.parentElement
+                        ? detalle_ancestro.parentElement.closest("details")
+                        : null;
             }
 
         }
@@ -485,8 +498,16 @@ function inicializar_submenus() {
             }
         });
 
-        // Ocultarlo automáticamente al seleccionar una opción.
-        detalle.querySelectorAll(".az-menu-sub .nav-link")
+        // Ocultarlo automáticamente solo al seleccionar un destino final
+        // de navegación (un <a> con data-modulo). Importante: NO usar un
+        // selector tipo ".az-menu-sub .nav-link", porque eso también
+        // atrapa los <summary class="nav-link"> de los submenús anidados
+        // (p. ej. "Consulta Externa" dentro de "Módulos"); si se hiciera,
+        // al hacer clic en esos encabezados el navegador abriría su
+        // <details> interno de forma nativa pero, en el mismo instante,
+        // este listener cerraría el <details> exterior ("Módulos"),
+        // dando la apariencia de que el menú "se cierra solo".
+        detalle.querySelectorAll(".az-menu-sub a[data-modulo]")
             .forEach(enlace => {
                 enlace.addEventListener("click", () => {
                     detalle.open = false;

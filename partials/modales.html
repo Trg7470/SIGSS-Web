@@ -1,0 +1,95 @@
+<!-- ==================================================
+     PARTIAL: VENTANAS MODALES GLOBALES
+     - #modalPopup   → controlado por js/popup.js
+     - #modal_generico → controlado por js/modal_manager.js
+     Se incluyen siempre, aunque una página no use
+     modal_generico, para mantener un único origen de verdad
+     y evitar que vuelva a faltar el marcado (como pasaba
+     antes en algunas páginas).
+     Cargado dinámicamente por /js/layout.js mediante
+     <div data-layout="/partials/modales.html"></div>
+     ================================================== -->
+
+<!-- Popup global SIGSS -->
+<div id="modalPopup" class="popup-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-titulo"
+  aria-describedby="modal-mensaje">
+  <div class="popup-card">
+    <!-- Botón cerrar -->
+    <button id="popup-cerrar" class="popup-cerrar" type="button" aria-label="Cerrar diálogo">
+      &times;
+    </button>
+    <!-- Icono -->
+    <div id="modal-icono" class="popup-icono">
+      <i class="fas fa-circle-xmark"></i>
+    </div>
+    <!-- Título -->
+    <h3 id="modal-titulo">
+      Generando documento
+    </h3>
+    <!-- Mensaje -->
+    <p id="modal-mensaje">
+      Espere un momento, por favor...
+    </p>
+    <!-- Botones de confirmación -->
+    <div id="modal-botones-confirmacion" class="popup-botones-confirmacion">
+      <button id="modal-cancelar" type="button">
+        Revisar datos
+      </button>
+      <button id="modal-confirmar" type="button">
+        Sí, registrar
+      </button>
+    </div>
+    <!-- Botón normal -->
+    <button id="modal-boton" class="popup-boton" type="button">
+      Aceptar
+    </button>
+  </div>
+</div>
+
+<!-- Modal genérico (formularios dinámicos) -->
+<div class="modal fade" id="modal_generico" tabindex="-1" role="dialog" aria-labelledby="modal_generico_titulo"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered" id="modal_generico_dialogo" role="document">
+    <div class="modal-content modal-sigss">
+      <!-- ENCABEZADO -->
+      <div class="modal-header modal-sigss-header">
+        <h5 class="modal-title font-weight-bold" id="modal_generico_titulo">
+          <i class="fa-solid fa-pen text-primary mr-2" id="modal_generico_icono"></i>
+          <span id="modal_generico_titulo_texto">
+            Formulario
+          </span>
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <!-- FORMULARIO -->
+      <form id="form_modal_generico" novalidate>
+        <div class="modal-body">
+          <!-- Descripción opcional -->
+          <p class="text-muted small mb-3 d-none" id="modal_generico_descripcion"></p>
+          <!-- Identificador del registro -->
+          <input type="hidden" id="modal_generico_id">
+          <!-- Los campos se generan mediante JavaScript -->
+          <div class="row" id="modal_generico_campos"></div>
+          <!-- Mensaje de validación -->
+          <div class="alert alert-danger mt-3 mb-0 d-none" id="modal_generico_error" role="alert">
+          </div>
+        </div>
+        <!-- PIE -->
+        <div class="modal-footer modal-sigss-footer">
+          <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">
+            <i class="fa-solid fa-xmark mr-1"></i>
+            Cancelar
+          </button>
+          <button type="submit" class="btn btn-primary" id="modal_generico_guardar">
+            <i class="fa-solid fa-floppy-disk mr-1" id="modal_generico_guardar_icono"></i>
+            <span id="modal_generico_guardar_texto">
+              Guardar
+            </span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

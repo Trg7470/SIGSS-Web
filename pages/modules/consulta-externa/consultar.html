@@ -25,105 +25,8 @@
   <!-- ================================================== -->
   <!-- ENCABEZADO PRINCIPAL                               -->
   <!-- ================================================== -->
-  <header id="seccion-encabezado" class="az-header">
-    <div id="contenedor-encabezado" class="container">
-      <div id="seccion-logotipo" class="az-header-left">
-        <!-- AJUSTA esta ruta a donde esté tu dashboard -->
-        <a href="../dashboard/index.html" id="logo-sigss" class="az-logo"><span></span> MEDITECH</a>
-        <a href="#" id="boton-menu-movil" class="az-header-menu-icon d-lg-none"
-          aria-label="Abrir menú"><span></span></a>
-      </div>
+    <div data-layout="/partials/header.html"></div>
 
-      <nav id="seccion-navegacion" class="az-header-menu">
-        <div id="encabezado-menu-movil" class="az-header-menu-header">
-          <a href="../dashboard/index.html" id="logo-sigss-movil" class="az-logo"><span></span> SIGSS</a>
-          <a href="#" id="boton-cerrar-menu" class="close" aria-label="Cerrar menú">&times;</a>
-        </div>
-        <ul id="menu-principal" class="nav"></ul>
-      </nav>
-
-      <div id="seccion-acciones-usuario" class="az-header-right">
-        <div id="seccion-mensajes" class="az-header-message">
-          <a href="#" id="boton-mensajes" aria-label="Mensajes"><i class="typcn typcn-messages"></i></a>
-        </div>
-
-        <div id="seccion-notificaciones" class="dropdown az-header-notification">
-          <a href="#" id="boton-notificaciones" class="new" aria-label="Notificaciones"><i
-              class="typcn typcn-bell"></i></a>
-          <div id="menu-notificaciones" class="dropdown-menu">
-            <div id="encabezado-notificaciones-movil" class="az-dropdown-header mg-b-20 d-sm-none">
-              <a href="#" id="volver-notificaciones" class="az-header-arrow" aria-label="Volver"><i
-                  class="icon ion-md-arrow-back"></i></a>
-            </div>
-            <h6 id="titulo-notificaciones" class="az-notification-title">Notificaciones</h6>
-            <p id="texto-notificaciones" class="az-notification-text">Tienes notificaciones pendientes</p>
-            <div id="lista-notificaciones" class="az-notification-list">
-              <div id="notificacion-1" class="media new">
-                <div class="az-img-user"><img src="../../../assets/images/usuario.png" alt="Usuario" /></div>
-                <div class="media-body">
-                  <p><strong>Notificación de ejemplo</strong> Actividad registrada en el sistema.</p>
-                  <span>Fecha y hora</span>
-                </div>
-              </div>
-              <div id="notificacion-2" class="media new">
-                <div class="az-img-user online"><img src="../../../assets/images/usuario.png" alt="Usuario" /></div>
-                <div class="media-body">
-                  <p><strong>Notificación de ejemplo</strong> Se ha registrado una nueva actividad.</p>
-                  <span>Fecha y hora</span>
-                </div>
-              </div>
-              <div id="notificacion-3" class="media">
-                <div class="az-img-user"><img src="../../../assets/images/usuario.png" alt="Usuario" /></div>
-                <div class="media-body">
-                  <p><strong>Notificación de ejemplo</strong> Información pendiente de consultar.</p>
-                  <span>Fecha y hora</span>
-                </div>
-              </div>
-              <div id="notificacion-4" class="media">
-                <div class="az-img-user"><img src="../../../assets/images/usuario.png" alt="Usuario" /></div>
-                <div class="media-body">
-                  <p><strong>Notificación de ejemplo</strong> Se ha actualizado la información.</p>
-                  <span>Fecha y hora</span>
-                </div>
-              </div>
-            </div>
-            <div id="pie-notificaciones" class="dropdown-footer">
-              <a href="#" id="ver-todas-notificaciones">Ver todas las notificaciones</a>
-            </div>
-          </div>
-        </div>
-
-        <div id="seccion-perfil" class="dropdown az-profile-menu">
-          <a href="#" id="boton-perfil" class="az-img-user" aria-label="Perfil del usuario">
-            <img src="../../../assets/images/usuario.png" style="width: 28px; height: 28px" alt="Foto de perfil" />
-          </a>
-          <div id="menu-perfil" class="dropdown-menu">
-            <div id="encabezado-perfil-movil" class="az-dropdown-header d-sm-none">
-              <a href="#" id="volver-perfil" class="az-header-arrow" aria-label="Volver"><i
-                  class="icon ion-md-arrow-back"></i></a>
-            </div>
-            <div id="informacion-perfil" class="az-header-profile">
-              <div id="imagen-perfil" class="az-img-user">
-                <img src="../../../assets/images/usuario.png" alt="Foto de perfil" />
-              </div>
-              <h6 id="nombre-usuario">Nombre del usuario</h6>
-              <span id="rol-usuario">Tipo de usuario</span>
-            </div>
-            <a href="#" id="opcion-mi-perfil" class="dropdown-item"><i class="typcn typcn-user-outline"></i> Mi
-              perfil</a>
-            <a href="#" id="opcion-editar-perfil" class="dropdown-item"><i class="typcn typcn-edit"></i> Editar
-              perfil</a>
-            <a href="#" id="opcion-registro-actividad" class="dropdown-item"><i class="typcn typcn-time"></i> Registro
-              de actividad</a>
-            <a href="#" id="opcion-configuracion" class="dropdown-item"><i class="typcn typcn-cog-outline"></i>
-              Configuración de la cuenta</a>
-            <a href="#" id="opcion-cerrar-sesion" class="dropdown-item"><i class="typcn typcn-power-outline"></i> Cerrar
-              sesión</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </header>
 
   <!-- ================================================== -->
   <!-- CONTENIDO PRINCIPAL                                -->
@@ -217,21 +120,23 @@
                 <div class="table-responsive hc-tabla-wrapper">
                   <table class="table table-hover hc-tabla-resultados mb-0" id="tabla-historial">
                     <colgroup>
-                      <col style="width: 13%;" />
+                      <col style="width: 11%;" />
                       <col style="width: 13%;" />
                       <col style="width: 12%;" />
                       <col style="width: 27%;" />
                       <col style="width: 21%;" />
+                      <col style="width: 13%;" />
                       <col style="width: 14%;" />
                     </colgroup>
                     <thead>
                       <tr>
-                        <th scope="col">Folio de receta</th>
+                        <th scope="col">Folio Receta</th>
                         <th scope="col">Expediente</th>
                         <th scope="col">Fecha consulta</th>
                         <th scope="col">Paciente</th>
                         <th scope="col">CURP del paciente</th>
-                        <th scope="col" class="text-center">Acciones</th>
+                        <th scope="col">Nota Médica</th>
+                        <th scope="col" class="text-center">Detalles</th>
                       </tr>
                     </thead>
                     <tbody id="cuerpo-tabla-historial"></tbody>
@@ -273,58 +178,25 @@
   <!-- ================================================== -->
   <!-- PIE DE PÁGINA                                      -->
   <!-- ================================================== -->
-  <footer id="seccion-pie-pagina" class="az-footer ht-40">
-    <div id="contenedor-pie-pagina" class="container ht-100p pd-t-0-f">
-      <span id="texto-pie-pagina" class="text-muted d-block text-center text-sm-left d-sm-inline-block">
-        SIGSS | Sistema Integral de Gestión de Servicios de Salud
-      </span>
-      <span id="version-sistema" class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">
-        Sistema de gestión de servicios de salud
-      </span>
-    </div>
-  </footer>
+    <div data-layout="/partials/footer.html"></div>
 
-  <!-- Popup global SIGSS -->
-  <div id="modalPopup" class="popup-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-titulo"
-    aria-describedby="modal-mensaje">
-    <div class="popup-card">
-      <!-- Botón cerrar -->
-      <button id="popup-cerrar" class="popup-cerrar" type="button" aria-label="Cerrar diálogo">
-        &times;
-      </button>
-      <!-- Icono -->
-      <div id="modal-icono" class="popup-icono">
-        <i class="fas fa-circle-xmark"></i>
-      </div>
-      <!-- Título -->
-      <h3 id="modal-titulo">Generando documento</h3>
-      <!-- Mensaje -->
-      <p id="modal-mensaje">
-        Espere un momento, por favor...
-      </p>
-      <!-- Botones de confirmación -->
-      <div id="modal-botones-confirmacion" class="popup-botones-confirmacion">
-        <button id="modal-cancelar" type="button">
-          Revisar datos
-        </button>
-        <button id="modal-confirmar" type="button">
-          Sí, registrar
-        </button>
-      </div>
-      <!-- Botón normal -->
-      <button id="modal-boton" class="popup-boton" type="button">
-        Aceptar
-      </button>
-    </div>
-  </div>
+  <!-- Ventanas modales (popup de estado + modal genérico) -->
+  <div data-layout="/partials/modales.html"></div>
 
   <!-- ================================================== -->
   <!-- BIBLIOTECAS JAVASCRIPT                             -->
   <!-- ================================================== -->
+  <script src="/js/layout.js"></script>
   <script src="../../../lib/jquery/jquery.min.js"></script>
   <script src="../../../lib/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="../../../lib/ionicons/ionicons.js"></script>
   <script src="../../../js/popup.js"></script>
+
+  <!-- Bibliotecas de gráficas de Azia -->
+  <script src="../../../lib/jquery.flot/jquery.flot.js"></script>
+  <script src="../../../lib/jquery.flot/jquery.flot.resize.js"></script>
+  <script src="../../../lib/chart.js/Chart.bundle.min.js"></script>
+  <script src="../../../lib/peity/jquery.peity.min.js"></script>
 
   <!-- Núcleo de la plantilla Azia -->
   <script src="../../../js/azia.js"></script>

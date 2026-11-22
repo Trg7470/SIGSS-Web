@@ -1394,513 +1394,135 @@ body {
 .pd-t-0-f {
   padding-top: 0px !important;
 }
-}
-.az-menu-sub .nav-link.active {
-  color: #5b47fb;
-  font-weight: 500;
-}
-@media (min-width: 992px) {
-  .az-menu-sub .nav-link.active {
-    font-weight: 400;
-  }
-}
+
 /* =========================================================
-   SUBMENÚS DINÁMICOS (Consulta Externa, Planificación Familiar, etc.)
+   FIX: segundo nivel del menú "Módulos"
+   (Consulta Externa, Salud Bucal, Planificación Familiar
+   anidados dentro de #submenu-modulos)
    ========================================================= */
-.az-header-menu .nav-item details {
-  position: relative;
-}
 
-.az-header-menu .nav-item details > summary.nav-link {
-  display: flex;
-  align-items: center;
-  position: relative;
-  width: 100%;
-  list-style: none;
-  color: #031b4e;
-  font-size: 15px;
-  font-weight: 500;
-  padding: 0;
-  cursor: pointer;
-  transition: all 0.2s ease-in-out;
-}
-
-.az-header-menu .nav-item details > summary.nav-link::-webkit-details-marker {
-  display: none;
-}
-
-.az-header-menu .nav-item details > summary.nav-link::after {
-  content: '\f3d0';
-  display: inline-block;
-  font-family: 'Ionicons';
-  font-size: 12px;
-  font-weight: 400;
-  margin-left: auto;
-  margin-top: 3px;
-  opacity: 0.5;
+/* Evita que el texto de cada módulo se parta palabra por
+   palabra dentro del dropdown "Módulos" */
+#submenu-modulos > .nav-link,
+#submenu-modulos > details > summary.nav-link {
+  white-space: nowrap;
 }
 
 @media (min-width: 992px) {
-  .az-header-menu .nav-item details > summary.nav-link {
-    font-size: 0.875rem;
+  /* Asegura ancho suficiente para el contenedor de "Módulos" */
+  #submenu-modulos {
+    min-width: 220px;
   }
 
-  .az-header-menu .nav-item details > summary.nav-link::after {
-    margin-left: 5px;
-  }
-}
-
-.az-header-menu .nav-item details > summary.nav-link:hover,
-.az-header-menu .nav-item details > summary.nav-link:hover i {
-  color: #5b47fb;
-}
-
-.az-header-menu .nav-item details > summary.nav-link .typcn {
-  font-size: 20px;
-  line-height: 0.95;
-  margin-right: 15px;
-  width: 16px;
-}
-
-@media (min-width: 992px) {
-  .az-header-menu .nav-item details > summary.nav-link .typcn {
-    font-size: 18px;
-    margin-right: 7px;
-  }
-}
-
-.az-header-menu .nav-item details > .az-menu-sub {
-  box-sizing: border-box;
-  width: 100%;
-  min-width: 0;
-  margin-left: 0;
-}
-
-.az-header-menu .nav-item details[open] > .az-menu-sub {
-  display: block;
-}
-
-/* En escritorio el submenú siempre está en el DOM (posicionado) y se anima
-   con opacidad/desplazamiento en lugar de aparecer/desaparecer de golpe. */
-@media (min-width: 992px) {
-  .az-header-menu .nav-item details > .az-menu-sub {
-    display: block;
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(8px);
-    pointer-events: none;
-    transition: opacity 0.18s ease, transform 0.18s ease, visibility 0s linear 0.18s;
+  /* Los <details> de segundo nivel (Consulta Externa, Salud Bucal,
+     Planificación Familiar) deben posicionar su propio flyout
+     relativo a sí mismos, no heredar el "position: relative" del
+     primer nivel sin más */
+  #submenu-modulos > details {
+    position: relative;
   }
 
-  .az-header-menu .nav-item details[open] > .az-menu-sub {
-    opacity: 1;
-    visibility: visible;
+  /* El tercer nivel (Registrar consulta / Consultar registros) se
+     abre a la DERECHA del panel "Módulos" en vez de usar el
+     "top: 74px" pensado para el primer nivel, que lo desplazaba
+     fuera de su sitio */
+  #submenu-modulos > details > .az-menu-sub {
+    position: absolute;
+    top: 0;
+    left: 100%;
+    margin-left: 8px;
     transform: translateY(0);
-    pointer-events: auto;
-    transition: opacity 0.18s ease, transform 0.18s ease;
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    .az-header-menu .nav-item details > .az-menu-sub,
-    .az-header-menu .nav-item details[open] > .az-menu-sub {
-      transition: none;
-    }
+  #submenu-modulos > details[open] > .az-menu-sub {
+    transform: translateY(0);
   }
 }
 
-.az-header-menu .nav-item.active details > summary.nav-link {
-  color: #5b47fb;
-}
-
-.az-header-menu .nav-item.active details > summary.nav-link::before {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  top: 0;
-  left: -20px;
-  width: 2px;
-  background-color: #5b47fb;
-  border-radius: 3px;
-}
+/* =========================================================
+   MEJORAS VISUALES: panel "Módulos" y su flyout de 2do nivel
+   ========================================================= */
 
 @media (min-width: 992px) {
-  .az-header-menu .nav-item.active details > summary.nav-link::before {
-    top: auto;
-    bottom: -22px;
-    left: 0;
-    right: 0;
-    width: auto;
-    height: 2px;
-  }
-}
 
-.az-header-right {
-  display: flex;
-  align-items: center;
-}
-.az-header-arrow {
-  font-size: 27px;
-  color: #1c273c;
-  display: inline-block;
-  line-height: 0;
-}
-.az-header-arrow i {
-  line-height: 0;
-}
-.az-header-arrow:hover, .az-header-arrow:focus {
-  color: #596882;
-}
-.az-header-message, .az-header-notification {
-  position: relative;
-}
-.az-header-message > a, .az-header-notification > a {
-  display: block;
-  font-size: 24px;
-  color: #1c273c;
-  position: relative;
-  line-height: .9;
-  outline: none;
-}
-.az-header-message > a.new::before, .az-header-notification > a.new::before {
-  content: '';
-  position: absolute;
-  top: -2px;
-  right: 2px;
-  width: 7px;
-  height: 7px;
-  background-color: #dc3545;
-  border-radius: 100%;
-}
-.az-header-notification {
-  margin-left: 15px;
-}
-.az-header-notification > a::after {
-  content: '';
-  position: absolute;
-  top: 47px;
-  left: 50%;
-  margin-left: -7px;
-  width: 14px;
-  height: 14px;
-  border: 2px solid transparent;
-  border-top-color: #cdd4e0;
-  border-left-color: #cdd4e0;
-  transform: rotate(45deg);
-  background-color: #fff;
-  z-index: 901;
-  display: none;
-}
-@media (min-width: 992px) {
-  .az-header-notification > a::after {
-    bottom: -36px;
+  /* --- Profundidad y bordes más suaves en ambos paneles --- */
+  #submenu-modulos,
+  #submenu-modulos > details > .az-menu-sub {
+    border-radius: 6px;
+    border-color: rgba(28, 39, 60, 0.1);
+    box-shadow: 0 10px 30px rgba(28, 39, 60, 0.14);
   }
-}
-.az-header-notification .dropdown-menu {
-  background-color: #fff;
-  width: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  padding: 15px 20px;
-  border-width: 0;
-  margin-top: 0;
-  z-index: 900;
-  border-radius: 0;
-}
-@media (min-width: 576px) {
-  .az-header-notification .dropdown-menu {
-    width: 300px;
-    position: absolute;
-    top: 52px;
-    left: auto;
-    right: -10px;
-    bottom: auto;
-    padding: 20px 20px 15px;
-    border-color: #cdd4e0;
-    border-width: 2px;
+
+  /* Un poco más de aire interno */
+  #submenu-modulos {
+    padding: 10px;
   }
-}
-.az-header-notification .dropdown-footer {
-  text-align: center;
-  padding-top: 10px;
-  font-size: 13px;
-  border-top: 1px dotted #b4bdce;
-}
-@media (min-width: 576px) {
-  .az-header-notification.show > a::after {
-    display: block;
+
+  /* --- Cada fila de "Módulos" se comporta como un botón --- */
+  #submenu-modulos > .nav-link,
+  #submenu-modulos > details > summary.nav-link {
+    padding: 8px 10px;
+    margin: 0;
+    border-radius: 5px;
+    transition: background-color 0.15s ease, color 0.15s ease;
   }
-}
-.az-header-notification.show .dropdown-menu {
-  display: block;
-}
-.az-notification-title {
-  font-size: 18px;
-  font-weight: 700;
-  color: #1c273c;
-  margin-bottom: 5px;
-  line-height: 1;
-}
-.az-notification-text {
-  font-size: 13px;
-  margin-bottom: 15px;
-}
-.az-notification-list .media {
-  padding: 10px 0;
-  position: relative;
-}
-.az-notification-list .media + .media {
-  border-top: 1px dotted #b4bdce;
-}
-.az-notification-list .media.new {
-  color: #1c273c;
-}
-.az-notification-list .media:hover, .az-notification-list .media:focus {
-  cursor: pointer;
-  z-index: 1;
-}
-.az-notification-list .media:hover::before, .az-notification-list .media:focus::before {
-  content: '';
-  position: absolute;
-  top: -1px;
-  left: -20px;
-  bottom: -1px;
-  right: -20px;
-  background-color: #f4f5f8;
-  border-top: 1px solid #cdd4e0;
-  border-bottom: 1px solid #cdd4e0;
-  z-index: -1;
-}
-.az-notification-list .media-body {
-  margin-left: 15px;
-  font-size: 13px;
-}
-.az-notification-list .media-body p {
-  margin-bottom: 5px;
-  line-height: 1.3;
-}
-.az-notification-list .media-body strong {
-  font-weight: 500;
-}
-.az-notification-list .media-body span {
-  display: block;
-  font-size: 11px;
-  color: #97a3b9;
-}
-.az-profile-menu {
-  position: relative;
-  margin-left: 15px;
-}
-.az-profile-menu > .az-img-user {
-  outline: none;
-  width: 32px;
-  height: 32px;
-}
-.az-profile-menu > .az-img-user::before {
-  content: '';
-  position: absolute;
-  bottom: -33px;
-  left: 50%;
-  margin-left: -7px;
-  width: 14px;
-  height: 14px;
-  border: 2px solid transparent;
-  border-top-color: #cdd4e0;
-  border-left-color: #cdd4e0;
-  transform: rotate(45deg);
-  background-color: #fff;
-  z-index: 901;
-  display: none;
-}
-.az-profile-menu > .az-img-user::after {
-  display: none;
-}
-.az-profile-menu .dropdown-menu {
-  background-color: #fff;
-  width: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  padding: 15px 20px 5px;
-  border-width: 0;
-  margin-top: 0;
-  z-index: 900;
-  border-radius: 0;
-}
-@media (min-width: 576px) {
-  .az-profile-menu .dropdown-menu {
-    padding-top: 20px;
-    position: absolute;
-    top: 56px;
-    left: auto;
-    right: -10px;
-    bottom: auto;
-    width: 230px;
-    border-color: #cdd4e0;
-    border-width: 2px;
+
+  /* Ya no se necesita la línea punteada entre filas: el propio
+     padding + hover separan visualmente cada opción */
+  #submenu-modulos > .nav-link + *,
+  #submenu-modulos > details + * {
+    margin-top: 2px;
+    padding-top: 0;
+    border-top: none;
   }
-}
-.az-profile-menu .dropdown-item {
-  position: relative;
-  padding: 0;
-  height: 38px;
-  display: flex;
-  align-items: center;
-  font-size: 13px;
-  color: #596882;
-}
-.az-profile-menu .dropdown-item i {
-  font-size: 24px;
-  margin-right: 10px;
-  width: 24px;
-  text-align: center;
-}
-.az-profile-menu .dropdown-item i.typcn {
-  line-height: .9;
-}
-.az-profile-menu .dropdown-item:hover, .az-profile-menu .dropdown-item:focus {
-  background-color: transparent;
-  color: #5b47fb;
-}
-.az-profile-menu .dropdown-item + .dropdown-item {
-  border-top: 1px dotted #b4bdce;
-}
-.az-profile-menu .dropdown-item:last-child {
-  margin-bottom: 10px;
-}
-@media (min-width: 576px) {
-  .az-profile-menu.show .az-img-user::before {
-    display: block;
+
+  #submenu-modulos > .nav-link:hover,
+  #submenu-modulos > details > summary.nav-link:hover {
+    background-color: #f4f5f8;
   }
-}
-.az-profile-menu.show .dropdown-menu {
-  display: block;
-}
-.az-header-profile {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
-}
-.az-header-profile .az-img-user {
-  width: 120px;
-  height: 120px;
-  margin-bottom: 20px;
-}
-@media (min-width: 576px) {
-  .az-header-profile .az-img-user {
-    width: 80px;
-    height: 80px;
+
+  /* Fila activa (detalle abierto) resaltada aunque el mouse
+     ya no esté encima */
+  #submenu-modulos > details[open] > summary.nav-link {
+    background-color: #f4f5f8;
+    color: #5b47fb;
   }
-}
-.az-header-profile .az-img-user::after {
-  display: none;
-}
-.az-header-profile h6 {
-  font-size: 24px;
-  font-weight: 700;
-  color: #1c273c;
-  margin-bottom: 0;
-}
-@media (min-width: 576px) {
-  .az-header-profile h6 {
-    font-size: 18px;
+
+  /* --- La flecha del 2do nivel apunta a la derecha, no hacia
+     abajo, para indicar que el submenú se abre al lado --- */
+  #submenu-modulos > details > summary.nav-link::after {
+    transform: rotate(-90deg);
+    margin-top: 0;
+    opacity: 0.6;
   }
-}
-.az-header-profile span {
-  display: block;
-  font-size: 13px;
-}
-.az-navbar-backdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.45);
-  z-index: 900;
-  visibility: hidden;
-  opacity: 0;
-  transition: all 0.4s;
-}
-@media (prefers-reduced-motion: reduce) {
-  .az-navbar-backdrop {
-    transition: none;
+
+  #submenu-modulos > details[open] > summary.nav-link::after {
+    opacity: 1;
+    color: #5b47fb;
   }
-}
-.az-content-dashboard {
-  padding-top: 20px;
-}
-@media (min-width: 992px) {
-  .az-content-dashboard {
-    padding-top: 30px;
+
+  /* --- Separación clara entre el panel y su flyout, y mismo
+     "aire" interno que el resto de los submenús --- */
+  #submenu-modulos > details > .az-menu-sub {
+    margin-left: 10px;
+    padding: 10px;
   }
-}
-.az-dashboard-one-title {
-  margin-bottom: 20px;
-}
-@media (min-width: 576px) {
-  .az-dashboard-one-title {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+
+  #submenu-modulos > details > .az-menu-sub .nav-link {
+    padding: 6px 8px;
+    border-radius: 5px;
+    transition: background-color 0.15s ease, color 0.15s ease;
   }
-}
-@media (min-width: 992px) {
-  .az-dashboard-one-title {
-    margin-bottom: 30px;
+
+  #submenu-modulos > details > .az-menu-sub .nav-link:hover {
+    background-color: #f4f5f8;
   }
-}
-.az-dashboard-title {
-  font-size: 22px;
-  font-weight: 700;
-  color: #1c273c;
-  letter-spacing: -1px;
-  margin-bottom: 3px;
-}
-.az-dashboard-text {
-  font-size: 13px;
-  margin-bottom: 0;
-}
-.az-content-header-right {
-  display: none;
-}
-@media (min-width: 992px) {
-  .az-content-header-right {
-    display: flex;
-    align-items: center;
+
+  /* Ya no hace falta la línea punteada entre "Registrar consulta"
+     y "Consultar registros": el padding + hover bastan */
+  #submenu-modulos > details > .az-menu-sub .nav-link + .nav-link {
+    border-top: none;
+    margin-top: 2px;
+    padding-top: 6px;
   }
-}
-.az-content-header-right .media label {
-  margin-bottom: 2px;
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: .5px;
-  text-transform: uppercase;
-  color: #97a3b9;
-}
-.az-content-header-right .media h6 {
-  color: #1c273c;
-  margin-bottom: 0;
-}
-.az-content-header-right .media + .media {
-  margin-left: 20px;
-  padding-left: 20px;
-  border-left: 1px solid #cdd4e0;
-}
-.ht-40 {
-  height: 40px;
-}
-.ht-100p {
-  height: 100%;
-}
-.mg-b-20 {
-  margin-bottom: 20px;
-}
-.pd-t-0-f {
-  padding-top: 0px !important;
 }

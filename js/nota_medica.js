@@ -47,14 +47,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
         return;
     }
-
-    const titulo_folio = document.getElementById("folio-consulta-titulo");
-    if (titulo_folio) {
-        titulo_folio.textContent = id_consulta;
-    } else {
-        console.warn('No se encontró "#folio-consulta-titulo" en el HTML -- revisa que formulario.html esté actualizado.');
-    }
-
     await cargar_consulta();
 });
 

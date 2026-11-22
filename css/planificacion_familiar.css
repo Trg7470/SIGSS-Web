@@ -2044,11 +2044,18 @@ select.form-control {
   border-radius: 0 0 5px 5px;
 }
 
-#seguimiento #acciones {
+.sigss-formulario > .card.align-items-end > .card-body {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-end;
   gap: 10px;
+  width: 100%;
+  padding: 20px 24px;
+  background: #fbfcfd;
+}
+
+.sigss-formulario > .card.align-items-end .btn {
+  margin: 0 !important;
 }
 
 .btn {
@@ -2217,12 +2224,12 @@ select.form-control {
 
   /* Botonera */
 
-  #seguimiento #acciones {
-    flex-direction: column;
+  .sigss-formulario > .card.align-items-end > .card-body {
+    justify-content: stretch;
+    padding: 16px;
   }
 
-  #seguimiento #acciones .btn {
-    width: 100%;
-    margin: 0;
+  .sigss-formulario > .card.align-items-end .btn {
+    flex: 1 1 100%;
   }
 }

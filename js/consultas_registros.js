@@ -174,12 +174,24 @@ function iniciales_de_nombre(nombre) {
     return (primera + segunda).toUpperCase() || "--";
 }
 
-function construir_boton_exportar(registro, tipo_salida, texto, etiqueta) {
+/**
+ * @param {object} registro
+ * @param {"xlsx"|"pdf"} tipo_salida
+ * @param {string} texto     Texto visible del botón.
+ * @param {string} etiqueta  aria-label del botón.
+ * @param {string} [formato] Formato a exportar si es distinto al módulo de
+ *                           la página (p. ej. "nota-medica" en la columna
+ *                           de Nota Médica del historial de consulta
+ *                           externa). Si se omite, exportar_consulta() usa
+ *                           modulo_actual, igual que siempre.
+ */
+function construir_boton_exportar(registro, tipo_salida, texto, etiqueta, formato) {
     const boton = document.createElement("button");
     boton.type = "button";
     boton.className = "btn btn-sm btn-outline-secondary btn-exportar";
     boton.dataset.idConsulta = registro.id_consulta;
     boton.dataset.tipoSalida = tipo_salida;
+    if (formato) boton.dataset.formato = formato;
     // Para armar el nombre de descarga en el cliente:
     // Apellido_Paterno_Apellido_Materno_Modulo_FechaConsulta.
     boton.dataset.apellidoPaterno = registro.apellido_paterno || "";
@@ -193,6 +205,40 @@ function construir_boton_exportar(registro, tipo_salida, texto, etiqueta) {
     boton.appendChild(texto_boton);
 
     return boton;
+}
+
+/**
+ * Celda de la columna "Nota Médica" (solo consulta-externa): un botón que
+ * genera y descarga el PDF de la nota médica de esa consulta, con el mismo
+ * mecanismo (fetch + popup de carga/éxito/error) que los botones de
+ * Excel/PDF de la columna "Detalles", pero con formato "nota-medica" fijo
+ * -- el backend ya sabe construir el registro para esa plantilla a partir
+ * de vista_nota_medica (ver nota_medica.mapeo.js) -- y tipo_salida "pdf"
+ * fijo, porque de la nota médica solo se ofrece el PDF.
+ */
+function construir_celda_nota_medica(registro) {
+    const celda = document.createElement("td");
+    celda.className = "text-center";
+
+    const boton = construir_boton_exportar(
+        registro,
+        "pdf",
+        "",
+        "Generar PDF de la nota médica",
+        "nota-medica"
+    );
+    boton.classList.replace("btn-outline-secondary", "btn-outline-primary");
+
+    const icono = document.createElement("i");
+    icono.className = "fa-solid fa-notes-medical";
+    icono.setAttribute("aria-hidden", "true");
+    boton.prepend(icono);
+
+    const texto_boton = boton.querySelector(".hc-texto-boton");
+    texto_boton.textContent = " Nota";
+
+    celda.appendChild(boton);
+    return celda;
 }
 
 function construir_fila(registro) {
@@ -227,6 +273,13 @@ function construir_fila(registro) {
     celda_curp.className = "hc-celda-monoespaciada";
     celda_curp.textContent = registro.curp || "—";
     fila.appendChild(celda_curp);
+
+    // La columna "Nota Médica" solo existe en el historial de consulta
+    // externa (es la única página que la tiene en su <thead>); en los
+    // demás módulos no se agrega la celda.
+    if (modulo_actual === "consulta-externa" || modulo_actual === "planificacion-familiar" || modulo_actual === "salud-bucal") {
+        fila.appendChild(construir_celda_nota_medica(registro)); 
+    }
 
     const celda_acciones = document.createElement("td");
     celda_acciones.className = "text-center";
@@ -294,9 +347,15 @@ async function exportar_consulta(boton) {
         tipoSalida: tipo_salida,
         apellidoPaterno: apellido_paterno,
         apellidoMaterno: apellido_materno,
-        fecha
+        fecha,
+        formato: formato_boton
     } = boton.dataset;
     if (!id_consulta || !tipo_salida) return;
+
+    // La columna "Nota Médica" manda su propio formato ("nota-medica") en
+    // el botón; los demás botones de exportar (Excel/PDF de la columna
+    // "Detalles") no lo traen y usan el módulo de la página, como siempre.
+    const formato_a_exportar = formato_boton || modulo_actual;
 
     const etiqueta_formato = tipo_salida === "pdf" ? "PDF" : "Excel";
     boton.disabled = true;
@@ -308,10 +367,10 @@ async function exportar_consulta(boton) {
         boton: false
     });
 
-    const nombre_archivo_solicitado = armar_nombre_archivo(apellido_paterno, apellido_materno, modulo_actual, fecha);
+    const nombre_archivo_solicitado = armar_nombre_archivo(apellido_paterno, apellido_materno, formato_a_exportar, fecha);
 
     const parametros = new URLSearchParams({
-        formato: modulo_actual,
+        formato: formato_a_exportar,
         tipo_salida,
         id_consulta,
         nombre_archivo: nombre_archivo_solicitado
@@ -329,7 +388,7 @@ async function exportar_consulta(boton) {
         const extension = tipo_salida === "pdf" ? "pdf" : "xlsx";
         const nombre_archivo =
             extraer_nombre_archivo(response.headers.get("Content-Disposition")) ||
-            `${nombre_archivo_solicitado || `${modulo_actual}-${id_consulta}`}.${extension}`;
+            `${nombre_archivo_solicitado || `${formato_a_exportar}-${id_consulta}`}.${extension}`;
 
         descargar_blob(blob, nombre_archivo);
 
