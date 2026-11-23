@@ -208,17 +208,23 @@ function construir_boton_exportar(registro, tipo_salida, texto, etiqueta, format
 }
 
 /**
- * Celda de la columna "Nota Médica" (solo consulta-externa): un botón que
- * genera y descarga el PDF de la nota médica de esa consulta, con el mismo
- * mecanismo (fetch + popup de carga/éxito/error) que los botones de
- * Excel/PDF de la columna "Detalles", pero con formato "nota-medica" fijo
- * -- el backend ya sabe construir el registro para esa plantilla a partir
- * de vista_nota_medica (ver nota_medica.mapeo.js) -- y tipo_salida "pdf"
- * fijo, porque de la nota médica solo se ofrece el PDF.
+ * Celda de la columna "Nota Médica" (consulta-externa, planificacion-familiar
+ * y salud-bucal): si la consulta ya tiene una nota médica guardada
+ * (registro.id_nota_medica, que viene del LEFT JOIN a Notas_Medicas en cada
+ * buscar_historial), ofrece generar y descargar su PDF -- igual que los
+ * botones de Excel/PDF de "Detalles", pero con formato "nota-medica" fijo y
+ * tipo_salida "pdf" fijo, porque de la nota médica solo se ofrece el PDF.
+ * Si todavía no existe, no hay nada que exportar ni que mostrar: la fila se
+ * sigue mostrando igual, solo que esta celda se queda vacía.
  */
 function construir_celda_nota_medica(registro) {
     const celda = document.createElement("td");
     celda.className = "text-center";
+
+    if (!registro.id_nota_medica) {
+        celda.textContent = "—";
+        return celda;
+    }
 
     const boton = construir_boton_exportar(
         registro,
@@ -278,7 +284,7 @@ function construir_fila(registro) {
     // externa (es la única página que la tiene en su <thead>); en los
     // demás módulos no se agrega la celda.
     if (modulo_actual === "consulta-externa" || modulo_actual === "planificacion-familiar" || modulo_actual === "salud-bucal") {
-        fila.appendChild(construir_celda_nota_medica(registro)); 
+        fila.appendChild(construir_celda_nota_medica(registro));
     }
 
     const celda_acciones = document.createElement("td");

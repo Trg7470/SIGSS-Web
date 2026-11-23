@@ -6,6 +6,12 @@ import {
     crear_paginador
 } from "./utils.js";
 
+import {
+    cargar_catalogos_pacientes,
+    obtener_paciente,
+    abrir_formulario_paciente
+} from "./pacientes_formulario.js";
+
 const Usuario = JSON.parse(sessionStorage.getItem("usuario"));
 
 const BASE_API = "http://localhost:3000/api";
@@ -46,14 +52,14 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
 
     document.getElementById("boton-nuevo-paciente")
-        .addEventListener("click", () => abrir_formulario_paciente());
+        .addEventListener("click", () => abrir_formulario_paciente_pagina());
 
     document.getElementById("cuerpo-tabla-pacientes")
         .addEventListener("click", manejar_click_tabla);
 
     paginador = crear_paginador((nueva_pagina) => listar_pacientes(nueva_pagina));
 
-    const catalogos_cargados = await cargar_catalogos();
+    const catalogos_cargados = await cargar_catalogos(); // eslint-disable-line no-use-before-define
     if (!catalogos_cargados) return;
 
     listar_pacientes(1);
@@ -63,14 +69,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 async function cargar_catalogos() {
     try {
-        const response = await fetch(`${BASE_API}/data/catalogos.json`);
-
-        if (!response.ok) {
-            const mensaje = await obtener_mensaje_error(response, "No fue posible cargar los catálogos estáticos.");
-            throw new Error(mensaje);
-        }
-
-        catalogos_json = await response.json();
+        catalogos_json = await cargar_catalogos_pacientes();
         return true;
     } catch (error) {
         console.error("Error al cargar catálogos:", error);
@@ -84,13 +83,6 @@ async function cargar_catalogos() {
         });
         return false;
     }
-}
-
-function opciones_catalogo(lista, campo_valor, formatear_texto) {
-    return (lista || []).map(dato => ({
-        valor: dato[campo_valor],
-        texto: formatear_texto(dato)
-    }));
 }
 
 // ======================= BÚSQUEDA / LISTADO =======================
@@ -161,13 +153,17 @@ function construir_fila(paciente) {
 
     const celda_acciones = document.createElement("td");
     celda_acciones.className = "text-center";
-    const boton_editar = document.createElement("button");
-    boton_editar.type = "button";
-    boton_editar.className = "btn btn-sm btn-outline-secondary btn-editar-paciente";
-    boton_editar.dataset.idPaciente = paciente.Id_Paciente;
-    boton_editar.setAttribute("aria-label", "Editar paciente");
-    boton_editar.innerHTML = `<i class="fas fa-pen"></i>`;
-    celda_acciones.appendChild(boton_editar);
+
+    // Ver expediente: lleva a la ficha completa del paciente
+    // (historial clínico, datos generales y notas médicas).
+    const enlace_expediente = document.createElement("a");
+    enlace_expediente.href = `expediente.html?id=${encodeURIComponent(paciente.Id_Paciente)}`;
+    enlace_expediente.className = "btn btn-sm btn-outline-primary mr-1";
+    enlace_expediente.setAttribute("aria-label", "Ver expediente");
+    enlace_expediente.setAttribute("title", "Ver expediente");
+    enlace_expediente.innerHTML = `<i class="fas fa-folder-open"></i>`;
+    celda_acciones.appendChild(enlace_expediente);
+
     fila.appendChild(celda_acciones);
 
     return fila;
@@ -197,129 +193,12 @@ function pintar_resultados(datos) {
 }
 
 function manejar_click_tabla(evento) {
-    const boton = evento.target.closest(".btn-editar-paciente");
-    if (!boton) return;
-    abrir_formulario_paciente(boton.dataset.idPaciente);
+    // La acción de "ver expediente" ya es un <a href>, no necesita manejador.
+    // Este listener queda disponible para futuras acciones por delegación.
 }
 
-// ======================= ALTA / EDICIÓN =======================
+// ======================= ALTA (el detalle/edición vive en expediente.html) =======================
 
-/** Sin id: formulario de alta. Con id: consulta el paciente y abre en modo edición. */
-async function abrir_formulario_paciente(Id_Paciente = null) {
-    let paciente = null;
-
-    if (Id_Paciente) {
-        mostrarPopup({
-            tipo: "carga",
-            titulo: "Cargando paciente",
-            mensaje: "Obteniendo los datos del paciente...",
-            boton: false
-        });
-
-        try {
-            const response = await fetch(`${BASE_API}/pacientes/${Id_Paciente}`);
-
-            if (!response.ok) {
-                const mensaje = await obtener_mensaje_error(response);
-                throw new Error(mensaje);
-            }
-
-            const resultado = await response.json();
-            paciente = resultado.paciente;
-            cerrarPopup();
-        } catch (error) {
-            console.error("Error al consultar paciente:", error);
-            mostrarPopup({
-                tipo: "error",
-                titulo: "Error al consultar",
-                mensaje: es_error_de_red(error)
-                    ? MENSAJE_SIN_CONEXION
-                    : (error.message || "No fue posible obtener los datos del paciente."),
-                boton: true
-            });
-            return;
-        }
-    }
-
-    window.modal_manager.mostrar({
-        titulo: Id_Paciente ? "Editar paciente" : "Nuevo paciente",
-        icono: Id_Paciente ? "fas fa-user-pen" : "fas fa-user-plus",
-        texto_guardar: Id_Paciente ? "Guardar cambios" : "Registrar paciente",
-        icono_guardar: "fas fa-save",
-        descripcion: Id_Paciente
-            ? "Modifica los datos del paciente y guarda los cambios."
-            : "Captura los datos del paciente nuevo.",
-        id: Id_Paciente || "",
-        campos: [
-            { id: "paciente-nombre", nombre: "Nombre", etiqueta: "Nombre(s)", tipo: "text", columna: "col-md-4 mb-3", requerido: true, maxlength: 30 },
-            { id: "paciente-apellido-paterno", nombre: "Apellido_Paterno", etiqueta: "Apellido paterno", tipo: "text", columna: "col-md-4 mb-3", requerido: true, maxlength: 30 },
-            { id: "paciente-apellido-materno", nombre: "Apellido_Materno", etiqueta: "Apellido materno", tipo: "text", columna: "col-md-4 mb-3", requerido: true, maxlength: 30 },
-            { id: "paciente-curp", nombre: "Curp", etiqueta: "CURP", tipo: "text", columna: "col-md-6 mb-3", requerido: true, maxlength: 18 },
-            { id: "paciente-expediente", nombre: "Expediente", etiqueta: "Expediente", tipo: "text", columna: "col-md-6 mb-3", requerido: true, maxlength: 15 },
-            { id: "paciente-fecha-nacimiento", nombre: "Fecha_Nacimiento", etiqueta: "Fecha de nacimiento", tipo: "date", columna: "col-md-4 mb-3", requerido: true },
-            { id: "paciente-entidad-nacimiento", nombre: "Entidad_Nacimiento", etiqueta: "Entidad de nacimiento", tipo: "text", columna: "col-md-4 mb-3", requerido: true, maxlength: 30 },
-            { id: "paciente-pais-nacimiento", nombre: "Pais_Nacimiento", etiqueta: "País de nacimiento", tipo: "text", columna: "col-md-4 mb-3", maxlength: 30, ayuda: "Solo si nació fuera de México." },
-            { id: "paciente-sexo", nombre: "Sexo", etiqueta: "Sexo", tipo: "select", columna: "col-md-4 mb-3", requerido: true,
-                opciones: opciones_catalogo(catalogos_json?.sexo_biologico, "Id_Cat_Sexo_Biologico", s => `${s.Clave} | ${s.Nombre}`) },
-            { id: "paciente-migrante", nombre: "Es_Migrante", etiqueta: "Migrante", tipo: "select", columna: "col-md-4 mb-3",
-                opciones: opciones_catalogo(catalogos_json?.migrante, "Id_Cat_Migrante", m => `${m.Clave} | ${m.Nombre}`) },
-            { id: "paciente-afromexicano", nombre: "Es_Afromexicano", etiqueta: "Se considera afromexicano", tipo: "checkbox", columna: "col-md-4 mb-3 d-flex align-items-center" },
-            { id: "paciente-indigena", nombre: "Es_Indigena", etiqueta: "Se considera indígena", tipo: "checkbox", columna: "col-md-4 mb-3 d-flex align-items-center" }
-        ],
-        datos: paciente || {},
-        onSubmit: (datos) => guardar_paciente(datos, Id_Paciente)
-    });
-}
-
-async function guardar_paciente(datos, Id_Paciente) {
-    const cuerpo = {
-        Nombre: datos.Nombre?.trim(),
-        Apellido_Paterno: datos.Apellido_Paterno?.trim(),
-        Apellido_Materno: datos.Apellido_Materno?.trim(),
-        Fecha_Nacimiento: datos.Fecha_Nacimiento || null,
-        Entidad_Nacimiento: datos.Entidad_Nacimiento?.trim(),
-        Pais_Nacimiento: datos.Pais_Nacimiento?.trim() || null,
-        Curp: datos.Curp?.trim().toUpperCase(),
-        Sexo: datos.Sexo ? Number(datos.Sexo) : null,
-        Es_Migrante: datos.Es_Migrante ? Number(datos.Es_Migrante) : null,
-        Es_Afromexicano: Boolean(datos.Es_Afromexicano),
-        Es_Indigena: Boolean(datos.Es_Indigena),
-        Expediente: datos.Expediente?.trim()
-    };
-
-    const url = Id_Paciente
-        ? `${BASE_API}/pacientes/${Id_Paciente}`
-        : `${BASE_API}/pacientes/registrar`;
-    const metodo = Id_Paciente ? "PUT" : "POST";
-
-    try {
-        const response = await fetch(url, {
-            method: metodo,
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(cuerpo)
-        });
-
-        const resultado = await response.json();
-
-        if (!response.ok || resultado.success === false) {
-            throw new Error(resultado.message || mensaje_por_estado(response.status));
-        }
-
-        mostrarPopup({
-            tipo: "exito",
-            titulo: Id_Paciente ? "Paciente actualizado" : "Paciente registrado",
-            mensaje: Id_Paciente
-                ? "Los datos del paciente se actualizaron correctamente."
-                : "El paciente se registró correctamente.",
-            boton: true
-        });
-
-        listar_pacientes(1);
-        return true;
-    } catch (error) {
-        console.error("Error al guardar paciente:", error);
-        throw new Error(
-            es_error_de_red(error) ? MENSAJE_SIN_CONEXION : (error.message || "No fue posible guardar el paciente.")
-        );
-    }
+function abrir_formulario_paciente_pagina() {
+    abrir_formulario_paciente(null, null, catalogos_json, () => listar_pacientes(1));
 }

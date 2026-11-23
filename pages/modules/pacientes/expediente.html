@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="es-MX">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="description" content="Sistema Integral de Gestión de Servicios de Salud" />
+  <meta name="author" content="SIGSS" />
+  <title>SIGSS | Expediente del paciente</title>
+
+  <!-- Hojas de estilo de iconos (raíz = ../../../) -->
+  <link href="../../../lib/fontawesome-free/css/all.min.css" rel="stylesheet" />
+  <link href="../../../lib/ionicons/css/ionicons.min.css" rel="stylesheet" />
+  <link href="../../../lib/typicons.font/typicons.css" rel="stylesheet" />
+  <link href="../../../lib/flag-icon-css/css/flag-icon.min.css" rel="stylesheet" />
+
+  <!-- Hojas de estilo de la plantilla -->
+  <link rel="stylesheet" href="../../../lib/bootstrap/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="../../../css/popup.css" />
+  <link rel="stylesheet" href="../../../css/modal.css" />
+  <link rel="stylesheet" href="/css/dashboard.css" />
+  <link rel="stylesheet" href="../../../css/consulta_externa.css" />
+  <!-- Estilos propios del expediente del paciente (nuevo) -->
+  <link rel="stylesheet" href="../../../css/expediente.css" />
+</head>
+
+<body id="pagina-sigss">
+  <!-- ================================================== -->
+  <!-- ENCABEZADO PRINCIPAL                               -->
+  <!-- ================================================== -->
+  <div data-layout="/partials/header.html"></div>
+
+  <!-- ================================================== -->
+  <!-- CONTENIDO PRINCIPAL                                -->
+  <!-- ================================================== -->
+  <main id="seccion-contenido" class="az-content az-content-dashboard">
+    <div id="contenedor-contenido" class="container">
+      <div id="contenido-dashboard" class="az-content-body">
+
+        <section id="seccion-bienvenida" class="az-dashboard-one-title">
+          <div id="informacion-bienvenida" class="hc-expediente-encabezado">
+            <div>
+              <nav aria-label="breadcrumb">
+                <ol class="breadcrumb bg-transparent p-0 mb-1">
+                  <li class="breadcrumb-item"><a href="pacientes.html">Pacientes</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Expediente</li>
+                </ol>
+              </nav>
+              <h1 id="titulo-bienvenida" class="az-dashboard-title">Expediente del paciente</h1>
+              <p id="descripcion-bienvenida" class="az-dashboard-text">Historial clínico, datos generales y notas médicas.</p>
+            </div>
+            <div class="hc-expediente-acciones">
+              <button type="button" class="btn btn-outline-secondary" id="boton-generar-reporte">
+                <i class="fa-solid fa-file-export mr-1"></i>Generar reporte
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <section id="seccion-expediente" aria-label="Expediente del paciente">
+          <div class="sigss-formulario">
+
+            <!-- Tarjeta resumen del paciente -->
+            <div class="shadow card hc-card-resumen mt-4" id="tarjeta-resumen-paciente">
+              <div class="card-body hc-resumen-body">
+                <div class="hc-expediente-avatar">
+                  <i class="fa-solid fa-user"></i>
+                </div>
+
+                <div class="hc-resumen-info">
+                  <div class="hc-resumen-nombre-fila">
+                    <h2 class="hc-resumen-nombre" id="texto-nombre-paciente">&nbsp;</h2>
+                    <span class="hc-resumen-expediente" id="texto-expediente-paciente"></span>
+                  </div>
+                  <div class="hc-resumen-meta">
+                    <span>CURP: <strong id="texto-curp-paciente"></strong></span>
+                    <span>Edad: <strong id="texto-edad-paciente"></strong></span>
+                    <span>Sexo: <strong id="texto-sexo-paciente"></strong></span>
+                    <span>Entidad de nacimiento: <strong id="texto-entidad-paciente"></strong></span>
+                  </div>
+                  <div class="hc-resumen-badges" id="contenedor-badges-modulos">
+                    <!-- Badges de módulos con historial, generados por expediente.js -->
+                  </div>
+                </div>
+
+                <div class="hc-resumen-stats">
+                  <div class="hc-resumen-stat">
+                    <span class="hc-resumen-stat-label">Última consulta</span>
+                    <span class="hc-resumen-stat-valor" id="texto-ultima-consulta">&mdash;</span>
+                  </div>
+                  <div class="hc-resumen-stat">
+                    <span class="hc-resumen-stat-label">Consultas registradas</span>
+                    <span class="hc-resumen-stat-valor" id="texto-total-consultas">0</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Pestañas -->
+            <ul class="nav nav-tabs hc-tabs mt-4" id="tabs-expediente" role="tablist">
+              <li class="nav-item">
+                <a class="nav-link active" id="tab-historial-tab" data-toggle="tab" href="#tab-historial"
+                  role="tab" aria-controls="tab-historial" aria-selected="true">Historial clínico</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="tab-datos-tab" data-toggle="tab" href="#tab-datos" role="tab"
+                  aria-controls="tab-datos" aria-selected="false">Datos generales</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="tab-notas-tab" data-toggle="tab" href="#tab-notas" role="tab"
+                  aria-controls="tab-notas" aria-selected="false">Notas médicas</a>
+              </li>
+            </ul>
+
+            <div class="tab-content hc-tab-content" id="contenido-tabs-expediente">
+
+              <!-- ======================= -->
+              <!-- Historial clínico       -->
+              <!-- ======================= -->
+              <div class="tab-pane fade show active" id="tab-historial" role="tabpanel" aria-labelledby="tab-historial-tab">
+                <div class="shadow card hc-card-resultados mt-3" id="tarjeta-historial">
+                  <div class="card-header hc-card-header">
+                    <span class="hc-card-header-titulo">
+                      <i class="fa-solid fa-clock-rotate-left mr-2"></i>Historial de consultas
+                    </span>
+                  </div>
+                  <div class="card-body">
+                    <div class="hc-filtros-modulo" id="contenedor-filtros-modulo" role="group" aria-label="Filtrar por módulo">
+                      <button type="button" class="btn btn-sm hc-chip-modulo active" data-modulo="todos">Todos</button>
+                      <button type="button" class="btn btn-sm hc-chip-modulo" data-modulo="consulta_externa">Consulta externa</button>
+                      <button type="button" class="btn btn-sm hc-chip-modulo" data-modulo="planificacion_familiar">Planificación familiar</button>
+                      <button type="button" class="btn btn-sm hc-chip-modulo" data-modulo="salud_bucal">Salud bucal</button>
+                    </div>
+                  </div>
+                  <div class="card-body p-0">
+                    <div class="table-responsive hc-tabla-wrapper">
+                      <table class="table table-hover hc-tabla-resultados mb-0" id="tabla-historial-expediente">
+                        <colgroup>
+                          <col style="width: 14%;" />
+                          <col style="width: 14%;" />
+                          <col style="width: 20%;" />
+                          <col style="width: 34%;" />
+                          <col style="width: 9%;" />
+                          <col style="width: 9%;" />
+                        </colgroup>
+                        <thead>
+                          <tr>
+                            <th scope="col">Folio</th>
+                            <th scope="col">Fecha</th>
+                            <th scope="col">Módulo</th>
+                            <th scope="col">Motivo / diagnóstico</th>
+                            <th scope="col" class="text-center">1ª vez</th>
+                            <th scope="col" class="text-center">Nota médica</th>
+                          </tr>
+                        </thead>
+                        <tbody id="cuerpo-tabla-historial-expediente">
+                          <!-- Filas generadas por expediente.js reutilizando buscar_historial -->
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ======================= -->
+              <!-- Datos generales         -->
+              <!-- ======================= -->
+              <div class="tab-pane fade" id="tab-datos" role="tabpanel" aria-labelledby="tab-datos-tab">
+                <div class="shadow card hc-card-resultados mt-3" id="tarjeta-datos-generales">
+                  <div class="card-header hc-card-header d-flex justify-content-between align-items-center">
+                    <span class="hc-card-header-titulo">
+                      <i class="fa-solid fa-id-card mr-2"></i>Datos del paciente
+                    </span>
+                    <button type="button" class="btn btn-sm btn-outline-secondary" id="boton-editar-datos">
+                      <i class="fa-solid fa-pen mr-1"></i>Editar
+                    </button>
+                  </div>
+
+                  <div class="card-body">
+                    <!-- Reutiliza el mismo formulario modal de alta/edición
+                         que ya existe en pacientes.html (pacientes_formulario.js),
+                         así que aquí solo se muestra en modo lectura. -->
+                    <div class="hc-datos-grid" id="vista-lectura-datos">
+                      <div><span class="hc-datos-label">Nombre completo</span><span class="hc-datos-valor" id="lectura-nombre"></span></div>
+                      <div><span class="hc-datos-label">CURP</span><span class="hc-datos-valor" id="lectura-curp"></span></div>
+                      <div><span class="hc-datos-label">No. de expediente</span><span class="hc-datos-valor" id="lectura-expediente"></span></div>
+                      <div><span class="hc-datos-label">Fecha de nacimiento</span><span class="hc-datos-valor" id="lectura-fecha-nacimiento"></span></div>
+                      <div><span class="hc-datos-label">Sexo</span><span class="hc-datos-valor" id="lectura-sexo"></span></div>
+                      <div><span class="hc-datos-label">Entidad de nacimiento</span><span class="hc-datos-valor" id="lectura-entidad-nacimiento"></span></div>
+                      <div><span class="hc-datos-label">País de nacimiento</span><span class="hc-datos-valor" id="lectura-pais-nacimiento"></span></div>
+                      <div><span class="hc-datos-label">Migrante</span><span class="hc-datos-valor" id="lectura-migrante"></span></div>
+                      <div><span class="hc-datos-label">Se considera afromexicano</span><span class="hc-datos-valor" id="lectura-afromexicano"></span></div>
+                      <div><span class="hc-datos-label">Se considera indígena</span><span class="hc-datos-valor" id="lectura-indigena"></span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ======================= -->
+              <!-- Notas médicas           -->
+              <!-- ======================= -->
+              <div class="tab-pane fade" id="tab-notas" role="tabpanel" aria-labelledby="tab-notas-tab">
+                <div id="contenedor-notas-medicas" class="mt-3">
+                  <!-- Tarjetas de nota médica generadas por expediente.js -->
+                </div>
+                <div class="text-muted small d-none" id="texto-sin-notas">
+                  Este paciente no tiene notas médicas registradas.
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <!-- ================================================== -->
+  <!-- PIE DE PÁGINA                                      -->
+  <!-- ================================================== -->
+  <div data-layout="/partials/footer.html"></div>
+
+  <!-- Ventanas modales (popup de estado + modal genérico) -->
+  <div data-layout="/partials/modales.html"></div>
+
+  <!-- ================================================== -->
+  <!-- BIBLIOTECAS JAVASCRIPT                             -->
+  <!-- ================================================== -->
+  <script src="/js/layout.js"></script>
+  <script src="../../../lib/jquery/jquery.min.js"></script>
+  <script src="../../../lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../../../lib/ionicons/ionicons.js"></script>
+  <script src="../../../js/popup.js"></script>
+
+  <!-- Núcleo de la plantilla Azia -->
+  <script src="../../../js/azia.js"></script>
+
+  <!-- Lógica propia de SIGSS -->
+  <script src="../../../js/modal_manager.js"></script>
+  <script type="module" src="../../../js/expediente.js"></script>
+  <script src="../../../js/dashboard.js"></script>
+  <script src="../../../js/clock.js"></script>
+</body>
+
+</html>
