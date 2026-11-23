@@ -92,7 +92,9 @@ async function cargar_dashboard() {
         case "Médico":
             generar_menu_medico();
             break;
-
+        case "Personal administrativo":
+            generar_menu_administrativo();
+            break;
         default:
             console.warn(
                 "No existe un menú configurado para el rol:",
@@ -323,6 +325,75 @@ function generar_menu_medico() {
                 </nav>
             </details>
         </li>
+        <!-- REPORTES -->
+        <li id="nav-reportes" class="nav-item">
+            <details id="grupo-reportes">
+                <summary
+                    id="enlace-reportes"
+                    class="nav-link"
+                >
+                    <i class="typcn typcn-document-text"></i>
+                    Reportes
+                </summary>
+                <nav
+                    id="submenu-reportes"
+                    class="az-menu-sub"
+                >
+                    <a
+                        href="/pages/modules/reportes/hoja_diaria.html"
+                        id="opcion-hoja-diaria"
+                        class="nav-link"
+                        data-modulo="reportes"
+                        data-vista="hoja-diaria"
+                    >
+                        <i class="typcn typcn-calendar"></i>
+                        Hoja diaria
+                    </a>
+                </nav>
+            </details>
+        </li>
+        <!-- PACIENTES -->
+        <li id="nav-pacientes" class="nav-item">
+            <a
+                href="/pages/modules/pacientes/index.html"
+                id="opcion-registrar-pacientes"
+                class="nav-link"
+                data-modulo="pacientes"
+                data-vista="pacientes"
+            >
+                <i class="typcn typcn-user"></i>
+                Pacientes
+            </a>
+        </li>
+    `;
+}
+
+function generar_menu_administrativo()
+{
+     const menu =
+        document.getElementById("menu-principal");
+    if (!menu) {
+        console.error(
+            "No se encontró #menu-principal."
+        );
+        return;
+    }
+
+    menu.innerHTML = `
+        <!-- HOME -->
+        <li id="nav-home" class="nav-item">
+            <a
+                href="/pages/dashboard/dashboard.html"
+                id="enlace-home"
+                class="nav-link"
+                data-modulo="home"
+                data-vista="inicio"
+            >
+                <i class="typcn typcn-home"></i>
+                Home
+            </a>
+        </li>
+        <!-- MODULOS (agrupa consulta externa, salud bucal, detecciones y planificacion familiar) -->
         <!-- REPORTES -->
         <li id="nav-reportes" class="nav-item">
             <details id="grupo-reportes">
