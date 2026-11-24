@@ -1,0 +1,989 @@
+<!doctype html>
+<html lang="es-MX">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="description" content="Sistema Integral de Gestión de Servicios de Salud" />
+  <meta name="author" content="SIGSS" />
+  <title>SIGSS | Detecciones</title>
+
+  <!-- Hojas de estilo de iconos (raíz = ../../../) -->
+  <link href="/lib/fontawesome-free/css/all.min.css" rel="stylesheet" />
+  <link href="/lib/ionicons/css/ionicons.min.css" rel="stylesheet" />
+  <link href="/lib/typicons.font/typicons.css" rel="stylesheet" />
+  <link href="/lib/flag-icon-css/css/flag-icon.min.css" rel="stylesheet" />
+
+  <!-- Hojas de estilo de la plantilla -->
+  <link rel="stylesheet" href="../../../lib/bootstrap/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="../../../css/popup.css" />
+  <link rel="stylesheet" href="../../../css/dashboard.css" />
+  <link rel="stylesheet" href="../../../css/modal.css" />
+  <link rel="stylesheet" href="../../../css/detecciones.css" />
+</head>
+
+<body id="pagina-sigss">
+  <!-- ================================================== -->
+  <!-- ENCABEZADO PRINCIPAL                               -->
+  <!-- ================================================== -->
+    <div data-layout="/partials/header.html"></div>
+
+
+  <!-- ================================================== -->
+  <!-- CONTENIDO PRINCIPAL                                -->
+  <!-- ================================================== -->
+  <main id="seccion-contenido" class="az-content az-content-dashboard">
+    <div id="contenedor-contenido" class="container">
+      <div id="contenido-dashboard" class="az-content-body">
+
+        <section id="seccion-bienvenida" class="az-dashboard-one-title">
+          <div id="informacion-bienvenida">
+            <h1 id="titulo-bienvenida" class="az-dashboard-title">Detecciones</h1>
+            <p id="descripcion-bienvenida" class="az-dashboard-text">Registro de atención</p>
+          </div>
+          <div id="informacion-adicional" class="az-content-header-right">
+            <div id="informacion-fecha" class="media">
+              <div class="media-body">
+                <label id="fecha">Fecha</label>
+                <h6 id="hora">--/--/----</h6>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="seccion-panel-usuario" aria-label="Formulario de detecciones">
+          <div id="contenedor-modulos" class="sigss-formulario">
+
+            <!-- Identificación y Atención -->
+            <div class="shadow card card-body mt-4" id="identificacion-atencion">
+              <div class="card-title">
+                <h5>Identificación y Atención</h5>
+              </div>
+              <div class="card-body">
+                <div class="form-row">
+                  <div class="form-group col-md-3">
+                    <label for="clues">CLUES</label>
+                    <input type="text" class="form-control" id="clues" placeholder="CLUES" required readonly />
+                  </div>
+                  <div class="form-group col-md-9">
+                    <label for="nombre-unidad">Nombre de la Unidad</label>
+                    <input type="text" class="form-control" id="nombre-unidad" placeholder="Nombre de la unidad"
+                      required readonly />
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-4">
+                    <label for="curp-prestador">CURP del Prestador</label>
+                    <input type="text" class="form-control" id="curp-prestador" placeholder="CURP del prestador"
+                      required readonly />
+                  </div>
+                  <div class="form-group col-md-8">
+                    <label for="nombre-prestador">Nombre de la/el Prestador</label>
+                    <input type="text" class="form-control" id="nombre-prestador" placeholder="Nombre del prestador"
+                      required readonly />
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-4">
+                    <label for="tipo-personal">Tipo de Personal</label>
+                    <input type="text" class="form-control" id="tipo-personal" placeholder="Tipo de personal"
+                      required readonly />
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="cedula-profesional">Cédula Profesional</label>
+                    <input type="text" class="form-control" id="cedula-profesional" placeholder="Cédula profesional"
+                      required readonly />
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="fecha-atencion">Fecha de Atención</label>
+                    <input type="date" class="form-control" id="fecha-atencion" required readonly />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="servicio">Servicio</label>
+                  <select class="form-control" id="servicio">
+                    <option value="">Selecciona un servicio</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- Información del Paciente -->
+            <div class="shadow card card-body mt-4" id="informacion-paciente">
+              <div class="card-title">
+                <h5>Información del Paciente</h5>
+              </div>
+              <div class="card-body">
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label for="derechohabiencia">Derechohabiencia</label>
+                    <select class="form-control" id="derechohabiencia">
+                      <option value="0">Selecciona una opción</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-3">
+                    <label for="folio-receta">Folio de la Receta</label>
+                    <input type="text" class="form-control" id="folio-receta" placeholder="Folio de la receta" />
+                  </div>
+                  <div class="form-group col-md-3">
+                    <label for="expediente">Expediente</label>
+                    <input type="text" class="form-control" id="expediente" placeholder="Expediente" required readonly />
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label for="curp-paciente">CURP o Fecha de nacimiento y Entidad o País de nacimiento</label>
+                    <input type="text" class="form-control" id="curp-paciente" placeholder="CURP ligado al paciente"
+                      required readonly />
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="nombre-paciente">Nombre del Paciente</label>
+                    <input type="text" class="form-control" id="nombre-paciente" placeholder="Nombre del paciente"
+                      required readonly />
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-3">
+                    <label for="edad">Edad</label>
+                    <input type="number" class="form-control" id="edad" placeholder="Edad" />
+                  </div>
+                  <div class="form-group col-md-5">
+                    <label for="clave-edad">Clave de edad</label>
+                    <select class="form-control" id="clave-edad">
+                      <option value="">Selecciona la clave de edad</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="sexo">Sexo biológico</label>
+                    <select class="form-control" id="sexo">
+                      <option value="">Selecciona el sexo</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-4">
+                    <label for="afromexicano">Afromexicano</label>
+                    <select class="form-control" id="afromexicano">
+                      <option value="">Selecciona una opción</option>
+                      <option value="0">No</option>
+                      <option value="1">Sí</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="indigena">Indígena</label>
+                    <select class="form-control" id="indigena">
+                      <option value="">Selecciona una opción</option>
+                      <option value="0">No</option>
+                      <option value="1">Sí</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="migrante">Migrante</label>
+                    <select class="form-control" id="migrante">
+                      <option value="">Selecciona una opción</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Mediciones -->
+            <div class="shadow card card-body mt-4" id="mediciones">
+              <div class="card-title">
+                <h5>Mediciones</h5>
+              </div>
+              <div class="card-body">
+                <div class="form-row">
+                  <div class="form-group col-md-4">
+                    <label for="peso">Peso</label>
+                    <div class="input-group">
+                      <input type="number" class="form-control" id="peso" placeholder="Peso" min="0" max="999.99"
+                        step="0.001" inputmode="decimal" title="Ingresa hasta 3 dígitos enteros y 2 decimales." />
+                      <div class="input-group-append"><span class="input-group-text">kg</span></div>
+                    </div>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="talla">Talla</label>
+                    <div class="input-group">
+                      <input type="number" class="form-control" id="talla" placeholder="Talla" />
+                      <div class="input-group-append"><span class="input-group-text">cm</span></div>
+                    </div>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="circunferencia-cintura">Circunferencia de la Cintura</label>
+                    <div class="input-group">
+                      <input type="number" class="form-control" id="circunferencia-cintura" placeholder="Cintura"
+                        title="Circunferencia de la cintura en centímetros" />
+                      <div class="input-group-append"><span class="input-group-text">cm</span></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-3">
+                    <label for="presion-diastolica">Presión diastólica</label>
+                    <div class="input-group">
+                      <input type="number" class="form-control" id="presion-diastolica" placeholder="Diastólica" />
+                      <div class="input-group-append"><span class="input-group-text">mmHg</span></div>
+                    </div>
+                  </div>
+                  <div class="form-group col-md-3">
+                    <label for="presion-sistolica">Presión sistólica</label>
+                    <div class="input-group">
+                      <input type="number" class="form-control" id="presion-sistolica" placeholder="Sistólica" />
+                      <div class="input-group-append"><span class="input-group-text">mmHg</span></div>
+                    </div>
+                  </div>
+                  <div class="form-group col-md-3">
+                    <label for="frecuencia-cardiaca">Frecuencia cardíaca</label>
+                    <div class="input-group">
+                      <input type="number" class="form-control" id="frecuencia-cardiaca" placeholder="Cardíaca" />
+                      <div class="input-group-append"><span class="input-group-text">bpm</span></div>
+                    </div>
+                  </div>
+                  <div class="form-group col-md-3">
+                    <label for="frecuencia-respiratoria">Frecuencia respiratoria</label>
+                    <div class="input-group">
+                      <input type="number" class="form-control" id="frecuencia-respiratoria"
+                        placeholder="Respiratoria" />
+                      <div class="input-group-append"><span class="input-group-text">rpm</span></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-3">
+                    <label for="temperatura">Temperatura</label>
+                    <div class="input-group">
+                      <input type="number" class="form-control" id="temperatura" placeholder="Temperatura" min="0"
+                        max="99.9" step="0.1" inputmode="decimal"
+                        title="Ingresa hasta 2 dígitos enteros y 1 decimal." />
+                      <div class="input-group-append"><span class="input-group-text">°C</span></div>
+                    </div>
+                  </div>
+                  <div class="form-group col-md-3">
+                    <label for="saturacion-oxigeno">Saturación de Oxígeno</label>
+                    <div class="input-group">
+                      <input type="number" class="form-control" id="saturacion-oxigeno" placeholder="Saturación" />
+                      <div class="input-group-append"><span class="input-group-text">%</span></div>
+                    </div>
+                  </div>
+                  <div class="form-group col-md-3">
+                    <label for="glucosa">Glucosa</label>
+                    <div class="input-group">
+                      <input type="number" class="form-control" id="glucosa" placeholder="Glucosa" step="any" />
+                      <div class="input-group-append"><span class="input-group-text">mg/dL</span></div>
+                    </div>
+                  </div>
+                  <div class="form-group col-md-3">
+                    <label for="glucosa-ayuno">¿El paciente estaba en ayuno?</label>
+                    <select class="form-control" id="glucosa-ayuno">
+                      <option value="">Selecciona una opción</option>
+                      <option value="1">Sí</option>
+                      <option value="0">No</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Discapacidad, Primera vez y Embarazo -->
+            <div class="shadow card card-body mt-4 mb-4" id="deteccion-general">
+              <div class="card-title">
+                <h5>Discapacidad, Primera Vez y Embarazo</h5>
+              </div>
+              <div class="card-body">
+                <div class="form-row">
+                  <div class="form-group col-md-4">
+                    <label for="primera-vez-anio">Primera vez en el año - Cobertura</label>
+                    <select class="form-control" id="primera-vez-anio">
+                      <option value="">Selecciona una opción</option>
+                      <option value="1">Sí</option>
+                      <option value="0">No</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="tiras-utilizadas">No. Tiras Utilizadas (Detecciones)</label>
+                    <input type="number" class="form-control" id="tiras-utilizadas" placeholder="Número de tiras" />
+                  </div>
+                </div>
+
+                <!-- Discapacidad -->
+                <p class="font-weight-bold mb-1">Dificultad para: (discapacidad)</p>
+                <div class="form-row">
+                  <div class="form-group col-md-4">
+                    <label for="discapacidad-a">a</label>
+                    <select class="form-control" id="discapacidad-a">
+                      <option value="">Selecciona una discapacidad</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="discapacidad-b">b</label>
+                    <select class="form-control" id="discapacidad-b">
+                      <option value="">Selecciona la dificultad</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="discapacidad-c">c</label>
+                    <select class="form-control" id="discapacidad-c">
+                      <option value="">Selecciona el motivo de la discapacidad</option>
+                    </select>
+                  </div>
+                </div>
+
+                <p class="font-weight-bold mb-1">Prueba de Embarazo</p>
+                <div class="form-row">
+                  <div class="form-group col-md-4">
+                    <label for="prueba-rapida-hcg">Prueba Rápida de Embarazo (hCG)</label>
+                    <select class="form-control" id="prueba-rapida-hcg">
+                      <option value="">Selecciona una opción</option>
+                      <option value="1">Sí</option>
+                      <option value="0">No</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="esta-embarazada">¿Está embarazada?</label>
+                    <select class="form-control" id="esta-embarazada">
+                      <option value="">Selecciona una opción</option>
+                      <option value="1">Sí</option>
+                      <option value="0">No</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="presenta-cartilla">Presenta cartilla</label>
+                    <select class="form-control" id="presenta-cartilla">
+                      <option value="">Selecciona una opción</option>
+                      <option value="0">No</option>
+                      <option value="1">Sí</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Depresión y Ansiedad -->
+            <div class="shadow card card-body mt-4 mb-4" id="depresion-ansiedad">
+              <div class="card-title">
+                <h5>Depresión y Ansiedad (10 años y más)</h5>
+              </div>
+              <div class="card-body">
+                <div class="form-row">
+                  <div class="form-group col-md-4">
+                    <label for="frecuentemente-triste">Tamizaje: ¿Está frecuentemente triste?</label>
+                    <select class="form-control" id="frecuentemente-triste">
+                      <option value="">Selecciona una opción</option>
+                      <option value="1">Sí</option>
+                      <option value="0">No</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="depresion">Detección: Depresión o Sintomatología Depresiva</label>
+                    <select class="form-control" id="depresion">
+                      <option value="">Selecciona una opción</option>
+                      <option value="1">Positivo</option>
+                      <option value="0">Negativo</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="ansiedad">Detección: Ansiedad</label>
+                    <select class="form-control" id="ansiedad">
+                      <option value="">Selecciona una opción</option>
+                      <option value="1">Positivo</option>
+                      <option value="0">Negativo</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Detecciones y Revaloraciones 60+ -->
+            <div class="shadow card card-body mt-4 mb-4" id="revaloraciones-60">
+              <div class="card-title">
+                <h5>Detecciones y Revaloraciones (60 años y más)</h5>
+              </div>
+              <div class="card-body">
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label for="ha-olvidado">Tamizaje: ¿Ha olvidado más cosas que de costumbre?</label>
+                    <select class="form-control" id="ha-olvidado">
+                      <option value="">Selecciona una opción</option>
+                      <option value="1">Sí</option>
+                      <option value="0">No</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="alteracion-memoria">Detección: Alteraciones de la Memoria</label>
+                    <select class="form-control" id="alteracion-memoria">
+                      <option value="">Selecciona una opción</option>
+                      <option value="1">Positivo</option>
+                      <option value="0">Negativo</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label for="demencia">Detección de Demencia</label>
+                    <select class="form-control" id="demencia">
+                      <option value="">Selecciona una opción</option>
+                      <option value="1">Positivo</option>
+                      <option value="0">Negativo</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="fuga-orina">Tamizaje: ¿Ha tenido fuga de orina?</label>
+                    <select class="form-control" id="fuga-orina">
+                      <option value="">Selecciona una opción</option>
+                      <option value="1">Sí</option>
+                      <option value="0">No</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label for="incontinencia-urinaria">Detección: Incontinencia Urinaria</label>
+                    <select class="form-control" id="incontinencia-urinaria">
+                      <option value="">Selecciona una opción</option>
+                      <option value="1">Positivo</option>
+                      <option value="0">Negativo</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="tiene-caidas">Tamizaje: ¿Ha tenido dos o más caídas?</label>
+                    <select class="form-control" id="tiene-caidas">
+                      <option value="">Selecciona una opción</option>
+                      <option value="1">Sí</option>
+                      <option value="0">No</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label for="sindrome-caidas">Detección: Síndrome de Caídas</label>
+                    <select class="form-control" id="sindrome-caidas">
+                      <option value="">Selecciona una opción</option>
+                      <option value="1">Positivo</option>
+                      <option value="0">Negativo</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="estabilidad-marcha">Detección: Estabilidad de la Marcha</label>
+                    <select class="form-control" id="estabilidad-marcha">
+                      <option value="">Selecciona una opción</option>
+                      <option value="1">Positivo</option>
+                      <option value="0">Negativo</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label for="estado-nutricion">Estado de Nutrición</label>
+                    <select class="form-control" id="estado-nutricion">
+                      <option value="">Selecciona una opción</option>
+                      <option value="1">Positivo</option>
+                      <option value="0">Negativo</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="actividades-basicas">Ayuda Vida Diaria: Actividades Básicas</label>
+                    <select class="form-control" id="actividades-basicas">
+                      <option value="">Selecciona una opción</option>
+                      <option value="1">Positivo</option>
+                      <option value="0">Negativo</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label for="evaluacion-abvd">Evaluación ABVD</label>
+                    <select class="form-control" id="evaluacion-abvd">
+                      <option value="">Selecciona una opción</option>
+                      <option value="1">Positivo</option>
+                      <option value="0">Negativo</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="actividades-instrumentales">Ayuda Vida Diaria: Actividades Instrumentales</label>
+                    <select class="form-control" id="actividades-instrumentales">
+                      <option value="">Selecciona una opción</option>
+                      <option value="1">Positivo</option>
+                      <option value="0">Negativo</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label for="evaluacion-aivd">Evaluación AIVD</label>
+                    <select class="form-control" id="evaluacion-aivd">
+                      <option value="">Selecciona una opción</option>
+                      <option value="1">Positivo</option>
+                      <option value="0">Negativo</option>
+                    </select>
+                  </div>
+                </div>
+
+                <p class="font-weight-bold mb-1">Sobrecarga del Cuidador</p>
+                <div class="form-row">
+                  <div class="form-group col-md-3">
+                    <label for="sobrecarga-cuidador">¿Se evaluó sobrecarga del cuidador?</label>
+                    <select class="form-control" id="sobrecarga-cuidador">
+                      <option value="">Selecciona una opción</option>
+                      <option value="1">Sí</option>
+                      <option value="0">No</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-3">
+                    <label for="cuidador-grupo-edad">Grupo de Edad del Cuidador</label>
+                    <select class="form-control" id="cuidador-grupo-edad">
+                      <option value="">Selecciona una opción</option>
+                      <option value="1">Menor de 20 años</option>
+                      <option value="2">De 20 a 59 años</option>
+                      <option value="3">60 y más años</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-3">
+                    <label for="cuidador-sexo">Sexo del Cuidador</label>
+                    <select class="form-control" id="cuidador-sexo">
+                      <option value="">Selecciona una opción</option>
+                      <option value="1">Mujer</option>
+                      <option value="2">Hombre</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-3">
+                    <label for="cuidador-resultado">Resultado</label>
+                    <select class="form-control" id="cuidador-resultado">
+                      <option value="">Selecciona una opción</option>
+                      <option value="1">Positivo</option>
+                      <option value="0">Negativo</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Riesgo de Fracturas por Osteoporosis -->
+            <div class="shadow card card-body mt-4 mb-4" id="riesgo-osteoporosis">
+              <div class="card-title">
+                <h5>Riesgo de Fracturas por Osteoporosis (50 años y más)</h5>
+              </div>
+              <div class="card-body">
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label for="riesgo-fracturas-osteoporosis">Riesgo</label>
+                    <select class="form-control" id="riesgo-fracturas-osteoporosis">
+                      <option value="">Selecciona una opción</option>
+                      <option value="1">Bajo riesgo</option>
+                      <option value="2">Riesgo medio</option>
+                      <option value="3">Alto riesgo</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Enfermedades Cardiometabólicas -->
+            <div class="shadow card card-body mt-4 mb-4" id="cardiometabolicas">
+              <div class="card-title">
+                <h5>Enfermedades Cardiometabólicas (20 años y más)</h5>
+              </div>
+              <div class="card-body">
+                <div class="form-row">
+                  <div class="form-group col-md-4">
+                    <label for="cardio-diabetes">Diabetes Mellitus</label>
+                    <select class="form-control" id="cardio-diabetes">
+                      <option value="">Selecciona una opción</option>
+                      <option value="1">Positivo</option>
+                      <option value="0">Negativo</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="cardio-hipertension">Hipertensión Arterial Sistémica (HAS)</label>
+                    <select class="form-control" id="cardio-hipertension">
+                      <option value="">Selecciona una opción</option>
+                      <option value="1">Positivo</option>
+                      <option value="0">Negativo</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="cardio-obesidad">Obesidad</label>
+                    <select class="form-control" id="cardio-obesidad">
+                      <option value="">Selecciona una opción</option>
+                      <option value="1">Positivo</option>
+                      <option value="0">Negativo</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-4">
+                    <label for="cardio-dislipidemias">Dislipidemias</label>
+                    <select class="form-control" id="cardio-dislipidemias">
+                      <option value="">Selecciona una opción</option>
+                      <option value="1">Positivo</option>
+                      <option value="0">Negativo</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="cardio-renal-cronica">Enfermedad Renal Crónica</label>
+                    <select class="form-control" id="cardio-renal-cronica">
+                      <option value="">Selecciona una opción</option>
+                      <option value="1">Positivo</option>
+                      <option value="0">Negativo</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Consumo de Sustancias Psicoactivas -->
+            <div class="shadow card card-body mt-4 mb-4" id="consumo-sustancias">
+              <div class="card-title">
+                <h5>Consumo de Sustancias Psicoactivas</h5>
+              </div>
+              <div class="card-body">
+                <div class="form-row">
+                  <div class="form-group col-md-4">
+                    <label for="consumo-alcohol">Alcohol</label>
+                    <select class="form-control" id="consumo-alcohol">
+                      <option value="">Selecciona una opción</option>
+                      <option value="1">Positivo</option>
+                      <option value="0">Negativo</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="consumo-tabaco">Tabaco</label>
+                    <select class="form-control" id="consumo-tabaco">
+                      <option value="">Selecciona una opción</option>
+                      <option value="1">Positivo</option>
+                      <option value="0">Negativo</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="consumo-cannabis">Cannabis (marihuana)</label>
+                    <select class="form-control" id="consumo-cannabis">
+                      <option value="">Selecciona una opción</option>
+                      <option value="1">Positivo</option>
+                      <option value="0">Negativo</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-4">
+                    <label for="consumo-cocaina">Cocaína</label>
+                    <select class="form-control" id="consumo-cocaina">
+                      <option value="">Selecciona una opción</option>
+                      <option value="1">Positivo</option>
+                      <option value="0">Negativo</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="consumo-metanfetaminas">Metanfetaminas</label>
+                    <select class="form-control" id="consumo-metanfetaminas">
+                      <option value="">Selecciona una opción</option>
+                      <option value="1">Positivo</option>
+                      <option value="0">Negativo</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="consumo-inhalables">Inhalables</label>
+                    <select class="form-control" id="consumo-inhalables">
+                      <option value="">Selecciona una opción</option>
+                      <option value="1">Positivo</option>
+                      <option value="0">Negativo</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-4">
+                    <label for="consumo-opiaceos">Opiáceos</label>
+                    <select class="form-control" id="consumo-opiaceos">
+                      <option value="">Selecciona una opción</option>
+                      <option value="1">Positivo</option>
+                      <option value="0">Negativo</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="consumo-alucinogenos">Alucinógenos</label>
+                    <select class="form-control" id="consumo-alucinogenos">
+                      <option value="">Selecciona una opción</option>
+                      <option value="1">Positivo</option>
+                      <option value="0">Negativo</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="consumo-tranquilizantes">Tranquilizantes</label>
+                    <select class="form-control" id="consumo-tranquilizantes">
+                      <option value="">Selecciona una opción</option>
+                      <option value="1">Positivo</option>
+                      <option value="0">Negativo</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-4">
+                    <label for="consumo-otras-sustancias">Otras Sustancias Psicoactivas</label>
+                    <select class="form-control" id="consumo-otras-sustancias">
+                      <option value="">Selecciona una opción</option>
+                      <option value="1">Positivo</option>
+                      <option value="0">Negativo</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Cáncer / Violencia / Síndrome de Turner -->
+            <div class="shadow card card-body mt-4 mb-4" id="cancer-violencia-turner">
+              <div class="card-title">
+                <h5>Cáncer, Violencia y Síndrome de Turner</h5>
+              </div>
+              <div class="card-body">
+                <p class="font-weight-bold mb-1">Cáncer Cérvico-Uterino (25 a 64 años)</p>
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label for="cancer-cervicouterino-realizado">Citología Cérvico-Vaginal Realizada</label>
+                    <select class="form-control" id="cancer-cervicouterino-realizado">
+                      <option value="">Selecciona una opción</option>
+                      <option value="1">Sí</option>
+                      <option value="0">No</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="cancer-cervicouterino-resultado">Resultado</label>
+                    <select class="form-control" id="cancer-cervicouterino-resultado">
+                      <option value="">Selecciona una opción</option>
+                      <option value="1">Positivo</option>
+                      <option value="0">Negativo</option>
+                    </select>
+                  </div>
+                </div>
+
+                <p class="font-weight-bold mb-1">Exploración Clínica Cáncer de Mama</p>
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label for="exploracion-cancer-mama">Resultado</label>
+                    <select class="form-control" id="exploracion-cancer-mama">
+                      <option value="">Selecciona una opción</option>
+                      <option value="1">Positivo</option>
+                      <option value="0">Negativo</option>
+                    </select>
+                  </div>
+                </div>
+
+                <p class="font-weight-bold mb-1">Detección de la Violencia</p>
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label for="violencia-sexual">¿Se realizó tamizaje universal de Violencia Sexual?</label>
+                    <select class="form-control" id="violencia-sexual">
+                      <option value="">Selecciona una opción</option>
+                      <option value="1">Sí</option>
+                      <option value="0">No</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="violencia-mujeres-15">Resultado Detección Violencia (Mujeres 15 años y más)</label>
+                    <select class="form-control" id="violencia-mujeres-15">
+                      <option value="">Selecciona una opción</option>
+                      <option value="1">Positivo</option>
+                      <option value="0">Negativo</option>
+                    </select>
+                  </div>
+                </div>
+
+                <p class="font-weight-bold mb-1">Detección Exclusiva para Mujeres</p>
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label for="sindrome-turner">Sospecha de Síndrome de Turner</label>
+                    <select class="form-control" id="sindrome-turner">
+                      <option value="">Selecciona una opción</option>
+                      <option value="1">Positivo</option>
+                      <option value="0">Negativo</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Detección Exclusiva para Hombres -->
+            <div class="shadow card card-body mt-4 mb-4" id="deteccion-hombres">
+              <div class="card-title">
+                <h5>Detección Exclusiva para Hombres</h5>
+              </div>
+              <div class="card-body">
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label for="hiperplasia-prostatica">Hiperplasia Prostática (45 años y más)</label>
+                    <select class="form-control" id="hiperplasia-prostatica">
+                      <option value="">Selecciona una opción</option>
+                      <option value="1">Positivo</option>
+                      <option value="0">Negativo</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="reactivos-antigeno-prostatico">No. Reactivos de Antígeno Prostático Utilizados</label>
+                    <input type="number" class="form-control" id="reactivos-antigeno-prostatico" placeholder="Número de reactivos" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Probable TB y Espirometría -->
+            <div class="shadow card card-body mt-4 mb-4" id="tb-espirometria">
+              <div class="card-title">
+                <h5>Probable Tuberculosis y Espirometría</h5>
+              </div>
+              <div class="card-body">
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label for="probable-tb-estudio">Probable TB por Estudio</label>
+                    <select class="form-control" id="probable-tb-estudio">
+                      <option value="">Selecciona una opción</option>
+                      <option value="1">Positivo</option>
+                      <option value="0">Negativo</option>
+                    </select>
+                  </div>
+                </div>
+                <p class="font-weight-bold mb-1">Espirometría</p>
+                <div class="form-row">
+                  <div class="form-group col-md-3">
+                    <label for="espirometria-vef1">VEF1</label>
+                    <input type="number" class="form-control" id="espirometria-vef1" placeholder="VEF1" step="any" />
+                  </div>
+                  <div class="form-group col-md-3">
+                    <label for="espirometria-cvf">CVF</label>
+                    <input type="number" class="form-control" id="espirometria-cvf" placeholder="CVF" step="any" />
+                  </div>
+                  <div class="form-group col-md-3">
+                    <label for="espirometria-lin">LIN (Límite Inferior de la Normalidad)</label>
+                    <input type="number" class="form-control" id="espirometria-lin" placeholder="LIN" step="any" />
+                  </div>
+                  <div class="form-group col-md-3">
+                    <label for="espirometria-resultado">Resultado de Espirometría</label>
+                    <select class="form-control" id="espirometria-resultado">
+                      <option value="">Selecciona una opción</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- ITS -->
+            <div class="shadow card card-body mt-4 mb-4" id="its">
+              <div class="card-title">
+                <h5>ITS (Infecciones de Transmisión Sexual)</h5>
+              </div>
+              <div class="card-body">
+                <p class="font-weight-bold mb-1">
+                  Si se captura algún resultado de este bloque, se debe completar el grupo
+                  poblacional y los 6 resultados (el tipo de prueba solo aplica para sífilis
+                  y es opcional).
+                </p>
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label for="its-grupo-poblacional">Grupo Poblacional</label>
+                    <select class="form-control" id="its-grupo-poblacional">
+                      <option value="">Selecciona una opción</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="its-tipo-prueba">Tipo de Prueba (solo para Sífilis / A539)</label>
+                    <select class="form-control" id="its-tipo-prueba">
+                      <option value="">Selecciona una opción</option>
+                      <option value="1">Treponémica</option>
+                      <option value="2">No treponémica</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-4">
+                    <label for="its-resultado-b24x">Resultado B24X (VIH)</label>
+                    <select class="form-control" id="its-resultado-b24x">
+                      <option value="">Selecciona una opción</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="its-resultado-a539">Resultado A539 (Sífilis)</label>
+                    <select class="form-control" id="its-resultado-a539">
+                      <option value="">Selecciona una opción</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="its-resultado-gonorrea">Resultado Gonorrea</label>
+                    <select class="form-control" id="its-resultado-gonorrea">
+                      <option value="">Selecciona una opción</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-4">
+                    <label for="its-resultado-hepatitis-b">Resultado Hepatitis B</label>
+                    <select class="form-control" id="its-resultado-hepatitis-b">
+                      <option value="">Selecciona una opción</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="its-resultado-herpes">Resultado Herpes Genital</label>
+                    <select class="form-control" id="its-resultado-herpes">
+                      <option value="">Selecciona una opción</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="its-resultado-chlamydia">Resultado Chlamydia</label>
+                    <select class="form-control" id="its-resultado-chlamydia">
+                      <option value="">Selecciona una opción</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-4">
+                    <label for="its-resultado-vph">Resultado Prueba VPH (mujeres)</label>
+                    <select class="form-control" id="its-resultado-vph">
+                      <option value="">Selecciona una opción</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Acciones -->
+            <div class="shadow card card-body mt-4 mb-4 align-items-end" id="acciones">
+              <div class="card-body">
+                <button type="button" class="btn btn-danger mr-2" id="cancelar">Cancelar</button>
+                <button type="button" class="btn btn-secondary mr-2" id="limpiar-formulario">Limpiar Formulario</button>
+                <button type="button" class="btn btn-primary mr-2" id="guardar-datos">Guardar Datos</button>
+              </div>
+            </div>
+
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <!-- ================================================== -->
+  <!-- PIE DE PÁGINA                                      -->
+  <!-- ================================================== -->
+    <div data-layout="/partials/footer.html"></div>
+
+  <!-- Ventanas modales (popup de estado + modal genérico) -->
+  <div data-layout="/partials/modales.html"></div>
+
+  <!-- ================================================== -->
+  <!-- BIBLIOTECAS JAVASCRIPT                             -->
+  <!-- ================================================== -->
+  <script src="/js/layout.js"></script>
+  <script src="/lib/jquery/jquery.min.js"></script>
+  <script src="/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="/lib/ionicons/ionicons.js"></script>
+  <script src="/js/popup.js"></script>
+
+  <!-- Bibliotecas de gráficas de Azia -->
+  <script src="/lib/jquery.flot/jquery.flot.js"></script>
+  <script src="/lib/jquery.flot/jquery.flot.resize.js"></script>
+  <script src="/lib/chart.js/Chart.bundle.min.js"></script>
+  <script src="/lib/peity/jquery.peity.min.js"></script>
+
+  <!-- Lógica personalizada del SIGSS -->
+  <script src="/js/modal_manager.js"></script>
+  <script type="module" src="/js/detecciones.js"></script>
+  <script src="/js/dashboard.js"></script>
+  <script src="/js/clock.js"></script>
+</body>
+
+</html>

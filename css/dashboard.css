@@ -127,6 +127,7 @@ button {
 }
 button, [type="button"], [type="reset"], [type="submit"] {
   -webkit-appearance: button;
+  appearance: button;
 }
 button:not(:disabled), [type="button"]:not(:disabled), [type="reset"]:not(:disabled), [type="submit"]:not(:disabled) {
   cursor: pointer;
@@ -141,6 +142,7 @@ button::-moz-focus-inner, [type="button"]::-moz-focus-inner, [type="reset"]::-mo
 [type="search"] {
   outline-offset: -2px;
   -webkit-appearance: none;
+  appearance: none;
 }
 [type="search"]::-webkit-search-decoration {
   -webkit-appearance: none;
@@ -1417,9 +1419,14 @@ body {
 }
 
 @media (min-width: 992px) {
-  /* Asegura ancho suficiente para el contenedor de "Módulos" */
+  /* Asegura ancho suficiente para el contenedor de "Módulos".
+     Se amplió de 220px a 300px porque, al poner el texto en
+     negrita (más ancho que antes), "Planificación Familiar" y
+     "Consulta Externa" ya no cabían en una sola línea pese al
+     "white-space: nowrap" de arriba, y el texto se veía partido
+     en 2-3 líneas (el "bug" en Salud Bucal, Detecciones, etc.). */
   #submenu-modulos {
-    min-width: 220px;
+    min-width: 300px;
   }
 
   /* Los <details> de segundo nivel (Consulta Externa, Salud Bucal,
@@ -1532,5 +1539,234 @@ body {
     border-top: none;
     margin-top: 2px;
     padding-top: 6px;
+  }
+}
+
+/* =========================================================
+   ANCHO DEL SUBMENÚ "REPORTES" (Hoja diaria)
+   ---------------------------------------------------------
+   "Reportes" es un <details> de primer nivel (como "Módulos"),
+   así que su .az-menu-sub hereda el min-width: 200px genérico
+   de la regla general de arriba. Igual que #submenu-modulos ya
+   tiene su propio min-width, aquí se le da uno más ancho a
+   #submenu-reportes sin tocar la regla genérica (que también
+   usan los flyouts de 3er nivel dentro de "Módulos").
+   ========================================================= */
+@media (min-width: 992px) {
+  #submenu-reportes {
+    /* Mismo ancho que los submenús de tercer nivel (Registrar
+       consulta / Consultar registros dentro de cada módulo),
+       que usan el min-width genérico de .az-menu-sub (200px). */
+    min-width: 200px;
+  }
+}
+
+/* =========================================================
+   MEJORAS VISUALES: panel "Reportes"
+   ---------------------------------------------------------
+   Mismo tratamiento visual que #submenu-modulos (bordes
+   redondeados, sombra, fila resaltada en hover/activo, mismo
+   tamaño y fuente de texto) para que ambos paneles de primer
+   nivel se vean consistentes.
+   ========================================================= */
+@media (min-width: 992px) {
+
+  #submenu-reportes {
+    border-radius: 6px;
+    border-color: rgba(28, 39, 60, 0.1);
+    box-shadow: 0 10px 30px rgba(28, 39, 60, 0.14);
+    padding: 10px;
+  }
+
+  /* Misma fuente/tamaño que el resto de .az-menu-sub (13px,
+     heredado) + mismo padding/radio de fila que en "Módulos" */
+  #submenu-reportes > .nav-link {
+    padding: 8px 10px;
+    margin: 0;
+    border-radius: 5px;
+    transition: background-color 0.15s ease, color 0.15s ease;
+  }
+
+  #submenu-reportes > .nav-link + .nav-link {
+    margin-top: 2px;
+    padding-top: 8px;
+    border-top: none;
+  }
+
+  #submenu-reportes > .nav-link:hover,
+  #submenu-reportes > .nav-link:focus {
+    background-color: #f4f5f8;
+  }
+
+  /* Mismo efecto en negrita que la fila activa de "Módulos" */
+  #submenu-reportes > .nav-link.active {
+    background-color: #f4f5f8;
+    color: #5b47fb;
+    font-weight: 700;
+  }
+}
+
+/* =========================================================
+   TIPOGRAFÍA UNIFORME EN TODOS LOS NIVELES DE SUBMENÚ
+   ---------------------------------------------------------
+   Antes cada nivel se veía un poco distinto (Módulos, cada
+   módulo dentro de Módulos, Registrar/Consultar dentro de cada
+   módulo, y Hoja diaria dentro de Reportes). Ahora toda fila
+   dentro de cualquier .az-menu-sub usa el mismo tamaño y el
+   mismo estilo en negritas y color negro que ya tenía
+   "Módulos -> Consulta Externa -> Consultar registros".
+   La especificidad de .active y de [open] (definidas arriba,
+   con ID) sigue ganando, así que el resaltado morado al pasar
+   el cursor o al estar en la página activa se conserva igual.
+   ========================================================= */
+@media (min-width: 992px) {
+  .az-menu-sub .nav-link,
+  .az-menu-sub > details > summary.nav-link {
+    font-size: 13px;
+    font-weight: 700;
+    color: #1c273c;
+  }
+}
+
+/* =========================================================
+   BOTONES DEL MENÚ PRINCIPAL (Home, Módulos, Reportes,
+   Pacientes): rectángulo con borde punteado, y relleno en azul
+   -el mismo #104787 de la línea/título "SERVICIOS DE SALUD DE
+   DURANGO" que ya se usa desde el login- solo cuando ESE módulo
+   está seleccionado (página actual). Si no está seleccionado,
+   se queda únicamente con el borde punteado, como ahora.
+   ========================================================= */
+@media (min-width: 992px) {
+
+  /* Rectángulo con borde punteado para los 4 botones de primer
+     nivel, estén o no seleccionados. */
+  .az-header-menu .nav-item > .nav-link,
+  .az-header-menu .nav-item > details > summary.nav-link {
+    border: 1px dashed rgba(16, 71, 135, 0.45);
+    border-radius: 6px;
+    padding: 6px 14px;
+    transition: background-color 0.15s ease, color 0.15s ease,
+      border-color 0.15s ease;
+  }
+
+  /* El módulo seleccionado ya no se marca con la barrita de
+     abajo/al lado; ahora se marca rellenando todo el rectángulo. */
+  .az-header-menu .nav-item.active > .nav-link::before,
+  .az-header-menu .nav-item.active > details > summary.nav-link::before {
+    content: none;
+  }
+
+  /* Relleno azul + texto invertido a blanco (el botón queda
+     oscuro, así que el texto pasa a claro para que se lea bien). */
+  .az-header-menu .nav-item.active > .nav-link,
+  .az-header-menu .nav-item.active > details > summary.nav-link {
+    background-color: #104787;
+    border-style: solid;
+    border-color: #104787;
+    color: #fff;
+  }
+
+  .az-header-menu .nav-item.active > .nav-link i,
+  .az-header-menu .nav-item.active > details > summary.nav-link i,
+  .az-header-menu .nav-item.active > .nav-link:hover,
+  .az-header-menu .nav-item.active > details > summary.nav-link:hover,
+  .az-header-menu .nav-item.active > .nav-link:hover i,
+  .az-header-menu .nav-item.active > details > summary.nav-link:hover i {
+    color: #fff;
+  }
+
+  /* La flechita de "Módulos"/"Reportes" también en blanco cuando
+     ese grupo está seleccionado. */
+  .az-header-menu .nav-item.active > details > summary.nav-link::after {
+    color: #fff;
+    opacity: 1;
+  }
+}
+
+/* =========================================================
+   BOTÓN ACTIVO EN EL MENÚ PRINCIPAL (Home, Módulos, Reportes,
+   Pacientes)
+   ---------------------------------------------------------
+   Solo cuando ese elemento de primer nivel es el que está
+   seleccionado (la página actual, o el grupo que contiene a la
+   página actual, como "Módulos" cuando se está en Consulta
+   Externa): se dibuja como un botón rectangular con borde
+   punteado y relleno azul, igual que el tono institucional del
+   encabezado "Servicios de Salud de Durango". El texto e ícono
+   se invierten a blanco porque el azul es un fondo oscuro.
+   Si el elemento NO está activo, se queda exactamente como
+   estaba antes (sin fondo, sin borde).
+
+   El color del relleno vive en --az-azul-activo: cambia solo
+   este valor si el azul institucional exacto es otro.
+   ========================================================= */
+:root {
+  --az-azul-activo: #1a5fa6;
+}
+
+@media (min-width: 992px) {
+
+  .az-header-menu .nav-item.active > .nav-link,
+  .az-header-menu .nav-item.active > details > summary.nav-link {
+    background-color: var(--az-azul-activo);
+    border: 1.5px dashed rgba(255, 255, 255, 0.75);
+    border-radius: 8px;
+    padding: 6px 14px;
+    color: #fff;
+  }
+
+  /* Ícono y flecha del "with-sub" también en blanco, para que
+     contrasten con el fondo azul */
+  .az-header-menu .nav-item.active > .nav-link i,
+  .az-header-menu .nav-item.active > details > summary.nav-link i,
+  .az-header-menu .nav-item.active > details > summary.nav-link::after {
+    color: #fff;
+    opacity: 1;
+  }
+
+  .az-header-menu .nav-item.active > .nav-link:hover,
+  .az-header-menu .nav-item.active > details > summary.nav-link:hover {
+    color: #fff;
+  }
+
+  /* Se oculta la barra inferior morada que antes marcaba el
+     activo, porque ahora el propio botón azul ya indica cuál
+     está seleccionado (si se deja, se verían los dos a la vez) */
+  .az-header-menu .nav-item.active > .nav-link::before,
+  .az-header-menu .nav-item.active > details > summary.nav-link::before {
+    display: none;
+  }
+}
+
+/* =========================================================
+   CONTORNOS/DIVISIONES EN AZUL (como en el login)
+   ---------------------------------------------------------
+   Las líneas que separan el encabezado del contenido, el pie
+   de página, y el panel del menú móvil usaban un gris neutro
+   genérico de la plantilla. Se cambian al mismo azul
+   institucional (#104787) que ya se usa en la franja de
+   "Servicios de Salud de Durango" desde el login, para que el
+   dashboard se sienta parte del mismo diseño.
+   ========================================================= */
+
+/* Línea bajo el encabezado (SIGSS, menú, perfil). */
+.az-header {
+  border-bottom: 2px solid #104787;
+}
+
+/* Línea sobre el pie de página. */
+.az-footer {
+  border-top: 2px solid #104787;
+}
+
+/* Borde del panel del menú al abrirse en móvil. */
+@media (max-width: 991.98px) {
+  .az-header-menu-show .az-header-menu {
+    border-right: 1px solid rgba(16, 71, 135, 0.35);
+  }
+
+  /* Línea bajo el encabezado del menú móvil (logo SIGSS + "X"). */
+  .az-header-menu-header {
+    border-bottom: 1px solid rgba(16, 71, 135, 0.25);
   }
 }

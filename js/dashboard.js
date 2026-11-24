@@ -146,7 +146,7 @@ function generar_menu_medico() {
                 data-modulo="home"
                 data-vista="inicio"
             >
-                <i class="typcn typcn-home"></i>
+                <i class="typcn typcn-home mr-2"></i>
                 Home
             </a>
         </li>
@@ -157,7 +157,7 @@ function generar_menu_medico() {
                     id="enlace-modulos"
                     class="nav-link"
                 >
-                    <i class="typcn typcn-th-list"></i>
+                    <i class="typcn typcn-th-list mr-2"></i>
                     Módulos
                 </summary>
                 <nav
@@ -170,7 +170,7 @@ function generar_menu_medico() {
                             id="enlace-consulta-externa"
                             class="nav-link"
                         >
-                            <i class="typcn typcn-clipboard"></i>
+                            <i class="fa-solid fa-stethoscope mr-2"></i>
                             Consulta Externa
                         </summary>
                         <nav
@@ -184,7 +184,7 @@ function generar_menu_medico() {
                                 data-modulo="consulta-externa"
                                 data-vista="registrar"
                             >
-                                <i class="typcn typcn-plus-outline"></i>
+                                <i class="fa-solid fa-notes-medical mr-2"></i>
                                 Registrar consulta
                             </a>
                             <a
@@ -194,7 +194,7 @@ function generar_menu_medico() {
                                 data-modulo="consulta-externa"
                                 data-vista="consultar"
                             >
-                                <i class="typcn typcn-notes-outline"></i>
+                                <i class="fa-solid fa-folder-open mr-2"></i>
                                 Consultar registros
                             </a>
                         </nav>
@@ -205,7 +205,7 @@ function generar_menu_medico() {
                             id="enlace-salud-bucal"
                             class="nav-link"
                         >
-                            <i class="typcn typcn-heart-outline"></i>
+                            <i class="fa-solid fa-tooth mr-2"></i>
                             Salud Bucal
                         </summary>
                         <nav
@@ -219,7 +219,7 @@ function generar_menu_medico() {
                                 data-modulo="salud-bucal"
                                 data-vista="registrar"
                             >
-                                <i class="typcn typcn-plus-outline"></i>
+                                <i class="fa-solid fa-briefcase-medical mr-2"></i>
                                 Registrar consulta
                             </a>
                             <a
@@ -229,29 +229,53 @@ function generar_menu_medico() {
                                 data-modulo="salud-bucal"
                                 data-vista="consultar"
                             >
-                                <i class="typcn typcn-notes-outline"></i>
+                                <i class="fa-solid fa-box-archive mr-2"></i>
                                 Consultar registros
                             </a>
                         </nav>
                     </details>
                     <!-- DETECCIONES -->
-                    <a
-                        href="/pages/modules/detecciones/index.html"
-                        id="enlace-detecciones"
-                        class="nav-link"
-                        data-modulo="detecciones"
-                        data-vista="inicio"
-                    >
-                        <i class="typcn typcn-beaker"></i>
-                        Detecciones
-                    </a>
+                    <details id="grupo-detecciones" name="grupo-modulos-items">
+                        <summary
+                            id="enlace-detecciones"
+                            class="nav-link"
+                        >
+                            <i class="fa-solid fa-magnifying-glass mr-2"></i>
+                            Detecciones
+                        </summary>
+                        <nav
+                            id="submenu-detecciones"
+                            class="az-menu-sub"
+                        >
+                            <a
+                                href="/pages/modules/detecciones/registrar.html"
+                                id="opcion-registrar-detecciones"
+                                class="nav-link"
+                                data-modulo="detecciones"
+                                data-vista="registrar"
+                            >
+                                <i class="fa-solid fa-flask mr-2"></i>
+                                Registrar consulta
+                            </a>
+                            <a
+                                href="/pages/modules/detecciones/consultar.html"
+                                id="opcion-consultar-detecciones"
+                                class="nav-link"
+                                data-modulo="detecciones"
+                                data-vista="consultar"
+                            >
+                                <i class="fa-solid fa-clipboard-list mr-2"></i>
+                                Consultar registros
+                            </a>
+                        </nav>
+                    </details>
                     <!-- PLANIFICACIÓN FAMILIAR -->
                     <details id="grupo-planificacion-familiar" name="grupo-modulos-items">
                         <summary
                             id="enlace-planificacion-familiar"
                             class="nav-link"
                         >
-                            <i class="typcn typcn-clipboard"></i>
+                            <i class="fa-solid fa-people-group mr-2"></i>
                             Planificación Familiar
                         </summary>
                         <nav
@@ -265,7 +289,7 @@ function generar_menu_medico() {
                                 data-modulo="planificacion-familiar"
                                 data-vista="registrar"
                             >
-                                <i class="typcn typcn-plus-outline"></i>
+                                <i class="fa-solid fa-calendar-plus mr-2"></i>
                                 Registrar consulta
                             </a>
                             <a
@@ -275,7 +299,7 @@ function generar_menu_medico() {
                                 data-modulo="planificacion-familiar"
                                 data-vista="consultar"
                             >
-                                <i class="typcn typcn-notes-outline"></i>
+                                <i class="fa-solid fa-table-list mr-2"></i>
                                 Consultar registros
                             </a>
                         </nav>
@@ -290,7 +314,7 @@ function generar_menu_medico() {
                     id="enlace-reportes"
                     class="nav-link"
                 >
-                    <i class="typcn typcn-document-text"></i>
+                    <i class="typcn typcn-document-text mr-2"></i>
                     Reportes
                 </summary>
                 <nav
@@ -304,7 +328,7 @@ function generar_menu_medico() {
                         data-modulo="reportes"
                         data-vista="hoja-diaria"
                     >
-                        <i class="typcn typcn-calendar"></i>
+                        <i class="fa-solid fa-file-lines mr-2"></i>
                         Hoja diaria
                     </a>
                 </nav>
@@ -319,7 +343,7 @@ function generar_menu_medico() {
                 data-modulo="pacientes"
                 data-vista="pacientes"
             >
-                <i class="typcn typcn-user"></i>
+                <i class="typcn typcn-user mr-2"></i>
                 Pacientes
             </a>
         </li>
@@ -346,7 +370,7 @@ function generar_menu_administrativo()
                 data-modulo="home"
                 data-vista="inicio"
             >
-                <i class="typcn typcn-home"></i>
+                <i class="typcn typcn-home mr-2"></i>
                 Home
             </a>
         </li>
@@ -358,7 +382,7 @@ function generar_menu_administrativo()
                     id="enlace-reportes"
                     class="nav-link"
                 >
-                    <i class="typcn typcn-document-text"></i>
+                    <i class="typcn typcn-document-text mr-2"></i>
                     Reportes
                 </summary>
                 <nav
@@ -372,7 +396,7 @@ function generar_menu_administrativo()
                         data-modulo="reportes"
                         data-vista="hoja-diaria"
                     >
-                        <i class="typcn typcn-calendar"></i>
+                        <i class="fa-solid fa-file-lines mr-2"></i>
                         Hoja diaria
                     </a>
                 </nav>
@@ -387,7 +411,7 @@ function generar_menu_administrativo()
                 data-modulo="pacientes"
                 data-vista="pacientes"
             >
-                <i class="typcn typcn-user"></i>
+                <i class="typcn typcn-user mr-2"></i>
                 Pacientes
             </a>
         </li>
@@ -414,7 +438,7 @@ function generar_menu_administrador()
                 data-modulo="home"
                 data-vista="inicio"
             >
-                <i class="typcn typcn-home"></i>
+                <i class="typcn typcn-home mr-2"></i>
                 Home
             </a>
         </li>
@@ -428,7 +452,7 @@ function generar_menu_administrador()
                 data-modulo="bitacora"
                 data-vista="bitacora"
             >
-                <i class="typcn typcn-time"></i>
+                <i class="typcn typcn-time mr-2"></i>
                 Bitácora
             </a>
         </li>
@@ -441,7 +465,7 @@ function generar_menu_administrador()
                 data-modulo="usuarios"
                 data-vista="usuarios"
             >
-                <i class="typcn typcn-group"></i>
+                <i class="typcn typcn-group mr-2"></i>
                 Usuarios
             </a>
         </li>
@@ -481,16 +505,19 @@ function actualizar_navegacion() {
             if (elemento_menu) {
                 elemento_menu.classList.add("active");
             }
-            let detalle =
-                enlace.closest("details");
 
-            while (detalle) {
-                detalle.open = true;
-                detalle =
-                    detalle.parentElement
-                        ? detalle.parentElement.closest("details")
-                        : null;
-            }
+            // Nota: aquí ya NO se fuerza "detalle_ancestro.open = true".
+            // Antes, al cargar la página de la sección activa (p. ej.
+            // "Registrar consulta" de Consulta Externa), se dejaban
+            // abiertos por código el <details> de "Consulta Externa" y el
+            // de "Módulos". Como se abrían por JS y no por un mouseenter
+            // real, nunca llegaba un mouseleave que disparara el cierre
+            // automático de activar_hover_con_retardo(), así que el menú
+            // se quedaba "pegado" abierto hasta que el usuario pasaba el
+            // cursor por ahí y lo volvía a quitar. Con esto, la sección
+            // activa solo queda resaltada (clases "active" / aria-current)
+            // y el menú se abre/cierra únicamente con el cursor, igual que
+            // cualquier otro submenú.
 
         }
 
@@ -499,9 +526,11 @@ function actualizar_navegacion() {
 }
 
 
+/* =========================================================
+   SUBMENÚS Y DESPLEGABLES (hover con margen para seleccionar)
+   ========================================================= */
 
-
-function activar_hover(elemento, { abierto, establecer_abierto }) {
+function activar_hover_con_retardo(elemento, { estaAbierto, establecerAbierto }) {
 
     let temporizador = null;
 
@@ -515,14 +544,14 @@ function activar_hover(elemento, { abierto, establecer_abierto }) {
     elemento.addEventListener("mouseenter", () => {
         if (!escritorio.matches) return;
         cancelarCierre();
-        establecer_abierto(true);
+        establecerAbierto(true);
     });
 
     elemento.addEventListener("mouseleave", () => {
         if (!escritorio.matches) return;
         cancelarCierre();
         temporizador = setTimeout(() => {
-            establecer_abierto(false);
+            establecerAbierto(false);
             temporizador = null;
         }, RETARDO_CIERRE_HOVER);
     });
@@ -537,25 +566,50 @@ function inicializar_submenus() {
 
     if (!menu) return;
 
+    // Todos los <details> del menú, sin importar el nivel de anidación:
+    // tanto el grupo de primer nivel ("Módulos", "Reportes") como, dentro
+    // de "Módulos", cada módulo (Consulta Externa, Salud Bucal, Detecciones,
+    // Planificación Familiar) con sus propios enlaces de Registrar/Consultar.
+    // Así, pasar el cursor por "Módulos" lo abre, y pasar el cursor por
+    // "Detecciones" dentro de ese submenú también lo abre, sin necesidad
+    // de hacer clic en ningún nivel.
     const detalles =
-        menu.querySelectorAll(".nav-item > details");
+        menu.querySelectorAll("details");
 
     detalles.forEach(detalle => {
 
-        activar_hover(detalle, {
-            abierto: () => detalle.open,
-            establecer_abierto: (abierto) => {
+        activar_hover_con_retardo(detalle, {
+            estaAbierto: () => detalle.open,
+            establecerAbierto: (abierto) => {
 
                 if (abierto) {
-                    // Cerrar cualquier otro submenú que haya quedado abierto.
-                    detalles.forEach(otro => {
-                        if (otro !== detalle) otro.open = false;
+                    // Cerrar solo los <details> HERMANOS (mismo contenedor
+                    // padre), nunca los ancestros ni los de otra rama del
+                    // menú. Usar ":scope > details" en vez de la lista
+                    // completa evita que, por ejemplo, abrir "Detecciones"
+                    // dentro de "Módulos" cierre al propio "Módulos".
+                    const hermanos = detalle.parentElement
+                        ? detalle.parentElement.querySelectorAll(":scope > details")
+                        : [];
+
+                    hermanos.forEach(hermano => {
+                        if (hermano !== detalle) hermano.open = false;
                     });
                 }
 
                 detalle.open = abierto;
             }
         });
+
+        // Ocultarlo automáticamente solo al seleccionar un destino final
+        // de navegación (un <a> con data-modulo). Importante: NO usar un
+        // selector tipo ".az-menu-sub .nav-link", porque eso también
+        // atrapa los <summary class="nav-link"> de los submenús anidados
+        // (p. ej. "Consulta Externa" dentro de "Módulos"); si se hiciera,
+        // al hacer clic en esos encabezados el navegador abriría su
+        // <details> interno de forma nativa pero, en el mismo instante,
+        // este listener cerraría el <details> exterior ("Módulos"),
+        // dando la apariencia de que el menú "se cierra solo".
         detalle.querySelectorAll(".az-menu-sub a[data-modulo]")
             .forEach(enlace => {
                 enlace.addEventListener("click", () => {
@@ -581,9 +635,9 @@ function inicializar_menus_cabecera() {
 
     contenedores.forEach(contenedor => {
 
-        activar_hover(contenedor, {
-            abierto: () => contenedor.classList.contains("show"),
-            establecer_abierto: (abierto) => {
+        activar_hover_con_retardo(contenedor, {
+            estaAbierto: () => contenedor.classList.contains("show"),
+            establecerAbierto: (abierto) => {
 
                 if (abierto) {
                     contenedores.forEach(otro => {
