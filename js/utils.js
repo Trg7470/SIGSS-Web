@@ -74,8 +74,6 @@ export function mensaje_por_estado(status) {
 export async function obtener_mensaje_error(response, mensaje_generico) {
     try {
         const data = await response.json();
-        // Distintos controladores usan "message", "mensaje" o "error" según
-        // cuál fue el primero en escribirse; se revisan los tres.
         if (data?.message) return data.message;
         if (data?.mensaje) return data.mensaje;
         if (data?.error) return data.error;
@@ -89,25 +87,6 @@ export function es_error_de_red(error) {
     return error instanceof TypeError;
 }
 
-/**
- * Controlador de paginación reutilizable para una tabla de resultados.
- * Pensado para reusarse en cualquier página de historial que use los
- * mismos ids en su HTML:
- *   #contador-resultados, #texto-paginacion,
- *   #paginacion-historial (con sus .page-item.active .page-link) y
- *   los botones #pagina-primera, #pagina-anterior, #pagina-siguiente,
- *   #pagina-ultima.
- *
- * Llamar crear_paginador() engancha de una vez los clicks de esos 4
- * botones, así que debe llamarse cuando ese HTML ya existe en el DOM
- * (p. ej. dentro de DOMContentLoaded).
- *
- * @param {(pagina: number) => void} onCambiarPagina
- *        Se llama con la nueva página cuando el usuario da click en un
- *        botón de paginación habilitado (normalmente para volver a
- *        llamar a la función que hace la búsqueda).
- * @returns {{ actualizar: (total: number, pagina: number, limite: number) => void }}
- */
 export function crear_paginador(onCambiarPagina) {
     let pagina_actual = 1;
     let total_paginas_actual = 1;

@@ -88,11 +88,6 @@ async function cargar_dashboard() {
     }
 }
 
-
-/* =========================================================
-   2.1 CERRAR SESIÓN
-   ========================================================= */
-
 async function cerrar_sesion(evento) {
 
     if (evento) evento.preventDefault();
@@ -110,20 +105,55 @@ async function cerrar_sesion(evento) {
         });
     }
 
-    if (!confirmado) return;
-    sessionStorage.clear();
+    try {
+        const response = await fetch("http://localhost:3000/api/bitacora/registrar",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    Id_Usuario: usuario.Id_Usuario,
+                    Accion: "Cierre de sesión",
+                    Modulo: "Logout",
+                    Tabla_Afectada: null,
+                })
+            });
 
-    if (typeof mostrarPopup === "function") {
-        mostrarPopup({
-            titulo: "Sesión cerrada",
-            mensaje: "Redirigiendo a la página de inicio de sesión...",
-            tipo: "exito"
-        });
+        if (!response.ok) {
+            mostrarPopup({
+                titulo: "Error",
+                mensaje: "No fue posible registrar el cierre de sesión en la bitácora. Inténtalo de nuevo.",
+                tipo: "error",
+            });
+            console.error("Error al registrar cierre de sesión en bitácora:", response.statusText);
+            return;
+        }
 
-        await new Promise(resolve => setTimeout(resolve, 1200));
+        if (!confirmado) return;
+        sessionStorage.clear();
+
+        if (typeof mostrarPopup === "function") {
+            mostrarPopup({
+                titulo: "Sesión cerrada",
+                mensaje: "Redirigiendo a la página de inicio de sesión...",
+                tipo: "exito"
+            });
+
+            await new Promise(resolve => setTimeout(resolve, 1200));
+        }
+
+        window.location.href = "/index.html";
     }
-
-    window.location.href = "../../index.html";
+    catch (error) {
+        mostrarPopup({
+            titulo: "Error",
+            mensaje: "No fue posible registrar el cierre de sesión en la bitácora. error: " + error.message,
+            tipo: "error",
+        });
+        console.error("Error al registrar cierre de sesión en bitácora:", error);
+        return;
+    }
 }
 
 function generar_menu_medico() {
@@ -350,9 +380,8 @@ function generar_menu_medico() {
     `;
 }
 
-function generar_menu_administrativo()
-{
-     const menu =
+function generar_menu_administrativo() {
+    const menu =
         document.getElementById("menu-principal");
     if (!menu) {
         console.error(
@@ -418,8 +447,7 @@ function generar_menu_administrativo()
     `;
 }
 
-function generar_menu_administrador()
-{
+function generar_menu_administrador() {
     const menu =
         document.getElementById("menu-principal");
     if (!menu) {
@@ -505,30 +533,9 @@ function actualizar_navegacion() {
             if (elemento_menu) {
                 elemento_menu.classList.add("active");
             }
-
-            // Nota: aquí ya NO se fuerza "detalle_ancestro.open = true".
-            // Antes, al cargar la página de la sección activa (p. ej.
-            // "Registrar consulta" de Consulta Externa), se dejaban
-            // abiertos por código el <details> de "Consulta Externa" y el
-            // de "Módulos". Como se abrían por JS y no por un mouseenter
-            // real, nunca llegaba un mouseleave que disparara el cierre
-            // automático de activar_hover_con_retardo(), así que el menú
-            // se quedaba "pegado" abierto hasta que el usuario pasaba el
-            // cursor por ahí y lo volvía a quitar. Con esto, la sección
-            // activa solo queda resaltada (clases "active" / aria-current)
-            // y el menú se abre/cierra únicamente con el cursor, igual que
-            // cualquier otro submenú.
-
         }
-
     });
-
 }
-
-
-/* =========================================================
-   SUBMENÚS Y DESPLEGABLES (hover con margen para seleccionar)
-   ========================================================= */
 
 function activar_hover_con_retardo(elemento, { estaAbierto, establecerAbierto }) {
 
@@ -566,13 +573,6 @@ function inicializar_submenus() {
 
     if (!menu) return;
 
-    // Todos los <details> del menú, sin importar el nivel de anidación:
-    // tanto el grupo de primer nivel ("Módulos", "Reportes") como, dentro
-    // de "Módulos", cada módulo (Consulta Externa, Salud Bucal, Detecciones,
-    // Planificación Familiar) con sus propios enlaces de Registrar/Consultar.
-    // Así, pasar el cursor por "Módulos" lo abre, y pasar el cursor por
-    // "Detecciones" dentro de ese submenú también lo abre, sin necesidad
-    // de hacer clic en ningún nivel.
     const detalles =
         menu.querySelectorAll("details");
 
@@ -583,11 +583,6 @@ function inicializar_submenus() {
             establecerAbierto: (abierto) => {
 
                 if (abierto) {
-                    // Cerrar solo los <details> HERMANOS (mismo contenedor
-                    // padre), nunca los ancestros ni los de otra rama del
-                    // menú. Usar ":scope > details" en vez de la lista
-                    // completa evita que, por ejemplo, abrir "Detecciones"
-                    // dentro de "Módulos" cierre al propio "Módulos".
                     const hermanos = detalle.parentElement
                         ? detalle.parentElement.querySelectorAll(":scope > details")
                         : [];
@@ -601,15 +596,6 @@ function inicializar_submenus() {
             }
         });
 
-        // Ocultarlo automáticamente solo al seleccionar un destino final
-        // de navegación (un <a> con data-modulo). Importante: NO usar un
-        // selector tipo ".az-menu-sub .nav-link", porque eso también
-        // atrapa los <summary class="nav-link"> de los submenús anidados
-        // (p. ej. "Consulta Externa" dentro de "Módulos"); si se hiciera,
-        // al hacer clic en esos encabezados el navegador abriría su
-        // <details> interno de forma nativa pero, en el mismo instante,
-        // este listener cerraría el <details> exterior ("Módulos"),
-        // dando la apariencia de que el menú "se cierra solo".
         detalle.querySelectorAll(".az-menu-sub a[data-modulo]")
             .forEach(enlace => {
                 enlace.addEventListener("click", () => {

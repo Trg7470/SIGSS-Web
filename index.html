@@ -22,23 +22,22 @@
 <body class="az-body">
 
   <!-- Encabezado / Header Superior -->
-<header class="header-superior">
-  <div class="encabezado">
-    <img src="/assets/images/SSD_Servicios_Durango_Azul.jpeg" class="logo" alt="Logo izquierdo"
-         width="95" height="125" fetchpriority="high">
-    <div class="titulo">
-      <h2>SERVICIOS DE SALUD DE DURANGO</h2>
-      <p>CESSA DR. ISAURO VENZOR, GÓMEZ PALACIO, DGO.</p>
+  <header class="header-superior">
+    <div class="encabezado">
+      <img src="/assets/images/SSD_Servicios_Durango_Azul.jpeg" class="logo" alt="Logo izquierdo" width="95"
+        height="125" fetchpriority="high">
+      <div class="titulo">
+        <h2>SERVICIOS DE SALUD DE DURANGO</h2>
+        <p>CESSA DR. ISAURO VENZOR, GÓMEZ PALACIO, DGO.</p>
+      </div>
+      <img src="/assets/images/DURANGO_Azul.png" class="logo" alt="Logo derecho" width="135" height="80"
+        fetchpriority="high">
     </div>
-    <img src="/assets/images/DURANGO_Azul.png" class="logo" alt="Logo derecho"
-         width="135" height="80" fetchpriority="high">
-  </div>
-</header>
+  </header>
 
   <div class="az-signin-wrapper">
     <div class="az-card-signin">
-<img src="/assets/images/Logo_SIGSS.jpeg" class="az-logo" alt="SIGSS"
-     width="80" height="106">
+      <img src="/assets/images/Logo_SIGSS.jpeg" class="az-logo" alt="SIGSS" width="80" height="106">
       <div class="az-signin-header">
         <h2>Bienvenido a SIGSS</h2>
         <h3>SISTEMA INTEGRAL DE GESTIÓN</h3>
@@ -48,20 +47,17 @@
         <form id="form-login">
           <div class="form-group">
             <label>Usuario</label>
-            <input type="text" class="form-control" placeholder="Ingresa tu nombre de usuario" 
-              id="usuario">
+            <input type="text" class="form-control" placeholder="Ingresa tu nombre de usuario" id="usuario">
           </div><!-- form-group -->
           <div class="form-group">
             <label>Contraseña</label>
-            <input type="password" class="form-control" placeholder="Ingresa tu contraseña" 
-              id="password">
+            <input type="password" class="form-control" placeholder="Ingresa tu contraseña" id="password">
           </div><!-- form-group -->
           <button class="btn btn-az-primary btn-block" id="Iniciar-Sesion">Iniciar Sesión</button>
         </form>
-      </div><!-- az-signin-header -->
-    </div><!-- az-card-signin -->
-  </div><!-- az-signin-wrapper -->
-  <!-- Popup global SIGSS -->
+      </div>
+    </div>
+  </div>
   <div id="modalPopup" class="popup-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-titulo"
     aria-describedby="modal-mensaje">
     <div class="popup-card">
@@ -69,17 +65,13 @@
       <button id="popup-cerrar" class="popup-cerrar" type="button" aria-label="Cerrar diálogo">
         &times;
       </button>
-      <!-- Icono -->
       <div id="modal-icono" class="popup-icono">
         <i class="fas fa-circle-xmark"></i>
       </div>
-      <!-- Título -->
       <h3 id="modal-titulo">Generando documento</h3>
-      <!-- Mensaje -->
       <p id="modal-mensaje">
         Espere un momento, por favor...
       </p>
-      <!-- Botones de confirmación -->
       <div id="modal-botones-confirmacion" class="popup-botones-confirmacion">
         <button id="modal-cancelar" type="button">
           Revisar datos
@@ -88,7 +80,6 @@
           Sí, registrar
         </button>
       </div>
-      <!-- Botón normal -->
       <button id="modal-boton" class="popup-boton" type="button">
         Aceptar
       </button>
@@ -98,8 +89,7 @@
   <script src="/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="/js/popup.js"></script>
   <script src="/lib/ionicons/ionicons.js"></script>
-  <script src="/js/login.js"></script>
-  <script src="/js/azia.js"></script>
+  <script type="module" src="/js/login.js"></script>
 </body>
 
 </html>
