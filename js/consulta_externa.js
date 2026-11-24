@@ -231,7 +231,6 @@ function configurar_busqueda_diagnosticos(id) {
     });
 }
 
-// Nueva lógica: obtiene la fecha de nacimiento de la CURP.
 function obtener_fecha_nacimiento_curp(curp) {
     const coincidencia = curp?.toUpperCase().match(/^[A-Z]{4}(\d{2})(\d{2})(\d{2})[HM]/);
 
@@ -255,7 +254,7 @@ function obtener_fecha_nacimiento_curp(curp) {
     return fecha;
 }
 
-// Nueva lógica: calcula la edad completa a la fecha de consulta.
+
 function calcular_edad(fecha_nacimiento, fecha_consulta) {
     const nacimiento = new Date(fecha_nacimiento);
     const consulta = new Date(`${fecha_consulta}T00:00:00`);
@@ -289,8 +288,8 @@ function calcular_edad(fecha_nacimiento, fecha_consulta) {
         : { edad: Math.floor(meses / 12), clave: "A" };
 }
 
-// Nueva lógica: rellena los campos automáticamente o permite capturarlos manualmente.
-function actualizar_edad() {
+
+function autorellenar_campos() {
     const campo_edad = document.getElementById("edad");
     const campo_clave = document.getElementById("clave-edad");
     const fecha_consulta = document.getElementById("fecha-atencion").value;
@@ -300,8 +299,6 @@ function actualizar_edad() {
     const desbloquear_para_captura_manual = () => {
         campo_edad.readOnly = false;
         campo_clave.disabled = false;
-        // Solo se borra lo que el propio cálculo automático había puesto;
-        // si el usuario ya estaba capturando a mano, se respeta lo que escribió.
         if (estaba_bloqueado) {
             campo_edad.value = "";
             campo_clave.value = "";
@@ -350,7 +347,7 @@ function validar_edad() {
             : null;
 
         if (resultado) {
-            actualizar_edad();
+            autorellenar_campos();
 
             if (!campo_clave.value) {
                 mostrarPopup({
@@ -391,7 +388,7 @@ function validar_edad() {
     return true;
 }
 
-document.getElementById("fecha-atencion").addEventListener("change", actualizar_edad);
+document.getElementById("fecha-atencion").addEventListener("change", autorellenar_campos);
 
 async function cargar_datos() {
     try {
@@ -495,8 +492,7 @@ async function cargar_datos() {
         llenar_select("interpretacion-diagnostica", teleconsulta.filter(t => t.Inciso === "b"), "Id_Cat_Teleconsulta_Interpretacion", t => `${t.Clave} | ${t.Nombre}`, "Selecciona una opción", true);
         llenar_select("modalidad", catalogos_json.modalidad, "Id_Cat_Modalidad", m => `${m.Clave} | ${m.Nombre}`, "Selecciona una opción", true);
 
-        // Nueva lógica: actualiza la edad al terminar de cargar el catálogo de claves.
-        actualizar_edad();
+        autorellenar_campos();
 
         return true;
     } catch (error) {
@@ -702,10 +698,8 @@ boton_registrar.addEventListener("click", async () => {
     boton_registrar.disabled = true;
 
     try {
-        // Validar edad.
         if (!validar_edad()) return;
 
-        // Validar diagnósticos.
         const diagnosticos_sin_elegir = [
             "diagnostico-a-cie10",
             "diagnostico-b-cie10",
@@ -723,7 +717,6 @@ boton_registrar.addEventListener("click", async () => {
             return;
         }
 
-        // Mostrar confirmación.
         const confirmar = await mostrarPopup({
             tipo: "advertencia",
             titulo: "Confirmar registro de consulta",
@@ -739,9 +732,7 @@ boton_registrar.addEventListener("click", async () => {
             textoCancelar: "Cancelar"
         });
 
-        // Si cancela, no continúa.
         if (!confirmar) return;
-
         mostrarPopup({
             tipo: "carga",
             titulo: "Registrando consulta",

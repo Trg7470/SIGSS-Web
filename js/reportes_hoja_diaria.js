@@ -8,9 +8,6 @@ import {
 const URL_MODULOS = "http://localhost:3000/api/modules";
 const URL_DOCUMENTOS = "http://localhost:3000/api/documentos";
 
-// Un día completo no debe recortarse por la paginación de /historial
-// (su límite por defecto es 10). Un médico atiende cuando mucho 15-20
-// consultas al día; 50 deja margen de sobra sin ser un número absurdo.
 const LIMITE_SIN_PAGINACION = 50;
 
 const NOMBRES_MODULO = {
@@ -22,10 +19,6 @@ const NOMBRES_MODULO = {
 
 const Usuario = JSON.parse(sessionStorage.getItem("usuario"));
 
-// Lo único que se guarda entre la consulta y el "Generar": el módulo y la
-// fecha ya elegidos. Las filas completas (las que de verdad llenan la
-// plantilla) se piden hasta que el usuario pide generar el archivo, no al
-// solo mostrar la vista previa.
 let modulo_consultado = null;
 let fecha_consultada = null;
 
@@ -56,13 +49,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     document.getElementById("descripcion-bienvenida").textContent = `Módulo de generación de reportes diarios.`;
 });
 
-/**
- * Vista previa: reusa el mismo endpoint de "Historial de consultas"
- * (/api/modules/{modulo}/historial), con fecha_inicial = fecha_final para
- * pedir un solo día. Trae solo las columnas para pintar la tabla; el
- * `datos` completo para la plantilla se pide aparte, hasta que se genere
- * el archivo.
- */
+
 async function manejar_envio_filtros(evento) {
     evento.preventDefault();
 
@@ -137,11 +124,6 @@ async function manejar_envio_filtros(evento) {
     }
 }
 
-/**
- * Llena la tabla de vista previa con los registros de /historial (mismas
- * columnas que "Historial de consultas": folio_receta, expediente, fecha,
- * nombre, curp).
- */
 function mostrar_resultados(registros, modulo, fecha) {
     const cuerpo_tabla = document.getElementById("cuerpo-tabla-reporte");
     const fecha_formateada = formatear_fecha(fecha);
@@ -190,12 +172,6 @@ function limpiar_filtros() {
     ocultar_resultados();
 }
 
-/**
- * Al generar: una sola llamada GET a /documentos/exportar. El propio
- * endpoint arma "datos" internamente (consultar_formato) a partir de
- * formato/fecha, así que aquí solo se mandan los parámetros, no ningún
- * `datos` ya consultado.
- */
 async function generar_documento(tipo_salida) {
     if (!modulo_consultado || !fecha_consultada) {
         return;

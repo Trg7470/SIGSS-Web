@@ -12,20 +12,11 @@ const BASE_API = "http://localhost:3000/api";
 const URL_EXPORTAR = `${BASE_API}/documentos/exportar`;
 const LIMITE_POR_PAGINA = 10;
 
-/** Arma la URL del historial para el módulo que se esté consultando. */
 function url_historial(modulo) {
     return `${BASE_API}/modules/${modulo}/historial`;
 }
 
-// Controlador de paginación (ver crear_paginador en utils.js); se crea
-// en DOMContentLoaded, una vez que el HTML de los botones ya existe.
 let paginador = null;
-
-// Módulo que esta página consulta (p. ej. "consulta-externa",
-// "planificacion-familiar"). Se toma del atributo data-modulo del botón
-// de búsqueda, así que cada página solo tiene que declararlo ahí:
-//   <button id="boton-buscar-historial" data-modulo="consulta-externa" ...>
-// El resto del script es el mismo para cualquier módulo.
 let modulo_actual = null;
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -66,24 +57,14 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("descripcion-bienvenida").textContent = `Módulo para consultar los registros de consultas realizadas en el sistema.`;
 });
 
-// ======================= FECHAS =======================
 function formatear_fecha_para_mostrar(valor_fecha) {
     if (!valor_fecha) return "—";
-    // El valor puede llegar como 'YYYY-MM-DD' o como ISO completo
-    // ('YYYY-MM-DDTHH:mm:ss.sssZ'); solo nos interesa la parte de la fecha.
     const solo_fecha = String(valor_fecha).slice(0, 10);
     const [anio, mes, dia] = solo_fecha.split("-");
     if (!anio || !mes || !dia) return solo_fecha;
     return `${dia}/${mes}/${anio}`;
 }
 
-// ======================= BÚSQUEDA =======================
-
-/**
- * @param {string} modulo  Módulo a consultar (p. ej. "consulta-externa").
- *                         Si se omite, se reutiliza el último usado.
- * @param {number} pagina
- */
 async function buscar_historial(modulo, pagina = 1) {
     if (modulo) modulo_actual = modulo;
 
@@ -174,17 +155,6 @@ function iniciales_de_nombre(nombre) {
     return (primera + segunda).toUpperCase() || "--";
 }
 
-/**
- * @param {object} registro
- * @param {"xlsx"|"pdf"} tipo_salida
- * @param {string} texto     Texto visible del botón.
- * @param {string} etiqueta  aria-label del botón.
- * @param {string} [formato] Formato a exportar si es distinto al módulo de
- *                           la página (p. ej. "nota-medica" en la columna
- *                           de Nota Médica del historial de consulta
- *                           externa). Si se omite, exportar_consulta() usa
- *                           modulo_actual, igual que siempre.
- */
 function construir_boton_exportar(registro, tipo_salida, texto, etiqueta, formato) {
     const boton = document.createElement("button");
     boton.type = "button";
@@ -207,16 +177,6 @@ function construir_boton_exportar(registro, tipo_salida, texto, etiqueta, format
     return boton;
 }
 
-/**
- * Celda de la columna "Nota Médica" (consulta-externa, planificacion-familiar
- * y salud-bucal): si la consulta ya tiene una nota médica guardada
- * (registro.id_nota_medica, que viene del LEFT JOIN a Notas_Medicas en cada
- * buscar_historial), ofrece generar y descargar su PDF -- igual que los
- * botones de Excel/PDF de "Detalles", pero con formato "nota-medica" fijo y
- * tipo_salida "pdf" fijo, porque de la nota médica solo se ofrece el PDF.
- * Si todavía no existe, no hay nada que exportar ni que mostrar: la fila se
- * sigue mostrando igual, solo que esta celda se queda vacía.
- */
 function construir_celda_nota_medica(registro) {
     const celda = document.createElement("td");
     celda.className = "text-center";
@@ -280,9 +240,6 @@ function construir_fila(registro) {
     celda_curp.textContent = registro.curp || "—";
     fila.appendChild(celda_curp);
 
-    // La columna "Nota Médica" solo existe en el historial de consulta
-    // externa (es la única página que la tiene en su <thead>); en los
-    // demás módulos no se agrega la celda.
     if (modulo_actual === "consulta-externa" || modulo_actual === "planificacion-familiar" || modulo_actual === "salud-bucal") {
         fila.appendChild(construir_celda_nota_medica(registro));
     }
@@ -324,21 +281,12 @@ function pintar_resultados(datos) {
     paginador.actualizar(total, pagina, limite);
 }
 
-// ======================= EXPORTAR (EXCEL / PDF) =======================
-//
-// Se usa fetch (en vez de abrir la URL directo) para poder mostrar el
-// popup de "generando documento" mientras el servidor arma el XLSX/PDF
-// (la conversión a PDF con LibreOffice puede tardar varios segundos) y
-// avisar con un popup de éxito o error según cómo termine.
-
 function manejar_click_tabla(evento) {
     const boton = evento.target.closest(".btn-exportar");
     if (!boton) return;
     exportar_consulta(boton);
 }
 
-/** Arma "Apellido_Paterno_Apellido_Materno_Modulo_FechaConsulta" para el
- *  nombre de descarga, sin espacios y con la fecha en formato AAAA-MM-DD. */
 function armar_nombre_archivo(apellido_paterno, apellido_materno, modulo, fecha) {
     const solo_fecha = fecha ? String(fecha).slice(0, 10) : "";
     return [apellido_paterno, apellido_materno, modulo, solo_fecha]
@@ -357,10 +305,6 @@ async function exportar_consulta(boton) {
         formato: formato_boton
     } = boton.dataset;
     if (!id_consulta || !tipo_salida) return;
-
-    // La columna "Nota Médica" manda su propio formato ("nota-medica") en
-    // el botón; los demás botones de exportar (Excel/PDF de la columna
-    // "Detalles") no lo traen y usan el módulo de la página, como siempre.
     const formato_a_exportar = formato_boton || modulo_actual;
 
     const etiqueta_formato = tipo_salida === "pdf" ? "PDF" : "Excel";
@@ -419,14 +363,12 @@ async function exportar_consulta(boton) {
     }
 }
 
-/** Lee el nombre de archivo de un encabezado Content-Disposition. */
 function extraer_nombre_archivo(encabezado_disposicion) {
     if (!encabezado_disposicion) return null;
     const coincidencia = /filename="?([^";]+)"?/.exec(encabezado_disposicion);
     return coincidencia ? coincidencia[1] : null;
 }
 
-/** Dispara la descarga de un Blob con el nombre indicado. */
 function descargar_blob(blob, nombre_archivo) {
     const url = URL.createObjectURL(blob);
     const enlace = document.createElement("a");

@@ -1,0 +1,473 @@
+/* ==========================================================================
+   Bitácora
+   Hoja autocontenida: trae las clases hc-* (tarjetas de filtros/resultados,
+   tabla y paginación), tomadas de "Historial de consultas", más lo propio
+   de esta pantalla (chips de Acción, badge de Módulo, celda de Tabla
+   afectada). La base (bootstrap + .sigss-formulario) sigue viniendo de
+   bootstrap.min.css + consulta_externa.css. Paleta: --hc-primario #3366ff,
+   --hc-oscuro #1c273c/#3b4863, --hc-texto-secundario #7987a1, bordes
+   #cdd4e0 (tomada de azia.css) para que no se note la costura entre hojas.
+   ========================================================================== */
+
+:root {
+  --hc-primario: #3366ff;
+  --hc-primario-suave: rgba(51, 102, 255, 0.08);
+  --hc-oscuro: #1c273c;
+  --hc-texto-secundario: #6b7a99;
+  --hc-borde: #e4e9f2;
+  --hc-fondo-suave: #f4f6fb;
+  --hc-transicion: 0.18s ease-in-out;
+}
+
+/* --------------------------------------------------------------------
+   Encabezado de la sección. El título va en az-dashboard-title (igual
+   que en las demás páginas) y el reloj (#informacion-fecha) vuelve a su
+   lugar de siempre a la derecha; solo se le agrega un acento visual y
+   una línea divisoria para separarlo del resto del contenido.
+   -------------------------------------------------------------------- */
+#seccion-bienvenida.az-dashboard-one-title {
+  padding-bottom: 1.1rem;
+  margin-bottom: 0.25rem;
+  border-bottom: 1px solid var(--hc-borde);
+}
+
+#seccion-bienvenida #titulo-bienvenida {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+#seccion-bienvenida #titulo-bienvenida::before {
+  content: "";
+  flex: 0 0 auto;
+  width: 4px;
+  height: 1.5rem;
+  background-color: var(--hc-primario);
+  border-radius: 2px;
+}
+
+#seccion-bienvenida #descripcion-bienvenida {
+  color: var(--hc-texto-secundario);
+}
+
+@media (max-width: 575.98px) {
+  #seccion-bienvenida.az-dashboard-one-title {
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+}
+
+/* --------------------------------------------------------------------
+   Tarjetas (filtros / resultados)
+   -------------------------------------------------------------------- */
+.hc-card-filtros,
+.hc-card-resultados {
+  overflow: hidden;
+  transition: box-shadow var(--hc-transicion);
+}
+
+/* Encabezado de tarjeta: icono + título a la izquierda, chevron a la
+   derecha (solo en la de filtros, que es colapsable). */
+.hc-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #fff;
+  padding-top: 0.9rem;
+  padding-bottom: 0.9rem;
+}
+
+#encabezado-filtros.hc-card-header {
+  cursor: pointer;
+  user-select: none;
+  transition: background-color var(--hc-transicion);
+}
+
+#encabezado-filtros.hc-card-header:hover {
+  background-color: var(--hc-fondo-suave);
+}
+
+#encabezado-filtros.hc-card-header:focus-visible {
+  outline: 2px solid var(--hc-primario);
+  outline-offset: -2px;
+}
+
+.hc-card-header-titulo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  font-size: 0.8125rem;
+  letter-spacing: 0.01em;
+  color: var(--hc-oscuro);
+}
+
+/* Contador de resultados: pastilla en vez de texto plano. */
+#contador-resultados {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.3rem;
+  height: 1.3rem;
+  padding: 0 0.35rem;
+  margin: 0 0.15rem;
+  border-radius: 999px;
+  background-color: var(--hc-primario-suave);
+  color: var(--hc-primario);
+  font-weight: 700;
+  font-size: 0.6875rem;
+}
+
+/* Chevron del colapso de filtros: gira al contraer y comparte el mismo
+   tamaño reducido que el título de la tarjeta. */
+.hc-chevron {
+  font-size: 0.8125rem;
+  color: var(--hc-texto-secundario);
+  transition: transform var(--hc-transicion);
+}
+
+#encabezado-filtros.collapsed .hc-chevron,
+#encabezado-filtros[aria-expanded="false"] .hc-chevron {
+  transform: rotate(180deg);
+}
+
+/* --------------------------------------------------------------------
+   Formulario de filtros
+   -------------------------------------------------------------------- */
+#cuerpo-filtros .input-group-text {
+  background-color: var(--hc-fondo-suave);
+  border-color: var(--hc-borde);
+  color: var(--hc-texto-secundario);
+  font-size: 0.8125rem;
+}
+
+/* Inputs y selects del formulario un punto más compactos que el cuerpo
+   de la página, a juego con las etiquetas de abajo. */
+#cuerpo-filtros .form-control {
+  font-size: 0.8125rem;
+}
+
+#cuerpo-filtros .input-group:focus-within .input-group-text {
+  border-color: var(--hc-primario);
+  color: var(--hc-primario);
+}
+
+#cuerpo-filtros .form-control:focus {
+  border-color: var(--hc-primario);
+  box-shadow: 0 0 0 0.15rem var(--hc-primario-suave);
+}
+
+#cuerpo-filtros label {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: var(--hc-texto-secundario);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.35rem;
+}
+
+/* Fila de botones del formulario de filtros. */
+.hc-fila-botones {
+  margin-top: 0.5rem;
+  padding-top: 0.75rem;
+  border-top: 1px dashed var(--hc-borde);
+}
+
+.hc-fila-botones .btn {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.8125rem;
+}
+
+/* Micro-interacción consistente para todos los botones de la página:
+   un pequeño levantamiento al pasar el mouse, igual que en la tabla. */
+#contenedor-bitacora .btn {
+  transition: transform var(--hc-transicion), box-shadow var(--hc-transicion);
+}
+
+#contenedor-bitacora .btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+#contenedor-bitacora .btn-primary:hover:not(:disabled) {
+  box-shadow: 0 4px 10px rgba(51, 102, 255, 0.28);
+}
+
+#contenedor-bitacora .btn-outline-secondary:hover:not(:disabled) {
+  box-shadow: 0 2px 6px rgba(121, 135, 161, 0.2);
+}
+
+@media (max-width: 575.98px) {
+  .hc-fila-botones {
+    flex-direction: column-reverse;
+  }
+
+  .hc-fila-botones .btn {
+    width: 100%;
+    justify-content: center;
+    margin-right: 0 !important;
+    margin-bottom: 0.5rem;
+  }
+
+  .hc-fila-botones .btn:first-child {
+    margin-bottom: 0;
+  }
+}
+
+/* --------------------------------------------------------------------
+   Tabla de resultados
+   -------------------------------------------------------------------- */
+.hc-tabla-wrapper {
+  max-height: 60vh;
+  overflow-y: auto;
+  overflow-x: auto;
+}
+
+.hc-tabla-resultados {
+  margin-bottom: 0;
+  table-layout: fixed;
+}
+
+/* El ancho real de cada columna lo fija el <colgroup> del HTML; aquí solo
+   se evita que el contenido largo rompa el layout. */
+.hc-tabla-resultados th,
+.hc-tabla-resultados td {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.hc-tabla-resultados thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background-color: var(--hc-fondo-suave);
+  color: var(--hc-texto-secundario);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-top: none;
+  border-bottom: 2px solid var(--hc-borde);
+  white-space: nowrap;
+  padding-top: 0.65rem;
+  padding-bottom: 0.65rem;
+}
+
+.hc-tabla-resultados tbody td {
+  vertical-align: middle;
+  font-size: 0.8125rem;
+  color: var(--hc-oscuro);
+  border-color: var(--hc-borde);
+  white-space: nowrap;
+  padding-top: 0.55rem;
+  padding-bottom: 0.55rem;
+}
+
+.hc-tabla-resultados tbody tr {
+  position: relative;
+  transition: background-color var(--hc-transicion), box-shadow var(--hc-transicion);
+}
+
+/* Zebra striping suave; el hover siempre gana sobre la franja. */
+.hc-tabla-resultados tbody tr:nth-of-type(even) {
+  background-color: rgba(244, 246, 251, 0.6);
+}
+
+.hc-tabla-resultados tbody tr:hover {
+  background-color: var(--hc-primario-suave);
+  box-shadow: inset 3px 0 0 var(--hc-primario);
+}
+
+/* Estado vacío: se muestra cuando no hay resultados (la fila la agrega
+   JS; aquí solo se define cómo se ve). */
+.hc-sin-resultados {
+  padding: 3rem 1rem;
+  text-align: center;
+  color: var(--hc-texto-secundario);
+}
+
+.hc-sin-resultados i {
+  font-size: 2.25rem;
+  color: var(--hc-borde);
+  display: block;
+  margin-bottom: 0.75rem;
+}
+
+/* Estado de carga (spinner centrado mientras llega la respuesta). */
+.hc-cargando {
+  padding: 3rem 1rem;
+  text-align: center;
+  color: var(--hc-texto-secundario);
+}
+
+/* --------------------------------------------------------------------
+   Pie de la tarjeta de resultados (conteo + paginación)
+   -------------------------------------------------------------------- */
+.hc-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  background-color: #fff;
+}
+
+/* Paginación: cada página es una pastilla independiente (en vez del
+   bloque pegado por defecto de Bootstrap). */
+#paginacion-bitacora {
+  gap: 0.25rem;
+}
+
+#paginacion-bitacora .page-item:not(:first-child) .page-link {
+  margin-left: 0;
+}
+
+#paginacion-bitacora .page-link {
+  font-size: 0.75rem;
+  color: var(--hc-oscuro);
+  border-color: var(--hc-borde);
+  border-radius: 6px;
+  transition: background-color var(--hc-transicion), color var(--hc-transicion), border-color var(--hc-transicion);
+}
+
+#texto-paginacion {
+  font-size: 0.75rem;
+}
+
+#paginacion-bitacora .page-item:not(.active):not(.disabled) .page-link:hover {
+  background-color: var(--hc-primario-suave);
+  border-color: var(--hc-primario-suave);
+  color: var(--hc-primario);
+}
+
+#paginacion-bitacora .page-item.active .page-link {
+  background-color: var(--hc-primario);
+  border-color: var(--hc-primario);
+}
+
+#paginacion-bitacora .page-item.disabled .page-link {
+  color: #c2c9d6;
+}
+
+#paginacion-bitacora .page-link:focus {
+  box-shadow: 0 0 0 0.15rem var(--hc-primario-suave);
+}
+
+@media (max-width: 575.98px) {
+  .hc-card-footer {
+    justify-content: center;
+    text-align: center;
+  }
+}
+
+/* ==========================================================================
+   Lo propio de Bitácora
+   ========================================================================== */
+
+/* --------------------------------------------------------------------
+   Columna Acción: chip de color según el tipo de operación
+   -------------------------------------------------------------------- */
+
+/* Chip base. El color concreto lo pone el modificador (.bc-accion-crear,
+   .bc-accion-actualizar, etc.) según el texto que venga de la bitácora;
+   si llega una acción sin modificador reconocido, se queda con este
+   estilo neutro. */
+.bc-accion-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+  background-color: var(--hc-fondo-suave);
+  color: var(--hc-texto-secundario);
+}
+
+.bc-accion-chip i {
+  font-size: 0.625rem;
+}
+
+/* Altas / registros nuevos. */
+.bc-accion-chip.bc-accion-crear {
+  background-color: rgba(40, 167, 69, 0.12);
+  color: #1e7e34;
+}
+
+/* Modificaciones. */
+.bc-accion-chip.bc-accion-actualizar {
+  background-color: var(--hc-primario-suave);
+  color: var(--hc-primario);
+}
+
+/* Desactivaciones / bajas lógicas. */
+.bc-accion-chip.bc-accion-desactivar {
+  background-color: rgba(220, 53, 69, 0.12);
+  color: #c0392b;
+}
+
+/* Reactivaciones. */
+.bc-accion-chip.bc-accion-activar {
+  background-color: rgba(23, 162, 184, 0.12);
+  color: #117a8b;
+}
+
+/* Inicio / cierre de sesión. */
+.bc-accion-chip.bc-accion-sesion {
+  background-color: rgba(108, 117, 125, 0.12);
+  color: #495057;
+}
+
+/* --------------------------------------------------------------------
+   Columna Módulo: etiqueta discreta (icono + texto), sin competir
+   visualmente con el chip de Acción.
+   -------------------------------------------------------------------- */
+.bc-modulo-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.8125rem;
+  color: var(--hc-oscuro);
+  font-weight: 500;
+}
+
+.bc-modulo-badge i {
+  color: var(--hc-texto-secundario);
+  font-size: 0.75rem;
+}
+
+/* --------------------------------------------------------------------
+   Columna Tabla afectada: nombre de la tabla en fuente monoespaciada,
+   igual criterio que la CURP/folio en Historial de consultas.
+   -------------------------------------------------------------------- */
+.hc-tabla-resultados td.bc-celda-tabla {
+  font-family: var(--font-family-monospace, "SFMono-Regular", Consolas, monospace);
+  font-size: 0.75rem;
+  letter-spacing: 0.01em;
+  color: var(--hc-texto-secundario);
+}
+
+/* Sin tabla afectada registrada (columna nullable): se pinta como el
+   resto de los campos vacíos de la hoja ("—"), no en blanco. */
+.hc-tabla-resultados td.bc-celda-tabla.bc-sin-valor {
+  color: #c2c9d6;
+  font-style: italic;
+}
+
+/* --------------------------------------------------------------------
+   Ajustes en pantallas pequeñas (propios de Bitácora)
+   -------------------------------------------------------------------- */
+@media (max-width: 575.98px) {
+  .bc-accion-chip {
+    padding: 0.15rem 0.45rem;
+    font-size: 0.625rem;
+  }
+
+  .bc-modulo-badge span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

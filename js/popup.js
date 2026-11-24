@@ -39,8 +39,6 @@ function inicializarPopup() {
 
 document.addEventListener("layoutCargado", inicializarPopup);
 
-
-// Resolver una confirmación pendiente
 function resolverPopup(valor) {
     if (!resolverConfirmacion) return;
 
@@ -50,8 +48,6 @@ function resolverPopup(valor) {
     resolver(valor);
 }
 
-
-// Mostrar popup global
 function mostrarPopup({
     titulo = "Procesando...",
     mensaje = "Espere un momento...",
@@ -82,7 +78,6 @@ function mostrarPopup({
         return Promise.resolve(false);
     }
 
-    // Resolver cualquier confirmación anterior como cancelada
     resolverPopup(false);
 
     if (!modalPopup.classList.contains("show")) {
@@ -107,15 +102,12 @@ function mostrarPopup({
     );
 
     modalPopup.classList.add(`tipo-${tipoValido}`);
-
-    // Restablecer botones
     btn.onclick = null;
     btn.textContent = "Aceptar";
 
     botonesConfirmacion.classList.remove("mostrar");
     btn.classList.remove("mostrar");
 
-    // Modo confirmación
     if (confirmar) {
 
         btnConfirmar.textContent = textoConfirmar;
@@ -131,19 +123,15 @@ function mostrarPopup({
         });
     }
 
-    // Modo normal
+
     if (boton) {
-
         btn.classList.add("mostrar");
-
         btn.onclick = function() {
             cerrarPopup();
-
             if (redireccion) {
                 window.location.href = redireccion;
                 return;
             }
-
             if (typeof onConfirmar === "function") {
                 try {
                     const resultado = onConfirmar();
@@ -161,14 +149,10 @@ function mostrarPopup({
     }
 
     modalPopup.classList.add("show");
-
     document.getElementById("popup-cerrar")?.focus();
-
     return Promise.resolve(false);
 }
 
-
-// Confirmar operación
 function confirmarPopup() {
     if (!modalPopup || !modalPopup.classList.contains("show")) return;
 
@@ -176,56 +160,39 @@ function confirmarPopup() {
     cerrarPopup();
 }
 
-
-// Cerrar popup
 function cerrarPopup() {
     if (!modalPopup || !modalPopup.classList.contains("show")) return;
-
-    // Si era una confirmación, devolver false
     resolverPopup(false);
-
     modalPopup.classList.remove("show");
-
     document.getElementById("modal-botones-confirmacion")
         ?.classList.remove("mostrar");
-
     document.getElementById("modal-boton")
         ?.classList.remove("mostrar");
-
     if (
         elementoConFocoAnterior instanceof HTMLElement &&
         elementoConFocoAnterior.isConnected
     ) {
         elementoConFocoAnterior.focus();
     }
-
     elementoConFocoAnterior = null;
 }
 
-
-// Control de teclado
 document.addEventListener("keydown", function(event) {
-
     if (!modalPopup || !modalPopup.classList.contains("show")) return;
-
     if (event.key === "Escape") {
         cerrarPopup();
         return;
     }
-
     if (event.key !== "Tab") return;
-
     const elementosEnfocables = Array.from(
         modalPopup.querySelectorAll(
             "button:not([disabled]), a[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex='-1'])"
         )
     ).filter(elemento => elemento.getClientRects().length > 0);
-
     if (elementosEnfocables.length === 0) {
         event.preventDefault();
         return;
     }
-
     const primero = elementosEnfocables[0];
     const ultimo = elementosEnfocables[elementosEnfocables.length - 1];
 

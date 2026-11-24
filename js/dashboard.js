@@ -1,14 +1,6 @@
-/* =========================================================
-   SIGSS | DASHBOARD
-   Navegación tradicional mediante archivos HTML
-   ========================================================= */
-
-
-/* =========================================================
-   1. SESIÓN DEL USUARIO
-   ========================================================= */
-
 let usuario = null;
+const RETARDO_CIERRE_HOVER = 350;
+const escritorio = window.matchMedia("(min-width: 992px)");
 
 try {
     usuario = JSON.parse(
@@ -21,72 +13,51 @@ try {
     );
 }
 
-
-/* =========================================================
-   2. INICIALIZACIÓN DEL DASHBOARD
-   ========================================================= */
-
 document.addEventListener("DOMContentLoaded", cargar_dashboard);
-
-
 async function cargar_dashboard() {
 
-    // Validar sesión.
     if (!usuario || !usuario.Rol) {
-
         if (typeof mostrarPopup === "function") {
-
             mostrarPopup({
                 titulo: "No has iniciado sesión",
                 mensaje: "Redirigiendo a la página de inicio de sesión...",
                 tipo: "error"
             });
-
             await new Promise(resolve =>
                 setTimeout(resolve, 2000)
             );
         }
-
         window.location.href = "../../index.html";
         return;
     }
 
-    // Título de bienvenida.
-    const tituloBienvenida =
+    const titulo_bienvenida =
         document.getElementById("titulo-bienvenida");
-
-    if (tituloBienvenida) {
-        tituloBienvenida.textContent =
+    if (titulo_bienvenida) {
+        titulo_bienvenida.textContent =
             `¡Bienvenido de nuevo a SIGSS, ${usuario.Nombre || "Usuario"}!`;
     }
 
-    // Descripción.
-    const descripcionBienvenida =
+    const descripcion_bienvenida =
         document.getElementById("descripcion-bienvenida");
-
-    if (descripcionBienvenida) {
-        descripcionBienvenida.textContent =
+    if (descripcion_bienvenida) {
+        descripcion_bienvenida.textContent =
             "Sistema Integral de Gestión de Servicios de Salud.";
     }
 
-    // Nombre del usuario.
-    const nombreUsuario =
+    const nombre_usuario =
         document.getElementById("nombre-usuario");
-
-    if (nombreUsuario) {
-        nombreUsuario.textContent =
+    if (nombre_usuario) {
+        nombre_usuario.textContent =
             usuario.Nombre || "Usuario";
     }
 
-    // Rol.
-    const rolUsuario =
+    const rol_usuario =
         document.getElementById("rol-usuario");
-
-    if (rolUsuario) {
-        rolUsuario.textContent = usuario.Rol;
+    if (rol_usuario) {
+        rol_usuario.textContent = usuario.Rol;
     }
 
-    // Generar menú según el rol.
     switch (usuario.Rol) {
 
         case "Médico":
@@ -94,6 +65,9 @@ async function cargar_dashboard() {
             break;
         case "Personal administrativo":
             generar_menu_administrativo();
+            break;
+        case "Administrador":
+            generar_menu_administrador();
             break;
         default:
             console.warn(
@@ -103,21 +77,14 @@ async function cargar_dashboard() {
             break;
     }
 
-    // Marcar la página actual en el menú.
     actualizar_navegacion();
-
-    // Mostrar/ocultar los submenús de los módulos al pasar el cursor.
     inicializar_submenus();
-
-    // Mostrar/ocultar notificaciones y perfil (incluye cerrar sesión) al pasar el cursor.
     inicializar_menus_cabecera();
 
-    // Vincular el botón de cerrar sesión.
-    const botonCerrarSesion =
+    const btn_cerrar_sesion =
         document.getElementById("opcion-cerrar-sesion");
-
-    if (botonCerrarSesion) {
-        botonCerrarSesion.addEventListener("click", cerrar_sesion);
+    if (btn_cerrar_sesion) {
+        btn_cerrar_sesion.addEventListener("click", cerrar_sesion);
     }
 }
 
@@ -144,8 +111,6 @@ async function cerrar_sesion(evento) {
     }
 
     if (!confirmado) return;
-
-    // Eliminar por completo los datos de la sesión del navegador.
     sessionStorage.clear();
 
     if (typeof mostrarPopup === "function") {
@@ -161,12 +126,6 @@ async function cerrar_sesion(evento) {
     window.location.href = "../../index.html";
 }
 
-
-/* =========================================================
-   3. GENERAR MENÚ DEL MÉDICO
-   ========================================================= */
-
-
 function generar_menu_medico() {
 
     const menu =
@@ -177,7 +136,6 @@ function generar_menu_medico() {
         );
         return;
     }
-
     menu.innerHTML = `
         <!-- HOME -->
         <li id="nav-home" class="nav-item">
@@ -378,7 +336,6 @@ function generar_menu_administrativo()
         );
         return;
     }
-
     menu.innerHTML = `
         <!-- HOME -->
         <li id="nav-home" class="nav-item">
@@ -436,66 +393,102 @@ function generar_menu_administrativo()
         </li>
     `;
 }
-/* =========================================================
-   4. ACTUALIZAR NAVEGACIÓN ACTIVA
-   ========================================================= */
 
-function actualizar_navegacion() {
-
+function generar_menu_administrador()
+{
     const menu =
         document.getElementById("menu-principal");
+    if (!menu) {
+        console.error(
+            "No se encontró #menu-principal."
+        );
+        return;
+    }
+    menu.innerHTML = `
+        <!-- HOME -->
+        <li id="nav-home" class="nav-item">
+            <a
+                href="/pages/dashboard/dashboard.html"
+                id="enlace-home"
+                class="nav-link"
+                data-modulo="home"
+                data-vista="inicio"
+            >
+                <i class="typcn typcn-home"></i>
+                Home
+            </a>
+        </li>
+        <!-- MODULOS (agrupa consulta externa, salud bucal, detecciones y planificacion familiar) -->
+        <!-- BITACORA -->
+        <li id="nav-bitacora" class="nav-item">
+            <a
+                href="/pages/modules/bitacora/index.html"
+                id="opcion-bitacora"
+                class="nav-link"
+                data-modulo="bitacora"
+                data-vista="bitacora"
+            >
+                <i class="typcn typcn-time"></i>
+                Bitácora
+            </a>
+        </li>
+        <!-- USUARIOS -->
+        <li id="nav-usuarios" class="nav-item">
+            <a
+                href="/pages/modules/usuarios/index.html"
+                id="opcion-usuarios"
+                class="nav-link"
+                data-modulo="usuarios"
+                data-vista="usuarios"
+            >
+                <i class="typcn typcn-group"></i>
+                Usuarios
+            </a>
+        </li>
+    `;
+}
 
+function actualizar_navegacion() {
+    const menu =
+        document.getElementById("menu-principal");
     if (!menu) return;
-
     const ruta_actual =
         window.location.pathname;
 
-    // Quitar estados activos anteriores.
     menu.querySelectorAll(".nav-item").forEach(item => {
         item.classList.remove("active");
     });
-
     menu.querySelectorAll(".nav-link").forEach(enlace => {
         enlace.classList.remove("active");
         enlace.removeAttribute("aria-current");
     });
 
-    // Identificar el enlace correspondiente a la página actual.
     const enlaces = menu.querySelectorAll(
         "a[data-modulo]"
     );
 
     enlaces.forEach(enlace => {
-
         const ruta_enlace =
             new URL(enlace.href).pathname;
-
         if (ruta_enlace === ruta_actual) {
-
             enlace.classList.add("active");
-
             enlace.setAttribute(
                 "aria-current",
                 "page"
             );
-
             const elemento_menu =
                 enlace.closest(".nav-item");
-
             if (elemento_menu) {
                 elemento_menu.classList.add("active");
             }
-
-            // Mantener abierto el submenú correspondiente (y, si aplica,
-            // también el/los <details> ancestro(s), como "Módulos").
-            let detalle_ancestro =
+            let detalle =
                 enlace.closest("details");
 
-            while (detalle_ancestro) {
-                detalle_ancestro.open = true;
-                detalle_ancestro =
-                    detalle_ancestro.parentElement
-                        ? detalle_ancestro.parentElement.closest("details")
+            while (detalle) {
+                detalle.open = true;
+                detalle =
+                    detalle.parentElement
+                        ? detalle.parentElement.closest("details")
                         : null;
             }
 
@@ -506,24 +499,9 @@ function actualizar_navegacion() {
 }
 
 
-/* =========================================================
-   5. SUBMENÚS Y DESPLEGABLES (hover con margen para seleccionar)
-   ========================================================= */
 
-// Milisegundos de margen antes de ocultar, para dar tiempo a mover
-// el cursor desde el botón hasta la lista sin que se cierre sola.
-const RETARDO_CIERRE_HOVER = 350;
 
-// Solo aplica el comportamiento de "hover" en escritorio; en móvil
-// los desplegables se siguen abriendo con un toque (clic).
-const esEscritorio = window.matchMedia("(min-width: 992px)");
-
-/**
- * Activa mostrar/ocultar por hover (con margen de tiempo) sobre un
- * elemento, usando las funciones que se le pasan para leer y cambiar
- * su estado de "abierto".
- */
-function activar_hover_con_retardo(elemento, { estaAbierto, establecerAbierto }) {
+function activar_hover(elemento, { abierto, establecer_abierto }) {
 
     let temporizador = null;
 
@@ -535,22 +513,19 @@ function activar_hover_con_retardo(elemento, { estaAbierto, establecerAbierto })
     };
 
     elemento.addEventListener("mouseenter", () => {
-        if (!esEscritorio.matches) return;
+        if (!escritorio.matches) return;
         cancelarCierre();
-        establecerAbierto(true);
+        establecer_abierto(true);
     });
 
     elemento.addEventListener("mouseleave", () => {
-        if (!esEscritorio.matches) return;
+        if (!escritorio.matches) return;
         cancelarCierre();
         temporizador = setTimeout(() => {
-            establecerAbierto(false);
+            establecer_abierto(false);
             temporizador = null;
         }, RETARDO_CIERRE_HOVER);
     });
-
-    // Si el elemento vuelve a recibir el foco (teclado) mientras
-    // estaba por cerrarse, cancelar el cierre.
     elemento.addEventListener("focusin", cancelarCierre);
 }
 
@@ -567,9 +542,9 @@ function inicializar_submenus() {
 
     detalles.forEach(detalle => {
 
-        activar_hover_con_retardo(detalle, {
-            estaAbierto: () => detalle.open,
-            establecerAbierto: (abierto) => {
+        activar_hover(detalle, {
+            abierto: () => detalle.open,
+            establecer_abierto: (abierto) => {
 
                 if (abierto) {
                     // Cerrar cualquier otro submenú que haya quedado abierto.
@@ -581,16 +556,6 @@ function inicializar_submenus() {
                 detalle.open = abierto;
             }
         });
-
-        // Ocultarlo automáticamente solo al seleccionar un destino final
-        // de navegación (un <a> con data-modulo). Importante: NO usar un
-        // selector tipo ".az-menu-sub .nav-link", porque eso también
-        // atrapa los <summary class="nav-link"> de los submenús anidados
-        // (p. ej. "Consulta Externa" dentro de "Módulos"); si se hiciera,
-        // al hacer clic en esos encabezados el navegador abriría su
-        // <details> interno de forma nativa pero, en el mismo instante,
-        // este listener cerraría el <details> exterior ("Módulos"),
-        // dando la apariencia de que el menú "se cierra solo".
         detalle.querySelectorAll(".az-menu-sub a[data-modulo]")
             .forEach(enlace => {
                 enlace.addEventListener("click", () => {
@@ -602,10 +567,6 @@ function inicializar_submenus() {
 
 }
 
-
-/* =========================================================
-   6. NOTIFICACIONES Y PERFIL (hover con margen para seleccionar)
-   ========================================================= */
 
 function inicializar_menus_cabecera() {
 
@@ -620,12 +581,11 @@ function inicializar_menus_cabecera() {
 
     contenedores.forEach(contenedor => {
 
-        activar_hover_con_retardo(contenedor, {
-            estaAbierto: () => contenedor.classList.contains("show"),
-            establecerAbierto: (abierto) => {
+        activar_hover(contenedor, {
+            abierto: () => contenedor.classList.contains("show"),
+            establecer_abierto: (abierto) => {
 
                 if (abierto) {
-                    // Cerrar el otro desplegable si estaba abierto.
                     contenedores.forEach(otro => {
                         if (otro !== contenedor) otro.classList.remove("show");
                     });
@@ -635,7 +595,6 @@ function inicializar_menus_cabecera() {
             }
         });
 
-        // Ocultarlo automáticamente al seleccionar una opción.
         contenedor.querySelectorAll(".dropdown-item")
             .forEach(opcion => {
                 opcion.addEventListener("click", () => {
