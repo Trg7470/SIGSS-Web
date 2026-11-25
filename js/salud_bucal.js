@@ -9,11 +9,16 @@ try {
 const API = "http://localhost:3000";
 
 let catalogosCargados = false;
-let enviando = false;
 let Paciente;
 
+// Se activa en cuanto el usuario edita algo del formulario (no se activa
+// con los autollenados por JS de cargar_datos/el modal de búsqueda, ya que
+// asignar .value por código no dispara "input"/"change"). Sirve para saber
+// si de verdad hay información capturada antes de advertir al salir.
+let formulario_modificado = false;
+
 // Servicios correspondientes a Salud Bucal.
-const SERVICIOS_SALUD_BUCAL = [10, 11, 12, 31];
+const SERVICIOS_SALUD_BUCAL = [10, 11, 12, 31, 70];
 
 /* =========================================================
    1. INICIALIZACIÓN
@@ -40,8 +45,105 @@ document.addEventListener("DOMContentLoaded", async () => {
         "Módulo de registro de consultas de salud bucal (hoja diaria, intramuros).";
 
     configurar_interacciones();
+    configurar_cancelar_busqueda_paciente();
+    configurar_deteccion_cambios();
+    configurar_confirmacion_salida();
     seleccionar_paciente();
 });
+
+/* =========================================================
+   CONFIRMAR SALIDA DEL FORMULARIO (MENÚ DE NAVEGACIÓN)
+   ========================================================= */
+
+// Marca el formulario como modificado con cualquier edición real del
+// usuario dentro de #contenedor-modulos (inputs, selects, checkboxes).
+function configurar_deteccion_cambios() {
+
+    const contenedor = document.getElementById("contenedor-modulos");
+
+    if (!contenedor) return;
+
+    const marcar = () => { formulario_modificado = true; };
+
+    contenedor.addEventListener("input", marcar);
+    contenedor.addEventListener("change", marcar);
+}
+
+// El logotipo (que funciona como "Inicio") y los enlaces del menú principal
+// (#menu-principal, armado por dashboard.js con los módulos) llevan al
+// usuario fuera de este formulario. Si ya capturó algo, se le avisa que no
+// se puede deshacer antes de dejarlo salir. El resto del header (perfil,
+// cerrar sesión, botón de menú móvil) no se toca, no se pidió.
+function configurar_confirmacion_salida() {
+
+    document.addEventListener("click", async evento => {
+
+        const enlace = evento.target.closest(
+            "#logo-sigss, #logo-sigss-movil, #menu-principal a"
+        );
+
+        if (!enlace || !enlace.href || !formulario_modificado) return;
+
+        evento.preventDefault();
+
+        const confirmar = await mostrarPopup({
+            tipo: "advertencia",
+            titulo: "Salir del formulario",
+            mensaje:
+                "Tienes información capturada sin guardar en este formulario. Si sales, se perderá y no se podrá deshacer. ¿Deseas continuar?",
+            confirmar: true,
+            textoConfirmar: "Sí, salir",
+            textoCancelar: "Seguir capturando"
+        });
+
+        if (!confirmar) return;
+
+        formulario_modificado = false;
+
+        window.location.href = enlace.href;
+    });
+}
+
+/* =========================================================
+   CANCELAR BÚSQUEDA DE PACIENTE (MODAL)
+   ========================================================= */
+
+// Esta página solo usa el modal_generico para la búsqueda de paciente, así
+// que aquí es seguro interceptar el botón "Cancelar" del pie para pedir
+// confirmación antes de cerrarlo. La "x" del encabezado, ESC y el clic en
+// el fondo oscuro se dejan con su comportamiento normal (cierran el modal
+// sin pedir nada), solo el botón "Cancelar" lleva la confirmación + redirección.
+function configurar_cancelar_busqueda_paciente() {
+
+    const boton_cancelar = document.querySelector(
+        '#modal_generico .modal-sigss-footer [data-dismiss="modal"]'
+    );
+
+    if (!boton_cancelar) return;
+
+    boton_cancelar.addEventListener("click", async evento => {
+
+        evento.preventDefault();
+        evento.stopPropagation();
+
+        const confirmar = await mostrarPopup({
+            tipo: "advertencia",
+            titulo: "Cancelar búsqueda de paciente",
+            mensaje:
+                "¿Estás seguro de cancelar? Se te redirigirá al panel principal.",
+            confirmar: true,
+            textoConfirmar: "Sí, cancelar",
+            textoCancelar: "Seguir buscando"
+        });
+
+        if (!confirmar) return;
+
+        window.modal_manager.cerrar("modal_generico");
+
+        window.location.href =
+            "../../dashboard/dashboard.html";
+    });
+}
 
 /* =========================================================
    2. BÚSQUEDA DE PACIENTES
@@ -175,7 +277,23 @@ function seleccionar_paciente() {
                     );
                 }
 
-                mostrarPopup({
+                // Se rellena el propio modal con los datos encontrados
+                // (nombre, apellidos y CURP) antes de avisar, para que se
+                // vea que el paciente corresponde a lo que se buscó.
+                window.modal_manager.establecer_valor(
+                    "paciente_curp", Paciente.Curp
+                );
+                window.modal_manager.establecer_valor(
+                    "paciente_nombre", Paciente.Nombre
+                );
+                window.modal_manager.establecer_valor(
+                    "paciente_apellido_paterno", Paciente.Apellido_Paterno
+                );
+                window.modal_manager.establecer_valor(
+                    "paciente_apellido_materno", Paciente.Apellido_Materno
+                );
+
+                await mostrarPopup({
                     tipo: "exito",
                     titulo: "Paciente encontrado",
                     mensaje:
@@ -217,6 +335,53 @@ function seleccionar_paciente() {
    3. BÚSQUEDA DE DIAGNÓSTICOS CIE-10
    ========================================================= */
 
+// El checkbox "Diagnóstico de primera vez" (B y C) solo tiene sentido si
+// ya hay un diagnóstico capturado; si no lo hay (o se borra), se deshabilita
+// y se desmarca para no dejar marcado "primera vez" sin diagnóstico. No
+// existe para el diagnóstico A (no tiene ese checkbox), por eso se busca
+// con optional chaining y no hace nada si no lo encuentra.
+function sincronizar_primera_vez(id) {
+
+    const hidden = document.getElementById(`${id}-id`);
+
+    const checkbox = document.getElementById(
+        `${id.replace("-cie10", "")}-primera-vez`
+    );
+
+    if (!hidden || !checkbox) return;
+
+    const tiene_diagnostico = hidden.value !== "";
+
+    checkbox.disabled = !tiene_diagnostico;
+
+    if (!tiene_diagnostico) {
+        checkbox.checked = false;
+    }
+}
+
+// "Folio de la Receta" solo es obligatorio si se marca Farmacoterapia
+// (ver validar_consulta). Aquí nada más se refleja visualmente esa regla:
+// borde rojo si falta y placeholder avisando que es obligatorio.
+function actualizar_folio_receta_requerido() {
+
+    const checkbox = document.getElementById("cur-farmacoterapia");
+
+    const folio = document.getElementById("folio-receta");
+
+    if (!checkbox || !folio) return;
+
+    const requerido = checkbox.checked;
+
+    folio.classList.toggle(
+        "is-invalid",
+        requerido && folio.value.trim() === ""
+    );
+
+    folio.placeholder = requerido
+        ? "Folio de la Receta (obligatorio por Farmacoterapia)"
+        : "Folio de la Receta";
+}
+
 function configurar_busqueda_diagnosticos(id) {
 
     const input = document.getElementById(id);
@@ -229,12 +394,15 @@ function configurar_busqueda_diagnosticos(id) {
 
     if (!input || !hidden || !resultados) return;
 
+    sincronizar_primera_vez(id);
+
     input.addEventListener("input", async () => {
 
         const nombre = input.value.trim();
 
         hidden.value = "";
         resultados.replaceChildren();
+        sincronizar_primera_vez(id);
 
         if (nombre.length < 2) {
             resultados.style.display = "none";
@@ -280,6 +448,8 @@ function configurar_busqueda_diagnosticos(id) {
 
                     hidden.value =
                         diagnostico.Id_Cat_Diagnosticos;
+
+                    sincronizar_primera_vez(id);
 
                     resultados.style.display = "none";
                     resultados.replaceChildren();
@@ -505,6 +675,8 @@ function validar_edad() {
                 boton: true
             });
 
+            resaltar_campo("fecha-atencion");
+
             return false;
         }
 
@@ -519,6 +691,8 @@ function validar_edad() {
                     "No se encontró la clave de edad correspondiente en el catálogo.",
                 boton: true
             });
+
+            resaltar_campo("clave-edad");
 
             return false;
         }
@@ -544,6 +718,8 @@ function validar_edad() {
                 "Captura una edad válida y selecciona su clave: D, M o A.",
             boton: true
         });
+
+        resaltar_campo(edad === "" ? "edad" : "clave-edad");
 
         return false;
     }
@@ -583,6 +759,34 @@ function edad_en_anios() {
 /* =========================================================
    5. UTILIDADES
    ========================================================= */
+
+// Resalta en rojo el campo que falló la validación y hace scroll hasta él
+// (con el formulario tan largo, el popup dice qué falta pero no dónde
+// está). El resaltado se quita solo en cuanto el usuario lo toca.
+function resaltar_campo(id) {
+
+    const campo = document.getElementById(id);
+
+    if (!campo) return;
+
+    campo.classList.add("is-invalid");
+
+    campo.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+    });
+
+    campo.focus({ preventScroll: true });
+
+    const quitar_resaltado = () => {
+        campo.classList.remove("is-invalid");
+        campo.removeEventListener("input", quitar_resaltado);
+        campo.removeEventListener("change", quitar_resaltado);
+    };
+
+    campo.addEventListener("input", quitar_resaltado);
+    campo.addEventListener("change", quitar_resaltado);
+}
 
 function leer_check(id) {
 
@@ -639,7 +843,7 @@ function validar_contadores() {
                 boton: true
             });
 
-            campo.focus();
+            resaltar_campo(campo.id);
 
             return false;
         }
@@ -681,6 +885,8 @@ function validar_consulta() {
             boton: true
         });
 
+        resaltar_campo("fecha-atencion");
+
         return false;
     }
 
@@ -693,6 +899,8 @@ function validar_consulta() {
                 "Selecciona el servicio correspondiente a Salud Bucal.",
             boton: true
         });
+
+        resaltar_campo("servicio");
 
         return false;
     }
@@ -708,6 +916,8 @@ function validar_consulta() {
                 "Indica si la consulta es de primera vez o subsecuente.",
             boton: true
         });
+
+        resaltar_campo("rt-motivo");
 
         return false;
     }
@@ -725,6 +935,8 @@ function validar_consulta() {
                 "Busca y selecciona el diagnóstico CIE-10 principal.",
             boton: true
         });
+
+        resaltar_campo("diagnostico-a-cie10");
 
         return false;
     }
@@ -745,6 +957,8 @@ function validar_consulta() {
             boton: true
         });
 
+        resaltar_campo("prev-hilo");
+
         return false;
     }
 
@@ -760,6 +974,8 @@ function validar_consulta() {
                 "Marcaste farmacoterapia; captura el folio de la receta.",
             boton: true
         });
+
+        resaltar_campo("folio-receta");
 
         return false;
     }
@@ -882,6 +1098,8 @@ async function cargar_datos() {
             s => SERVICIOS_SALUD_BUCAL.includes(
                 Number(s.Clave)
             )
+        ).sort(
+            (a, b) => Number(a.Clave) - Number(b.Clave)
         );
 
         llenar_select(
@@ -1009,9 +1227,16 @@ async function cargar_datos() {
             true
         );
 
+        // "Especialidad" (pregunta 8) no es una elección aparte: según el
+        // instructivo de la hoja diaria, 8. ESPECIALIDAD = SERVICIO, o sea
+        // que siempre debe traer el mismo servicio ya elegido en el campo
+        // "servicio". Se llena con el mismo catálogo filtrado (servicios_bucal)
+        // para que comparta los mismos Id_Cat_Servicios como opciones, pero
+        // queda deshabilitado y su valor se sincroniza solo (ver
+        // actualizar_condicionales).
         llenar_select(
             "especialidad",
-            catalogos.servicios,
+            servicios_bucal,
             "Id_Cat_Servicios",
             opcion,
             placeholder,
@@ -1532,6 +1757,15 @@ function limpiar_formulario() {
         lista.style.display = "none";
     });
 
+    // Al limpiar también se borran los diagnósticos (el value="" de arriba
+    // ya incluye los hidden -id), así que "primera vez" de B y C debe
+    // volver a quedar deshabilitado.
+    ["diagnostico-b-cie10", "diagnostico-c-cie10"].forEach(
+        sincronizar_primera_vez
+    );
+
+    actualizar_folio_receta_requerido();
+
     actualizar_edad();
     actualizar_condicionales();
 }
@@ -1547,7 +1781,8 @@ function configurar_interacciones() {
         "nivel",
         "Teleconsulta",
         "interpretacion-diagnostica",
-        "unidad-consultante"
+        "unidad-consultante",
+        "servicio"
     ].forEach(id => {
 
         document.getElementById(id)
@@ -1556,6 +1791,14 @@ function configurar_interacciones() {
                 actualizar_condicionales
             );
     });
+
+    document.getElementById("cur-farmacoterapia")
+        ?.addEventListener("change", actualizar_folio_receta_requerido);
+
+    document.getElementById("folio-receta")
+        ?.addEventListener("input", actualizar_folio_receta_requerido);
+
+    actualizar_folio_receta_requerido();
 
     actualizar_condicionales();
 }
@@ -1586,7 +1829,11 @@ function actualizar_condicionales() {
         }
     });
 
-    // Referencias.
+    // Referencias: "Especialidad" (pregunta 8) siempre es igual al
+    // "Servicio" ya elegido de forma obligatoria en el formulario (8.
+    // ESPECIALIDAD = SERVICIO, según el instructivo). No es una elección
+    // aparte para el usuario: se sincroniza sola con el servicio elegido y
+    // queda siempre deshabilitada, solo se muestra cuando hay "Referido a".
     const nivel =
         document.getElementById("nivel");
 
@@ -1595,14 +1842,15 @@ function actualizar_condicionales() {
             "especialidad"
         );
 
-    if (especialidad && nivel) {
+    const servicio =
+        document.getElementById("servicio");
 
-        especialidad.disabled =
-            !nivel.value;
+    if (especialidad && nivel && servicio) {
 
-        if (!nivel.value) {
-            especialidad.value = "";
-        }
+        especialidad.value =
+            nivel.value ? servicio.value : "";
+
+        especialidad.disabled = true;
     }
 
     // Teleconsulta.
@@ -1707,14 +1955,40 @@ boton_registrar.addEventListener("click", async () => {
 
 document.getElementById(
     "limpiar-formulario"
-).addEventListener(
-    "click",
-    limpiar_formulario
-);
+).addEventListener("click", async () => {
+
+    const confirmar = await mostrarPopup({
+        tipo: "advertencia",
+        titulo: "Limpiar formulario",
+        mensaje:
+            "¿Estás seguro de limpiar el formulario? Se perderá la información capturada.",
+        confirmar: true,
+        textoConfirmar: "Sí, limpiar",
+        textoCancelar: "Seguir capturando"
+    });
+
+    if (!confirmar) return;
+
+    limpiar_formulario();
+
+    formulario_modificado = false;
+});
 
 document.getElementById(
     "cancelar"
-).addEventListener("click", () => {
+).addEventListener("click", async () => {
+
+    const confirmar = await mostrarPopup({
+        tipo: "advertencia",
+        titulo: "Cancelar registro",
+        mensaje:
+            "¿Estás seguro de cancelar? Se perderá la información capturada y se te redirigirá al panel principal.",
+        confirmar: true,
+        textoConfirmar: "Sí, cancelar",
+        textoCancelar: "Seguir capturando"
+    });
+
+    if (!confirmar) return;
 
     window.location.href =
         "../../dashboard/dashboard.html";
