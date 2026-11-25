@@ -17,19 +17,6 @@
 <link rel="stylesheet" href="/css/dashboard.css" />
 <link rel="stylesheet" href="/css/modal.css" />
 <link rel="stylesheet" href="/css/salud_bucal.css" />
-<style>
-    /* Índice lateral de secciones: resalta el enlace al pasar el cursor. */
-    #indice-secciones .nav-link {
-        color: #495057;
-        transition: color 0.15s ease-in-out;
-    }
-
-    #indice-secciones .nav-link:hover,
-    #indice-secciones .nav-link:focus {
-        color: #007bff;
-        text-decoration: underline;
-    }
-</style>
 </head>
 
 <body id="pagina-sigss">
@@ -50,26 +37,6 @@
 </section>
 
 <section id="seccion-panel-usuario" aria-label="Formulario de salud bucal">
-<div class="row">
-<nav id="indice-secciones" class="col-lg-2 d-none d-lg-block" aria-label="Índice de secciones del formulario">
-<div class="sticky-top" style="top: 1rem;">
-<p class="font-weight-bold small text-uppercase text-muted mb-2">Secciones</p>
-<ul class="nav flex-column small">
-<li class="nav-item"><a class="nav-link p-1" href="#identificacion-atencion">Identificación y Atención</a></li>
-<li class="nav-item"><a class="nav-link p-1" href="#informacion-paciente">Información del Paciente</a></li>
-<li class="nav-item"><a class="nav-link p-1" href="#mediciones">Mediciones</a></li>
-<li class="nav-item"><a class="nav-link p-1" href="#diagnostico">Diagnósticos</a></li>
-<li class="nav-item"><a class="nav-link p-1" href="#atencion-preventiva">Atención Preventiva</a></li>
-<li class="nav-item"><a class="nav-link p-1" href="#atencion-curativa">Atención Curativa</a></li>
-<li class="nav-item"><a class="nav-link p-1" href="#cierre-atencion">Cierre de la Atención</a></li>
-<li class="nav-item"><a class="nav-link p-1" href="#promocion-salud">Promoción de la Salud</a></li>
-<li class="nav-item"><a class="nav-link p-1" href="#referencias">Referencias</a></li>
-<li class="nav-item"><a class="nav-link p-1" href="#teleconsulta">Teleconsulta</a></li>
-<li class="nav-item"><a class="nav-link p-1" href="#seguimiento">Seguimiento</a></li>
-</ul>
-</div>
-</nav>
-<div class="col-lg-10">
 <div id="contenedor-modulos" class="sigss-formulario">
 
 <div class="shadow card card-body mt-4 " id="identificacion-atencion">
@@ -519,12 +486,9 @@
 </div>
 </div>
 <div class="shadow card card-body mt-4 mb-4" id="referencias">
-<div class="card-title" data-toggle="collapse" data-target="#colapso-referencias" aria-expanded="false" aria-controls="colapso-referencias" role="button" style="cursor: pointer;">
-<h5>Referencias <i class="fas fa-chevron-down float-right"></i></h5>
-</div>
-<div class="collapse" id="colapso-referencias">
+<div class="card-title"><h5>Referencias</h5></div>
+<p class="text-muted small mb-2">Completa los datos de destino únicamente cuando el paciente sea referido.</p>
 <div class="card-body">
-<p class="text-muted small mb-3">Completa los datos de destino únicamente cuando el paciente sea referido.</p>
 <div class="form-row">
 <div class="form-group col-md-6">
 <label for="contrarreferido">Contrarreferido</label>
@@ -545,14 +509,10 @@
 </div>
 </div>
 </div>
-</div>
 <div class="shadow card card-body mt-4 mb-4" id="teleconsulta">
-<div class="card-title" data-toggle="collapse" data-target="#colapso-teleconsulta" aria-expanded="false" aria-controls="colapso-teleconsulta" role="button" style="cursor: pointer;">
-<h5>Teleconsulta <i class="fas fa-chevron-down float-right"></i></h5>
-</div>
-<div class="collapse" id="colapso-teleconsulta">
+<div class="card-title"><h5>Teleconsulta</h5></div>
+<p class="text-muted small mb-2">Completa este apartado únicamente si se brindó atención mediante telemedicina.</p>
 <div class="card-body">
-<p class="text-muted small mb-3">Completa este apartado únicamente si se brindó atención mediante telemedicina.</p>
 <div class="form-row">
 <div class="form-group col-md-6">
 <label for="Teleconsulta">A) Teleconsulta</label>
@@ -571,7 +531,6 @@
 <div class="form-group col-md-6">
 <label for="modalidad">Modalidad</label>
 <select class="form-control" id="modalidad"><option value="">Selecciona una opción</option></select>
-</div>
 </div>
 </div>
 </div>
@@ -596,8 +555,6 @@
 </div>
 </div>
 
-</div>
-</div>
 </div>
 </section>
 </div>

@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="Sistema Integral de Gestión de Servicios de Salud">
+  <meta name="description" content="Sistema Integral de Gestión y Seguimiento de la Salud">
   <meta name="author" content="SIGSS">
   <title>SIGSS | Panel principal</title>
   <link href="/lib/fontawesome-free/css/all.min.css" rel="stylesheet">
@@ -24,6 +24,7 @@
       <div id="contenido-dashboard" class="az-content-body">
         <section id="seccion-bienvenida" class="az-dashboard-one-title">
           <div id="informacion-bienvenida">
+            <span class="sigss-kicker"><i class="fas fa-clinic-medical" aria-hidden="true"></i> CESSA Dr. Isauro Venzor · Jurisdicción Sanitaria No. 2 · Panel principal</span>
             <h1 id="titulo-bienvenida" class="az-dashboard-title">
             </h1>
             <p id="descripcion-bienvenida" class="az-dashboard-text">
@@ -31,6 +32,7 @@
           </div>
           <div id="informacion-adicional" class="az-content-header-right">
             <div id="informacion-fecha" class="media">
+              <i class="far fa-calendar-alt sigss-calendar" aria-hidden="true"></i>
               <div class="media-body">
                 <label id="fecha">Fecha</label>
                 <h6 id="hora">--/--/----</h6>
@@ -42,6 +44,119 @@
           <div id="contenedor-modulos">
           </div>
         </section>
+
+        <section id="seccion-acerca-sigss" class="sigss-section" aria-labelledby="acerca-titulo">
+          <div class="sigss-intro">
+            <div><span class="sigss-eyebrow">Conoce tu plataforma</span><h2 id="acerca-titulo">¿Qué es SIGSS?</h2>
+            <p class="sigss-lead">Sistema Integral de Gestión y Seguimiento de la Salud</p>
+            <p>Una herramienta digital del CESSA Dr. Isauro Venzor orientada a facilitar el registro y la consulta de las atenciones médicas, así como la generación de documentos conforme a los formatos SINBA de la Secretaría de Salud.</p>
+            <p>Su propósito es simplificar los procedimientos administrativos, aprovechar la información registrada y reducir el llenado repetitivo de formatos.</p></div>
+            <div class="sigss-facts"><div><strong>4</strong><span>Módulos clínicos</span></div><div><strong>2</strong><span>Tipos de documentos</span></div><div><strong>SINBA</strong><span>Formatos de referencia</span></div><div><strong>3</strong><span>Roles de usuario</span></div></div>
+          </div>
+          <h2 class="sigss-subheading">Módulos de atención</h2><p>Conoce las áreas que integra el sistema. Las opciones disponibles dependen de tu rol.</p>
+          <div class="sigss-grid"><article class="sigss-feature tone-0"><span class="sigss-feature-icon"><i class="fas fa-stethoscope" aria-hidden="true"></i></span><h3>Consulta Externa</h3><p>Registro y consulta de las atenciones médicas generales.</p></article>
+<article class="sigss-feature tone-1"><span class="sigss-feature-icon"><i class="fas fa-tooth" aria-hidden="true"></i></span><h3>Salud Bucal</h3><p>Organización de las consultas y actividades de atención odontológica.</p></article>
+<article class="sigss-feature tone-2"><span class="sigss-feature-icon"><i class="fas fa-search" aria-hidden="true"></i></span><h3>Detecciones</h3><p>Registro de las actividades de detección realizadas a los pacientes.</p></article>
+<article class="sigss-feature tone-3"><span class="sigss-feature-icon"><i class="fas fa-users" aria-hidden="true"></i></span><h3>Planificación Familiar</h3><p>Gestión de las consultas relacionadas con la planificación familiar.</p></article></div>
+        </section>
+        <section class="sigss-section" aria-labelledby="funciones-titulo">
+          <span class="sigss-eyebrow">Herramientas de trabajo</span><h2 id="funciones-titulo">¿Qué puedes hacer con SIGSS?</h2>
+          <div class="sigss-grid"><article class="sigss-feature tone-0"><span class="sigss-feature-icon"><i class="fas fa-clipboard-list" aria-hidden="true"></i></span><h3>Registrar consultas</h3><p>Captura la información de las atenciones mediante formularios digitales.</p></article>
+<article class="sigss-feature tone-1"><span class="sigss-feature-icon"><i class="fas fa-search" aria-hidden="true"></i></span><h3>Consultar registros</h3><p>Localiza las consultas registradas y recupera su información.</p></article>
+<article class="sigss-feature tone-2"><span class="sigss-feature-icon"><i class="fas fa-user-friends" aria-hidden="true"></i></span><h3>Identificar pacientes</h3><p>Busca pacientes por CURP o nombre para asociar sus consultas.</p></article>
+<article class="sigss-feature tone-3"><span class="sigss-feature-icon"><i class="fas fa-file-export" aria-hidden="true"></i></span><h3>Generar documentos</h3><p>Obtén hojas diarias e informes mensuales en PDF o Excel.</p></article></div>
+          <div class="sigss-benefits"><i class="fas fa-check-circle" aria-hidden="true"></i><div><h3>Menos tareas repetitivas, más tiempo para la atención</h3><p>La digitalización busca facilitar la organización de los registros, agilizar la elaboración de formatos y apoyar el trabajo del personal médico y administrativo.</p></div></div>
+        </section>
+        <section class="sigss-section" aria-labelledby="documentos-titulo">
+          <span class="sigss-eyebrow">Documentación</span><h2 id="documentos-titulo">De la consulta al documento</h2>
+          <div class="sigss-docs"><article><i class="fas fa-calendar-day" aria-hidden="true"></i><h3>Hoja diaria</h3><p>Reúne las consultas realizadas por un médico en una fecha determinada.</p><span>Fecha · Médico · PDF o Excel</span></article><article><i class="fas fa-calendar-alt" aria-hidden="true"></i><h3>Informe mensual</h3><p>Organiza la información del periodo mensual para la elaboración del informe correspondiente.</p><span>Mes · Año · PDF o Excel</span></article></div>
+        </section>
+
+        <!-- ======================= IDENTIDAD INSTITUCIONAL ======================= -->
+        <section id="seccion-identidad-institucional" aria-labelledby="identidad-titulo">
+          <div class="sigss-identidad-encabezado">
+            <span class="sigss-eyebrow">Identidad institucional</span>
+            <h2 id="identidad-titulo">CESSA Dr. Isauro Venzor</h2>
+            <p>Sistema Integral de Gestión y Seguimiento de la Salud</p>
+          </div>
+          <div class="sigss-identidad-imagen">
+            <img src="/assets/images/Fondo_Isauro_Venzor.png" alt="CESSA Dr. Isauro Venzor">
+          </div>
+        </section>
+
+        <!-- ======================= PREGUNTAS FRECUENTES ======================= -->
+        <section id="seccion-preguntas-frecuentes" class="shadow card card-body mt-4 mb-4" aria-label="Preguntas frecuentes">
+          <i class="fas fa-question-circle acerca-sigss-decoracion" aria-hidden="true"></i>
+          <div class="card-title">
+            <h5><i class="fas fa-question-circle mr-2"></i>Preguntas frecuentes</h5>
+          </div>
+          <div class="card-body px-0" id="acordeon-faq">
+
+            <div class="faq-elemento">
+              <button type="button" class="faq-pregunta" data-toggle="collapse" data-target="#faq-1"
+                   aria-expanded="false" aria-controls="faq-1">
+                <span class="faq-pregunta-icono"><i class="fas fa-tasks"></i></span>
+                <span class="faq-pregunta-texto">¿Qué puedo hacer en el sistema?</span>
+                <i class="fas fa-chevron-right faq-pregunta-chevron"></i>
+              </button>
+              <div class="collapse" id="faq-1">
+                <p class="text-muted small mt-2 mb-0">
+                  Registrar y consultar consultas de los módulos de Consulta Externa,
+                  Salud Bucal, Detecciones y Planificación Familiar, y generar el
+                  hoja diaria y el informe mensual en Excel o PDF.
+                </p>
+              </div>
+            </div>
+
+            <div class="faq-elemento">
+              <button type="button" class="faq-pregunta" data-toggle="collapse" data-target="#faq-2"
+                   aria-expanded="false" aria-controls="faq-2">
+                <span class="faq-pregunta-icono"><i class="fas fa-user-check"></i></span>
+                <span class="faq-pregunta-texto">¿Quién puede usar SIGSS?</span>
+                <i class="fas fa-chevron-right faq-pregunta-chevron"></i>
+              </button>
+              <div class="collapse" id="faq-2">
+                <p class="text-muted small mt-2 mb-0">
+                  El personal médico y administrativo autorizado del centro de salud,
+                  cada quien con el menú de opciones correspondiente a su rol.
+                </p>
+              </div>
+            </div>
+
+            <div class="faq-elemento">
+              <button type="button" class="faq-pregunta" data-toggle="collapse" data-target="#faq-3"
+                   aria-expanded="false" aria-controls="faq-3">
+                <span class="faq-pregunta-icono"><i class="fas fa-file-export"></i></span>
+                <span class="faq-pregunta-texto">¿Cómo genero la hoja diaria?</span>
+                <i class="fas fa-chevron-right faq-pregunta-chevron"></i>
+              </button>
+              <div class="collapse" id="faq-3">
+                <p class="text-muted small mt-2 mb-0">
+                  Desde el menú "Reportes &rarr; Hoja diaria", eligiendo el módulo y la
+                  fecha, el médico y el formato de exportación.
+                </p>
+              </div>
+            </div>
+
+            <div class="faq-elemento">
+              <button type="button" class="faq-pregunta" data-toggle="collapse" data-target="#faq-4"
+                   aria-expanded="false" aria-controls="faq-4">
+                <span class="faq-pregunta-icono"><i class="fas fa-headset"></i></span>
+                <span class="faq-pregunta-texto">¿A quién contacto si tengo un problema con el sistema?</span>
+                <i class="fas fa-chevron-right faq-pregunta-chevron"></i>
+              </button>
+              <div class="collapse" id="faq-4">
+                <p class="text-muted small mt-2 mb-0">
+                  Con el área de informática de la jurisdicción o con el administrador
+                  del sistema en tu unidad.
+                </p>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+
       </div>
     </div>
   </main>

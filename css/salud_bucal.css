@@ -790,43 +790,15 @@ body {
   --hc-transicion: 0.18s ease-in-out;
 }
 
-/* --------------------------------------------------------------------
-   Encabezado de la sección. El título va en az-dashboard-title (igual
-   que en las demás páginas) y el reloj (#informacion-fecha) vuelve a su
-   lugar de siempre a la derecha; solo se le agrega un acento visual y
-   una línea divisoria para separarlo del resto del contenido.
-   -------------------------------------------------------------------- */
-#seccion-bienvenida.az-dashboard-one-title {
-  padding-bottom: 1.1rem;
-  margin-bottom: 0.25rem;
-  border-bottom: 1px solid var(--hc-borde);
-}
-
-#seccion-bienvenida #titulo-bienvenida {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-}
-
-#seccion-bienvenida #titulo-bienvenida::before {
-  content: "";
-  flex: 0 0 auto;
-  width: 4px;
-  height: 1.5rem;
-  background-color: var(--hc-primario);
-  border-radius: 2px;
-}
-
-#seccion-bienvenida #descripcion-bienvenida {
-  color: var(--hc-texto-secundario);
-}
-
-@media (max-width: 575.98px) {
-  #seccion-bienvenida.az-dashboard-one-title {
-    flex-wrap: wrap;
-    gap: 0.75rem;
-  }
-}
+/* Nota: el encabezado azul de #seccion-bienvenida (franja degradada,
+   margen hacia la primera tarjeta, etc.) ya lo define dashboard.css
+   igual que en todas las demás páginas (Consulta Externa, Detecciones...).
+   Aquí había una versión propia de ese encabezado (línea divisoria +
+   acento azul antes del título, pensada para un diseño anterior de
+   tarjeta blanca) que, por compartir el mismo id #seccion-bienvenida,
+   también se colaba en el formulario de registrar y le aplastaba el
+   espacio antes de "Identificación y Atención". Se quitó para que
+   Salud Bucal quede igual que el resto de los módulos. */
 
 /* --------------------------------------------------------------------
    Tarjetas (filtros / resultados)

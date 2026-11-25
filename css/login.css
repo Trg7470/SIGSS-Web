@@ -327,3 +327,120 @@
     min-height: auto;
   }
 }
+
+/* ----------------------------------------------------------
+   7. PIE DE PÁGINA (footer.html)
+   ---------------------------------------------------------
+   Mismo partial /partials/footer.html que carga el dashboard
+   (data-layout + /js/layout.js), aquí con su propia hoja de
+   estilos: el login no carga dashboard.css ni bootstrap, así
+   que estas reglas son autosuficientes y usan las variables
+   de este archivo (--color-az-blue, etc.) en vez de las del
+   dashboard. .az-body ya es flex-column con .az-signin-wrapper
+   en flex:1, así que el footer queda pegado abajo sin más.
+   ---------------------------------------------------------- */
+.az-footer {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  background-color: var(--bg-header);
+  padding: 22px 0 16px;
+  margin-top: auto;
+}
+
+.az-footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--color-az-blue), var(--color-primary-hover), #ffc107);
+}
+
+#seccion-pie-pagina .container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px 32px;
+  width: 100%;
+  max-width: 1300px;
+  margin: 0 auto;
+  padding-inline: 1.875rem;
+  font-size: 13px;
+  color: var(--color-text-muted);
+}
+
+.sigss-footer-marca {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.sigss-footer-logo {
+  font-weight: 800;
+  font-size: 18px;
+  letter-spacing: -0.5px;
+  color: var(--color-az-blue);
+}
+
+.sigss-footer-tagline {
+  font-size: 12px;
+  color: var(--color-text-muted);
+}
+
+.sigss-footer-contacto {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sigss-footer-dato {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--color-text-main);
+  transition: color var(--transition);
+}
+
+.sigss-footer-dato i {
+  flex-shrink: 0;
+  width: 16px;
+  text-align: center;
+  color: var(--color-az-blue);
+}
+
+.sigss-footer-dato:hover {
+  color: var(--color-az-blue);
+  text-decoration: none;
+}
+
+/* Teléfono: solo texto informativo (no es un enlace, no navega
+   a ningún lado), así que no debe verse ni comportarse como uno. */
+.sigss-footer-dato-estatico,
+.sigss-footer-dato-estatico:hover {
+  cursor: default;
+  color: var(--color-text-main);
+}
+
+.sigss-footer-copyright {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 12px;
+  color: var(--color-placeholder);
+}
+
+@media (min-width: 992px) {
+  .sigss-footer-copyright {
+    text-align: right;
+  }
+}
+
+@media (max-width: 576px) {
+  #seccion-pie-pagina .container {
+    flex-direction: column;
+    padding-inline: 0.5rem;
+  }
+}

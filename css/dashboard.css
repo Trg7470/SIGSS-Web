@@ -1770,3 +1770,394 @@ body {
     border-bottom: 1px solid rgba(16, 71, 135, 0.25);
   }
 }
+
+/* =========================================================
+   DASHBOARD: "Acerca de SIGSS" y preguntas frecuentes.
+   ---------------------------------------------------------
+   Tema claro: tarjeta blanca, texto en el azul institucional,
+   con una franja de acento de color arriba de cada tarjeta
+   para que no se vean planas.
+   ========================================================= */
+
+#seccion-acerca-sigss,
+#seccion-preguntas-frecuentes {
+  background: #fff;
+  color: #1c273c;
+  border: none;
+  border-radius: 16px !important;
+  box-shadow: 0 15px 35px rgba(16, 71, 135, 0.18) !important;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Franja de acento arriba de cada tarjeta */
+#seccion-acerca-sigss::before,
+#seccion-preguntas-frecuentes::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: linear-gradient(90deg, #104787, var(--az-azul-activo, #1a5fa6), #ffc107);
+}
+
+#seccion-preguntas-frecuentes .card-title h5 {
+  color: #104787;
+}
+
+#seccion-acerca-sigss p {
+  color: #475569;
+}
+
+/* --- Preguntas frecuentes --- */
+.faq-elemento + .faq-elemento {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px dotted rgba(16, 71, 135, 0.2);
+}
+
+.faq-pregunta {
+  cursor: pointer;
+  font-weight: 500;
+  color: #1c273c;
+}
+
+.faq-pregunta:hover {
+  color: #104787;
+}
+
+.faq-pregunta i.fa-chevron-right {
+  transition: transform 0.2s ease;
+}
+
+.faq-pregunta[aria-expanded="true"] i.fa-chevron-right {
+  transform: rotate(90deg);
+}
+
+/* Ícono grande y tenue de fondo, solo decorativo (en la tarjeta
+   de preguntas frecuentes). */
+.acerca-sigss-decoracion {
+  position: absolute;
+  top: -20px;
+  right: -10px;
+  font-size: 140px;
+  color: rgba(16, 71, 135, 0.06);
+  transform: rotate(-12deg);
+  pointer-events: none;
+}
+
+/* =========================================================
+   FAQ: fila con ícono + texto + flecha, en vez de solo texto
+   ========================================================= */
+
+.faq-pregunta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.faq-pregunta-texto {
+  flex: 1;
+}
+
+.faq-pregunta-icono {
+  flex-shrink: 0;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #eef3fb;
+  color: #104787;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+}
+
+.faq-pregunta-chevron {
+  flex-shrink: 0;
+}
+
+/* =========================================================
+   Efecto de "levantarse" al pasar el cursor sobre las 3
+   tarjetas, para que se sientan más vivas.
+   ========================================================= */
+#seccion-acerca-sigss,
+#seccion-preguntas-frecuentes {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#seccion-acerca-sigss:hover,
+#seccion-preguntas-frecuentes:hover {
+  transform: translateY(-4px);
+}
+
+/* SIGSS | Rediseño del panel principal. Conserva los estilos de navegación. */
+#pagina-sigss { background:#f0f5fa; }
+#seccion-contenido { color:#18334e; font-size:16px; line-height:1.65; padding:28px 0 40px; }
+#contenedor-contenido { max-width:1320px; padding:0 24px; }
+#seccion-bienvenida { position:relative; overflow:hidden; display:flex; flex-wrap:wrap; gap:24px; align-items:center; justify-content:space-between; padding:clamp(24px,4vw,48px); border-radius:22px; background:radial-gradient(circle at 85% 0%,#287cae 0%,transparent 48%),linear-gradient(120deg,#103762,#104787); color:white; box-shadow:0 12px 30px #10478724; }
+#informacion-bienvenida { flex:1 1 320px; min-width:0; }
+.sigss-kicker { display:block; font-size:14px; font-weight:600; color:#d8ebff; margin-bottom:14px; }
+#titulo-bienvenida { font-size:clamp(26px,3.3vw,42px); color:white; letter-spacing:-.6px; line-height:1.2; margin-bottom:10px; overflow-wrap:anywhere; }
+#descripcion-bienvenida { font-size:17px; color:#e0efff; }
+#informacion-adicional { display:flex; max-width:100%; }
+#informacion-fecha { align-items:center; gap:14px; background:#ffffff19; border:1px solid #ffffff40; border-radius:14px; padding:16px 20px; }
+.sigss-calendar { font-size:27px; color:#d8ebff; }
+#informacion-fecha label { color:#e0efff; font-size:13px; }
+#informacion-fecha h6 { color:white; font-size:18px; line-height:1.4; }
+#contenido-dashboard .sigss-section, #contenido-dashboard #seccion-preguntas-frecuentes { background:white; border:1px solid #dce6f0; border-radius:20px !important; padding:clamp(20px,3vw,34px); margin:24px 0 !important; box-shadow:0 5px 20px #173c6310 !important; transform:none; }
+#contenido-dashboard #seccion-acerca-sigss::before,#contenido-dashboard #seccion-preguntas-frecuentes::before { display:none; }
+#contenido-dashboard .sigss-section h2,#contenido-dashboard #seccion-preguntas-frecuentes h5 { font-size:clamp(23px,2.4vw,30px); font-weight:750; color:#104787; line-height:1.25; margin:6px 0 12px; }
+.sigss-eyebrow { display:block; color:#28628f; font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:1.5px; }
+.sigss-intro { display:grid; grid-template-columns:1.5fr 1fr; gap:30px; align-items:center; }
+#seccion-acerca-sigss .sigss-lead { font-size:19px; font-weight:600; color:#234e76; }
+.sigss-facts { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+.sigss-facts div { background:#edf5fc; border:1px solid #dce9f5; border-radius:14px; padding:20px 12px; text-align:center; }
+.sigss-facts strong { display:block; font-size:29px; color:#104787; line-height:1.2; }
+.sigss-facts span { display:block; font-size:14px; color:#38546e; margin-top:6px; }
+#contenido-dashboard .sigss-subheading { margin-top:28px; font-size:23px; }
+.sigss-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:16px; margin-top:20px; }
+.sigss-feature { border:1px solid #dce6f0; border-radius:15px; padding:20px; background:#fff; transition:transform .2s,box-shadow .2s; }
+.sigss-feature:hover { transform:translateY(-3px); box-shadow:0 8px 18px #10478715; }
+.sigss-feature-icon { display:grid; place-items:center; width:50px; height:50px; border-radius:14px; background:#e5efff; color:#1759a2; font-size:23px; margin-bottom:15px; }
+.tone-1 .sigss-feature-icon { background:#e0f5f1; color:#087c70; }.tone-2 .sigss-feature-icon { background:#fff1d9; color:#946000; }.tone-3 .sigss-feature-icon { background:#f0e9ff; color:#6940a5; }
+.sigss-feature h3,.sigss-docs h3,.sigss-benefits h3 { font-size:18px; font-weight:700; color:#183b60; margin:0 0 8px; line-height:1.35; }
+.sigss-feature p,.sigss-docs p,.sigss-benefits p { font-size:15px; color:#475d73; margin:0; }
+.sigss-benefits { display:flex; gap:16px; align-items:flex-start; background:#eaf5f3; border-radius:14px; padding:22px; margin-top:22px; }.sigss-benefits>i { color:#087c70; font-size:26px; }
+.sigss-docs { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:20px; }.sigss-docs article { padding:24px; background:#f4f8fc; border:1px solid #dce6f0; border-radius:15px; }.sigss-docs article>i { color:#104787; font-size:28px; margin-bottom:14px; }.sigss-docs span { display:block; margin-top:14px; font-size:14px; font-weight:600; color:#104787; }
+#seccion-preguntas-frecuentes .card-body { padding-top:8px; padding-bottom:0; }
+#seccion-preguntas-frecuentes .faq-elemento { border:1px solid #dce6f0; border-radius:12px; padding:0; margin:10px 0; overflow:hidden; }
+#seccion-preguntas-frecuentes .faq-pregunta { width:100%; border:0; background:#f7faff; text-align:left; padding:16px; font-size:16px; font-weight:600; color:#183b60; }
+#seccion-preguntas-frecuentes .faq-pregunta:hover { background:#edf5fc; }.faq-pregunta-icono { width:38px;height:38px;font-size:17px; }
+#seccion-preguntas-frecuentes .collapse p,#seccion-preguntas-frecuentes .collapsing p { font-size:16px; color:#475d73 !important; padding:0 20px 18px; }
+#contenido-dashboard :focus-visible { outline:3px solid #2675c4; outline-offset:3px; }
+@media(max-width:1000px){.sigss-grid{grid-template-columns:repeat(2,minmax(0,1fr));}.sigss-intro{grid-template-columns:1fr;}}
+@media(max-width:560px){#contenedor-contenido{padding:0 12px;}.sigss-grid,.sigss-docs{grid-template-columns:1fr;}.sigss-facts div{padding:14px 8px;}.sigss-facts strong{font-size:24px;}}
+@media(prefers-reduced-motion:reduce){.sigss-feature{transition:none;}.sigss-feature:hover{transform:none;}}
+
+
+/* SIGSS | Identidad institucional sin carrusel */
+#seccion-identidad-institucional {
+  position: relative;
+  overflow: hidden;
+  margin: 24px 0;
+  padding: clamp(20px, 4vw, 44px);
+  border-radius: 22px;
+  background: radial-gradient(ellipse at top right, #347eb2, transparent 65%), linear-gradient(135deg, #103762, #104787);
+  box-shadow: 0 12px 30px #10478726;
+  text-align: center;
+}
+.sigss-identidad-encabezado { margin-bottom: 24px; }
+#seccion-identidad-institucional .sigss-eyebrow { color: #d5eaff; }
+#identidad-titulo { color: #fff; font-size: clamp(26px, 3.5vw, 40px); font-weight: 750; line-height: 1.2; margin: 10px 0; }
+.sigss-identidad-encabezado p { color: #e0efff; font-size: clamp(15px, 1.8vw, 19px); margin: 0; }
+.sigss-identidad-imagen { background: #fff; border: 1px solid #ffffff80; border-radius: 16px; padding: clamp(12px, 2vw, 24px); box-shadow: 0 10px 28px #08294d40; }
+.sigss-identidad-imagen img { display: block; width: 100%; height: clamp(220px, 43vw, 520px); object-fit: contain; object-position: center; margin: 0 auto; }
+@media (max-width: 560px) { #seccion-identidad-institucional { padding: 20px 14px; } .sigss-identidad-encabezado { margin-bottom: 16px; } }
+
+/* =========================================================
+   ENCABEZADO (header.html): más alto, logo más grande, y la
+   misma franja de acento en degradado que ya usan las tarjetas
+   del dashboard, en vez del borde azul plano de antes.
+   ========================================================= */
+
+.az-header {
+  height: 76px;
+  border-bottom: none;
+  box-shadow: 0 6px 20px rgba(16, 71, 135, 0.12);
+  position: relative;
+}
+
+/* Franja de acento abajo del encabezado: mismo degradado que la
+   franja de arriba de las tarjetas ("Acerca de SIGSS", FAQ...). */
+.az-header::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #104787, var(--az-azul-activo, #1a5fa6), #ffc107);
+}
+
+@media (min-width: 992px) {
+  .az-header {
+    height: 92px;
+  }
+}
+
+/* Logo SIGSS más grande (antes 40x50 fijo en el HTML). */
+#logo-sigss img {
+  width: 52px;
+  height: 65px;
+  object-fit: contain;
+}
+
+@media (min-width: 992px) {
+  #logo-sigss img {
+    width: 68px;
+    height: 85px;
+  }
+}
+
+/* El encabezado del menú móvil (logo "SIGSS" + botón cerrar)
+   crece un poco para guardar proporción con la barra más alta. */
+.az-header-menu-header {
+  height: 76px;
+}
+
+/* El avatar de perfil crece junto con el encabezado para no
+   verse pequeño dentro de la barra más alta, y gana un anillo
+   azul institucional al pasar el cursor. */
+.az-profile-menu > .az-img-user {
+  width: 44px;
+  height: 44px;
+  transition: box-shadow 0.15s ease;
+}
+
+@media (min-width: 992px) {
+  .az-profile-menu > .az-img-user {
+    width: 52px;
+    height: 52px;
+  }
+}
+
+.az-profile-menu > .az-img-user:hover {
+  box-shadow: 0 0 0 3px rgba(16, 71, 135, 0.25);
+}
+
+/* Paneles desplegables (notificaciones, perfil) con el mismo
+   radio redondeado que el resto de las tarjetas del dashboard,
+   solo en escritorio (en móvil ocupan toda la pantalla). */
+@media (min-width: 576px) {
+  .az-header-notification .dropdown-menu,
+  .az-profile-menu .dropdown-menu {
+    border-radius: 14px;
+  }
+}
+
+/* =========================================================
+   PIE DE PÁGINA (footer.html): antes era una sola línea de
+   texto, muy "solita". Ahora tiene marca, datos de contacto
+   (teléfono y enlace a Maps) y el texto de la unidad, con el
+   mismo lenguaje visual del resto del rediseño (azul
+   institucional, franja de acento en degradado arriba).
+   ========================================================= */
+
+/* Antes el footer estaba oculto en móvil (display:none) y con
+   una altura fija de 40px; ahora se ve en cualquier tamaño y
+   crece según su contenido. */
+#seccion-pie-pagina.az-footer {
+  display: block;
+  height: auto;
+  padding: 28px 0 20px;
+  position: relative;
+}
+
+#seccion-pie-pagina.az-footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #104787, var(--az-azul-activo, #1a5fa6), #ffc107);
+}
+
+#seccion-pie-pagina .container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px 32px;
+  padding: 0 20px;
+  font-size: 13px;
+  color: #596882;
+}
+
+@media (min-width: 992px) {
+  #seccion-pie-pagina .container {
+    padding: 0;
+  }
+}
+
+.sigss-footer-marca {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.sigss-footer-logo {
+  font-weight: 800;
+  font-size: 20px;
+  letter-spacing: -0.5px;
+  color: #104787;
+}
+
+.sigss-footer-tagline {
+  font-size: 12px;
+  color: #7987a1;
+}
+
+.sigss-footer-contacto {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sigss-footer-dato {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #475569;
+  transition: color 0.15s ease;
+}
+
+.sigss-footer-dato i {
+  flex-shrink: 0;
+  width: 16px;
+  text-align: center;
+  color: #104787;
+}
+
+.sigss-footer-dato:hover {
+  color: #104787;
+  text-decoration: none;
+}
+
+/* Teléfono: solo texto informativo, no es un enlace (no navega a
+   ningún lado), así que no debe verse ni comportarse como uno. */
+.sigss-footer-dato-estatico,
+.sigss-footer-dato-estatico:hover {
+  cursor: default;
+  color: #475569;
+}
+
+.sigss-footer-copyright {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  text-align: left;
+  font-size: 12px;
+  color: #97a3b9;
+}
+
+@media (min-width: 992px) {
+  .sigss-footer-copyright {
+    text-align: right;
+  }
+}
+
+@media (max-width: 575.98px) {
+  #seccion-pie-pagina .container {
+    flex-direction: column;
+  }
+}
+
+/* El logo de SIGSS en el header ya no es un enlace (no navega a
+   ningún lado), así que no debe verse ni comportarse como uno. */
+#logo-sigss,
+#logo-sigss-movil {
+  cursor: default;
+}
