@@ -976,28 +976,14 @@ async function cargar_datos() {
         );
 
         // Diagnósticos.
+        // El instructivo de esta hoja (SINBA-SIS-02-P) no trae campo de
+        // Medicina Tradicional Indígena ni de Confirmación Diagnóstica,
+        // por eso aquí solo se configura la búsqueda de CIE-10 (a
+        // diferencia de Consulta Externa, que sí los usa).
         ["a", "b", "c"].forEach(letra => {
 
             configurar_busqueda_diagnosticos(
                 `diagnostico-${letra}-cie10`
-            );
-
-            llenar_select(
-                `diagnostico-${letra}-medicina-indigena`,
-                catalogos.medicina_tradicional,
-                "Id_Cat_Medicina_Tradicional",
-                opcion,
-                placeholder,
-                true
-            );
-
-            llenar_select(
-                `diagnostico-${letra}-confirmacion`,
-                catalogos_json.confirmacion_diagnostica,
-                "Id_Cat_Confirmacion_Diagnostica",
-                opcion,
-                placeholder,
-                true
             );
         });
 
@@ -1012,15 +998,8 @@ async function cargar_datos() {
         );
 
         // Referencias.
-        llenar_select(
-            "referido-por",
-            catalogos.referido_motivo,
-            "Id_Cat_Referido_Motivo",
-            opcion,
-            placeholder,
-            true
-        );
-
+        // BC de la hoja diaria es solo "¿Fue referido?" (Si/No), derivado
+        // de si se capturó Nivel; esta hoja no usa el motivo del referido.
         llenar_select(
             "nivel",
             catalogos.referido_nivel,
@@ -1104,6 +1083,11 @@ async function registrar_consulta() {
 
     if (!validar_consulta()) return;
 
+    // El instructivo de esta hoja (SINBA-SIS-02-P) no usa Medicina
+    // Tradicional Indígena ni Confirmación Diagnóstica, por eso aquí no
+    // se capturan; se mandan como null porque Consulta_Diagnosticos
+    // (modelo compartido con otros módulos) siempre espera ambas
+    // columnas en el INSERT.
     const diagnostico = letra => ({
 
         Cat_Diagnosticos_Id_Cat_Diagnosticos:
@@ -1118,15 +1102,9 @@ async function registrar_consulta() {
                     `diagnostico-${letra}-primera-vez`
                 ),
 
-        Cat_Medicina_Tradicional_Id_Cat_Medicina_Tradicional:
-            verificar_nulo(
-                `diagnostico-${letra}-medicina-indigena`
-            ),
+        Cat_Medicina_Tradicional_Id_Cat_Medicina_Tradicional: null,
 
-        Confirmacion_Diagnostica:
-            verificar_nulo(
-                `diagnostico-${letra}-confirmacion`
-            )
+        Confirmacion_Diagnostica: null
     });
 
     const data = {
@@ -1183,8 +1161,10 @@ async function registrar_consulta() {
             Cat_Referido_Nivel_Id_Cat_Referido_Nivel:
                 verificar_nulo("nivel"),
 
-            Cat_Referido_Motivo_Id_Cat_Referido_Motivo:
-                verificar_nulo("referido-por"),
+            // Esta hoja no captura motivo de referido; se manda null
+            // porque Consultas (modelo compartido con otros módulos)
+            // siempre espera esta columna en el INSERT.
+            Cat_Referido_Motivo_Id_Cat_Referido_Motivo: null,
 
             Cat_Derechohabiencia_Id_Cat_Derechohabiencia:
                 verificar_nulo("derechohabiencia"),
@@ -1494,7 +1474,7 @@ async function registrar_consulta() {
             mensaje:
                 "La consulta se registró correctamente. A continuación se abrirá el formulario de la nota médica.",
             boton: true,
-            redireccion: `/pages/modules/nota-medica/registrar.html?id_consulta=${resultado.Id_Consulta}`
+            redireccion: `/pages/modules/nota-medica/registrar.html?id_consulta=${resultado.Id_Consulta}&modulo=salud-bucal`
         });
 
     } catch (error) {
@@ -1564,7 +1544,6 @@ function configurar_interacciones() {
 
     [
         "primera-vez-anio",
-        "referido-por",
         "nivel",
         "Teleconsulta",
         "interpretacion-diagnostica",

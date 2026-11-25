@@ -354,7 +354,23 @@ async function cargar_datos() {
 
         const catalogos_json = await response_j.json();
 
-        llenar_select("servicio", catalogos.servicios, "Id_Cat_Servicios", s => `${s.Clave} | ${s.Nombre}`, "Selecciona un servicio", true);
+        // El catálogo Cat_Servicios es compartido por todo el sistema (Consulta
+        // Externa, Salud Bucal, etc.), así que trae servicios que no aplican a
+        // la hoja diaria de Detecciones (Odontología, Homeopatía, Acupuntura,
+        // Nutrición, Optometría, Medicina Familiar, Oncología Pediátrica...).
+        // Aquí se filtra para mostrar solo las claves que el instructivo oficial
+        // de Detecciones reconoce (el mismo listado que usa Consulta Externa).
+        const CLAVES_SERVICIO_DETECCIONES = [
+            1, 2, 3, 4, 5, 7, 8, 9, 13, 14, 15, 16, 18, 19, 20, 21, 22, 23,
+            25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
+            41, 42, 43, 44, 45, 46, 47, 48, 49, 51, 53, 54, 55, 57, 59, 60,
+            61, 62, 70, 88
+        ];
+        const servicios_detecciones = (catalogos.servicios || [])
+            .filter(s => CLAVES_SERVICIO_DETECCIONES.includes(s.Clave))
+            .sort((a, b) => a.Clave - b.Clave);
+
+        llenar_select("servicio", servicios_detecciones, "Id_Cat_Servicios", s => `${s.Clave} | ${s.Nombre}`, "Selecciona un servicio", true);
         llenar_select("derechohabiencia", catalogos.derechohabiencia, "Id_Cat_Derechohabiencia", d => `${d.Clave} | ${d.Nombre}`, "Selecciona una opción", true);
         llenar_select("clave-edad", catalogos_json.clave_edad, "Id_Cat_Clave_Edad", c => `${c.Clave} | ${c.Nombre}`, "Selecciona una opción", true);
         llenar_select("sexo", catalogos_json.sexo_biologico, "Id_Cat_Sexo_Biologico", s => `${s.Clave} | ${s.Nombre}`, "Selecciona una opción", true);
@@ -547,7 +563,8 @@ async function registrar_consulta() {
             Evaluacion_ABVD: verificar_nulo("evaluacion-abvd"),
             Actividades_Instrumentales: verificar_nulo("actividades-instrumentales"),
             Evaluacion_AIVD: verificar_nulo("evaluacion-aivd"),
-            Sobrecarga_Cuidador: verificar_nulo("sobrecarga-cuidador"),
+            // Sobrecarga_Cuidador ya no existe como columna en la BD (se
+            // eliminó); no se captura ni se envía.
             Grupo_Edad: verificar_nulo("cuidador-grupo-edad"),
             Sexo: verificar_nulo("cuidador-sexo"),
             Resultado: verificar_nulo("cuidador-resultado"),

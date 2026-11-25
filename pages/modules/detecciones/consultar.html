@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="es-MX">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="description" content="Sistema Integral de Gestión de Servicios de Salud" />
+  <meta name="author" content="SIGSS" />
+  <title>SIGSS | Historial de detecciones</title>
+
+  <!-- Hojas de estilo de iconos (raíz = ../../../) -->
+  <link href="/lib/fontawesome-free/css/all.min.css" rel="stylesheet" />
+  <link href="/lib/ionicons/css/ionicons.min.css" rel="stylesheet" />
+  <link href="/lib/typicons.font/typicons.css" rel="stylesheet" />
+  <link href="/lib/flag-icon-css/css/flag-icon.min.css" rel="stylesheet" />
+
+  <!-- Hojas de estilo de la plantilla -->
+  <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="/css/popup.css" />
+  <link rel="stylesheet" href="/css/dashboard.css" />
+  <link rel="stylesheet" href="/css/modal.css" />
+  <link rel="stylesheet" href="/css/detecciones.css" />
+  <link rel="stylesheet" href="/css/consultas_registros.css" />
+</head>
+
+<body id="pagina-sigss">
+  <!-- ================================================== -->
+  <!-- ENCABEZADO PRINCIPAL                               -->
+  <!-- ================================================== -->
+    <div data-layout="/partials/header.html"></div>
+
+
+  <!-- ================================================== -->
+  <!-- CONTENIDO PRINCIPAL                                -->
+  <!-- ================================================== -->
+  <main id="seccion-contenido" class="az-content az-content-dashboard">
+    <div id="contenedor-contenido" class="container">
+      <div id="contenido-dashboard" class="az-content-body">
+
+        <section id="seccion-bienvenida" class="az-dashboard-one-title">
+          <div id="informacion-bienvenida">
+            <h1 id="titulo-bienvenida" class="az-dashboard-title">Historial de detecciones</h1>
+            <p id="descripcion-bienvenida" class="az-dashboard-text">Consulta el historial de detecciones
+              registradas.</p>
+          </div>
+          <div id="informacion-adicional" class="az-content-header-right">
+            <div id="informacion-fecha" class="media">
+              <div class="media-body">
+                <label id="fecha">Fecha</label>
+                <h6 id="hora">--/--/----</h6>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="seccion-historial-consultas" aria-label="Historial de detecciones">
+          <div id="contenedor-historial" class="sigss-formulario">
+
+            <!-- Filtros de búsqueda -->
+            <div class="shadow card hc-card-filtros mt-4" id="tarjeta-filtros">
+              <div class="card-header hc-card-header" id="encabezado-filtros" data-toggle="collapse"
+                href="#cuerpo-filtros" role="button" aria-expanded="true" aria-controls="cuerpo-filtros">
+                <span class="hc-card-header-titulo">
+                  <i class="fa-solid fa-filter mr-2"></i>Filtros de búsqueda
+                </span>
+                <i class="fa-solid fa-chevron-up hc-chevron" id="icono-colapso-filtros"></i>
+              </div>
+              <div id="cuerpo-filtros" class="collapse show" aria-labelledby="encabezado-filtros">
+                <div class="card-body">
+                  <form id="form-filtros-historial" novalidate>
+                    <div class="form-row">
+                      <div class="form-group col-md-4">
+                        <label for="filtro-busqueda">Paciente, CURP o folio</label>
+                        <div class="input-group">
+                          <input type="text" class="form-control" id="filtro-busqueda"
+                            placeholder="Ingrese el nombre, CURP o folio" />
+                        </div>
+                      </div>
+                      <div class="form-group col-md-4">
+                        <label for="filtro-fecha-inicial">Fecha inicial</label>
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fa-solid fa-calendar-days"></i></span>
+                          </div>
+                          <input type="date" class="form-control" id="filtro-fecha-inicial" />
+                        </div>
+                      </div>
+                      <div class="form-group col-md-4">
+                        <label for="filtro-fecha-final">Fecha final</label>
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fa-solid fa-calendar-days"></i></span>
+                          </div>
+                          <input type="date" class="form-control" id="filtro-fecha-final" />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-row justify-content-end hc-fila-botones">
+                      <button type="button" class="btn btn-outline-secondary mr-2" id="boton-limpiar-filtros">
+                        <i class="fa-solid fa-eraser mr-1"></i>Limpiar
+                      </button>
+                      <button type="submit" class="btn btn-primary" id="boton-buscar-historial"
+                        data-modulo="detecciones">
+                        <i class="fa-solid fa-magnifying-glass mr-1"></i>
+                        Buscar
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+
+            <!-- Resultados -->
+            <div class="shadow card hc-card-resultados mt-4" id="tarjeta-resultados">
+              <div class="card-header hc-card-header">
+                <span class="hc-card-header-titulo">
+                  Resultados
+                  (<span id="contador-resultados">0</span> registros)
+                </span>
+              </div>
+              <div class="card-body p-0">
+                <div class="table-responsive hc-tabla-wrapper">
+                  <table class="table table-hover hc-tabla-resultados mb-0" id="tabla-historial">
+                    <colgroup>
+                      <col style="width: 11%;" />
+                      <col style="width: 13%;" />
+                      <col style="width: 12%;" />
+                      <col style="width: 27%;" />
+                      <col style="width: 21%;" />
+                      <col style="width: 16%;" />
+                    </colgroup>
+                    <thead>
+                      <tr>
+                        <th scope="col">Folio Receta</th>
+                        <th scope="col">Expediente</th>
+                        <th scope="col">Fecha consulta</th>
+                        <th scope="col">Paciente</th>
+                        <th scope="col">CURP del paciente</th>
+                        <th scope="col" class="text-center">Acciones</th>
+                      </tr>
+                    </thead>
+                    <tbody id="cuerpo-tabla-historial"></tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="card-footer hc-card-footer">
+                <span class="text-muted small" id="texto-paginacion">Mostrando 0 a 0 de 0 registros</span>
+                <nav aria-label="Paginación del historial de detecciones">
+                  <ul class="pagination pagination-sm mb-0" id="paginacion-historial">
+                    <li class="page-item disabled" id="pagina-primera">
+                      <a class="page-link" href="#" tabindex="-1" aria-label="Primera página"><i
+                          class="fa-solid fa-angles-left"></i></a>
+                    </li>
+                    <li class="page-item disabled" id="pagina-anterior">
+                      <a class="page-link" href="#" tabindex="-1" aria-label="Página anterior"><i
+                          class="fa-solid fa-angle-left"></i></a>
+                    </li>
+                    <li class="page-item active" aria-current="page"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item disabled" id="pagina-siguiente">
+                      <a class="page-link" href="#" tabindex="-1" aria-label="Página siguiente"><i
+                          class="fa-solid fa-angle-right"></i></a>
+                    </li>
+                    <li class="page-item disabled" id="pagina-ultima">
+                      <a class="page-link" href="#" tabindex="-1" aria-label="Última página"><i
+                          class="fa-solid fa-angles-right"></i></a>
+                    </li>
+                  </ul>
+                </nav>
+              </div>
+            </div>
+
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <!-- ================================================== -->
+  <!-- PIE DE PÁGINA                                      -->
+  <!-- ================================================== -->
+    <div data-layout="/partials/footer.html"></div>
+
+  <!-- Ventanas modales (popup de estado + modal genérico) -->
+  <div data-layout="/partials/modales.html"></div>
+
+  <!-- ================================================== -->
+  <!-- BIBLIOTECAS JAVASCRIPT                             -->
+  <!-- ================================================== -->
+  <script src="/js/layout.js"></script>
+  <script src="/lib/jquery/jquery.min.js"></script>
+  <script src="/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="/lib/ionicons/ionicons.js"></script>
+  <script src="/js/popup.js"></script>
+
+  <!-- Bibliotecas de gráficas de Azia -->
+  <script src="/lib/jquery.flot/jquery.flot.js"></script>
+  <script src="/lib/jquery.flot/jquery.flot.resize.js"></script>
+  <script src="/lib/chart.js/Chart.bundle.min.js"></script>
+  <script src="/lib/peity/jquery.peity.min.js"></script>
+
+  <!-- Lógica propia de SIGSS -->
+  <script type="module" src="/js/consultas_registros.js"></script>
+  <script src="/js/dashboard.js"></script>
+  <script src="/js/clock.js"></script>
+</body>
+
+</html>
