@@ -115,7 +115,7 @@ async function cerrar_sesion(evento) {
                 body: JSON.stringify({
                     Id_Usuario: usuario.Id_Usuario,
                     Accion: "Cierre de sesión",
-                    Modulo: "Logout",
+                    Modulo: "sesion",
                     Tabla_Afectada: null,
                 })
             });

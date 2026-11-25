@@ -1,25 +1,15 @@
-<!-- ==================================================
-     PARTIAL: ENCABEZADO PRINCIPAL (az-header)
-     Usado por todas las páginas internas del dashboard.
-     Cargado dinámicamente por /js/layout.js mediante
-     <div data-layout="/partials/header.html"></div>
-     ================================================== -->
 <header id="seccion-encabezado" class="az-header">
   <div id="contenedor-encabezado" class="container">
     <!-- LOGOTIPO Y BOTÓN DEL MENÚ MÓVIL -->
     <div id="seccion-logotipo" class="az-header-left">
-      <a href="/pages/dashboard/dashboard.html" id="logo-sigss" class="az-logo" >
+      <a href="/pages/dashboard/dashboard.html" id="logo-sigss" class="az-logo">
         <img src="/assets/images/Logo_SIGSS.jpeg" alt="SIGSS" width="40" height="50">
       </a>
       <a href="#" id="boton-menu-movil" class="az-header-menu-icon d-lg-none" aria-label="Abrir menú">
         <span></span>
       </a>
     </div>
-    <!-- ================================================== -->
-    <!-- MENÚ PRINCIPAL                                     -->
-    <!-- ================================================== -->
     <nav id="seccion-navegacion" class="az-header-menu">
-      <!-- Encabezado del menú móvil -->
       <div id="encabezado-menu-movil" class="az-header-menu-header">
         <a href="/pages/dashboard/dashboard.html" id="logo-sigss-movil" class="az-logo">
           <span></span> SIGSS
@@ -28,30 +18,19 @@
           &times;
         </a>
       </div>
-      <!-- Opciones de navegación (se generan dinámicamente según el rol) -->
       <ul id="menu-principal" class="nav"></ul>
     </nav>
-    <!-- ================================================== -->
-    <!-- ACCIONES DEL USUARIO                               -->
-    <!-- ================================================== -->
     <div id="seccion-acciones-usuario" class="az-header-right">
-      <!-- ================================================== -->
-      <!-- PERFIL DEL USUARIO                                 -->
-      <!-- ================================================== -->
       <div id="seccion-perfil" class="dropdown az-profile-menu">
-        <!-- Acceso al perfil -->
         <a href="#" id="boton-perfil" class="az-img-user" aria-label="Perfil del usuario">
           <img src="/assets/images/usuario.png" style="width: 28px; height: 28px;" alt="Foto de perfil">
         </a>
-        <!-- Menú desplegable del perfil -->
         <div id="menu-perfil" class="dropdown-menu">
-          <!-- Encabezado móvil -->
           <div id="encabezado-perfil-movil" class="az-dropdown-header d-sm-none">
             <a href="#" id="volver-perfil" class="az-header-arrow" aria-label="Volver">
               <i class="icon ion-md-arrow-back"></i>
             </a>
           </div>
-          <!-- Información del usuario -->
           <div id="informacion-perfil" class="az-header-profile">
             <div id="imagen-perfil" class="az-img-user">
               <img src="/assets/images/usuario.png" alt="Foto de perfil">
@@ -59,7 +38,6 @@
             <h6 id="nombre-usuario">Nombre del usuario</h6>
             <span id="rol-usuario">Tipo de usuario</span>
           </div>
-          <!-- Opciones del perfil -->
           <a href="#" id="opcion-mi-perfil" class="dropdown-item">
             <i class="typcn typcn-user-outline"></i>
             Mi perfil
