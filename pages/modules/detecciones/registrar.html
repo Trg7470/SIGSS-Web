@@ -302,7 +302,8 @@
                   </div>
                   <div class="form-group col-md-4">
                     <label for="tiras-utilizadas">No. Tiras Utilizadas (Detecciones)</label>
-                    <input type="number" class="form-control" id="tiras-utilizadas" placeholder="Número de tiras" />
+                    <input type="number" class="form-control" id="tiras-utilizadas" placeholder="Número de tiras"
+                      data-contador min="0" step="1" />
                   </div>
                 </div>
 
@@ -332,11 +333,11 @@
                 <p class="font-weight-bold mb-1">Prueba de Embarazo</p>
                 <div class="form-row">
                   <div class="form-group col-md-4">
-                    <label for="prueba-rapida-hcg">Prueba Rápida de Embarazo (hCG)</label>
+                    <label for="prueba-rapida-hcg">Detección: Prueba Rápida de Embarazo (hCG)</label>
                     <select class="form-control" id="prueba-rapida-hcg">
                       <option value="">Selecciona una opción</option>
-                      <option value="0">Sí</option>
-                      <option value="1">No</option>
+                      <option value="0">Positivo</option>
+                      <option value="1">Negativo</option>
                     </select>
                   </div>
                   <div class="form-group col-md-4">
@@ -483,11 +484,11 @@
                     </select>
                   </div>
                   <div class="form-group col-md-6">
-                    <label for="actividades-basicas">Ayuda Vida Diaria: Actividades Básicas</label>
+                    <label for="actividades-basicas">Tamizaje: Ayuda en Actividades Básicas de la Vida Diaria</label>
                     <select class="form-control" id="actividades-basicas">
                       <option value="">Selecciona una opción</option>
-                      <option value="1">Positivo</option>
-                      <option value="0">Negativo</option>
+                      <option value="1">Sí</option>
+                      <option value="0">No</option>
                     </select>
                   </div>
                 </div>
@@ -532,11 +533,9 @@
                     </select>
                   </div>
                   <div class="form-group col-md-4">
-                    <label for="cuidador-sexo">Sexo del Cuidador</label>
+                    <label for="cuidador-sexo">Sexo Biológico del Cuidador</label>
                     <select class="form-control" id="cuidador-sexo">
                       <option value="">Selecciona una opción</option>
-                      <option value="1">Hombre</option>
-                      <option value="2">Mujer</option>
                     </select>
                   </div>
                   <div class="form-group col-md-4">
@@ -730,11 +729,11 @@
                 <p class="font-weight-bold mb-1">Cáncer Cérvico-Uterino (25 a 64 años)</p>
                 <div class="form-row">
                   <div class="form-group col-md-6">
-                    <label for="cancer-cervicouterino-realizado">Citología Cérvico-Vaginal Realizada</label>
+                    <label for="cancer-cervicouterino-realizado">Citología Cérvico-Vaginal</label>
                     <select class="form-control" id="cancer-cervicouterino-realizado">
                       <option value="">Selecciona una opción</option>
-                      <option value="1">Sí</option>
-                      <option value="0">No</option>
+                      <option value="1">Realizado</option>
+                      <option value="0">No Realizado</option>
                     </select>
                   </div>
                   <div class="form-group col-md-6">
@@ -753,8 +752,8 @@
                     <label for="exploracion-cancer-mama">Resultado</label>
                     <select class="form-control" id="exploracion-cancer-mama">
                       <option value="">Selecciona una opción</option>
-                      <option value="1">Positivo</option>
-                      <option value="0">Negativo</option>
+                      <option value="1">Resultado Anormal</option>
+                      <option value="0">Resultado Normal</option>
                     </select>
                   </div>
                 </div>
@@ -762,11 +761,11 @@
                 <p class="font-weight-bold mb-1">Detección de la Violencia</p>
                 <div class="form-row">
                   <div class="form-group col-md-6">
-                    <label for="violencia-sexual">¿Se realizó tamizaje universal de Violencia Sexual?</label>
+                    <label for="violencia-sexual">Detección: Violencia Sexual</label>
                     <select class="form-control" id="violencia-sexual">
                       <option value="">Selecciona una opción</option>
-                      <option value="0">Sí</option>
-                      <option value="1">No</option>
+                      <option value="0">Positivo</option>
+                      <option value="1">Negativo</option>
                     </select>
                   </div>
                   <div class="form-group col-md-6">
@@ -810,7 +809,8 @@
                   </div>
                   <div class="form-group col-md-6">
                     <label for="reactivos-antigeno-prostatico">No. Reactivos de Antígeno Prostático Utilizados</label>
-                    <input type="number" class="form-control" id="reactivos-antigeno-prostatico" placeholder="Número de reactivos" />
+                    <input type="number" class="form-control" id="reactivos-antigeno-prostatico" placeholder="Número de reactivos"
+                      data-contador min="0" step="1" />
                   </div>
                 </div>
               </div>
@@ -824,29 +824,29 @@
               <div class="card-body">
                 <div class="form-row">
                   <div class="form-group col-md-6">
-                    <label for="probable-tb-estudio">Probable TB por Estudio</label>
+                    <label for="probable-tb-estudio">Tamizaje: Probable TB por Estudio</label>
                     <select class="form-control" id="probable-tb-estudio">
                       <option value="">Selecciona una opción</option>
-                      <option value="1">Positivo</option>
-                      <option value="0">Negativo</option>
+                      <option value="1">Sí</option>
+                      <option value="0">No</option>
                     </select>
                   </div>
                 </div>
                 <p class="font-weight-bold mb-1">Espirometría</p>
                 <div class="form-row">
-                  <div class="form-group col-md-3">
-                    <label for="espirometria-vef1">VEF1</label>
-                    <input type="number" class="form-control" id="espirometria-vef1" placeholder="VEF1" step="any" />
+                  <div class="form-group col-md-4">
+                    <label for="espirometria-vef1-cvf">VEF1/CVF (razón)</label>
+                    <input type="number" class="form-control" id="espirometria-vef1-cvf" placeholder="Ej. 0.700"
+                      data-decimal min="0" step="0.001"
+                      title="Relación Volumen Espiratorio Forzado en el primer segundo (VEF1) / Capacidad Vital Forzada (CVF), posterior al uso de broncodilatador." />
                   </div>
-                  <div class="form-group col-md-3">
-                    <label for="espirometria-cvf">CVF</label>
-                    <input type="number" class="form-control" id="espirometria-cvf" placeholder="CVF" step="any" />
-                  </div>
-                  <div class="form-group col-md-3">
+                  <div class="form-group col-md-4">
                     <label for="espirometria-lin">LIN (Límite Inferior de la Normalidad)</label>
-                    <input type="number" class="form-control" id="espirometria-lin" placeholder="LIN" step="any" />
+                    <input type="number" class="form-control" id="espirometria-lin" placeholder="Ej. 0.655 a 0.785; 0.999 si se desconoce"
+                      data-decimal min="0" step="0.001"
+                      title="Rango esperado: 0.655 a 0.785. Si se desconoce, anota 0.999." />
                   </div>
-                  <div class="form-group col-md-3">
+                  <div class="form-group col-md-4">
                     <label for="espirometria-resultado">Resultado de Espirometría</label>
                     <select class="form-control" id="espirometria-resultado">
                       <option value="">Selecciona una opción</option>
@@ -925,7 +925,7 @@
                 </div>
                 <div class="form-row">
                   <div class="form-group col-md-4">
-                    <label for="its-resultado-vph">Resultado Prueba VPH (mujeres)</label>
+                    <label for="its-resultado-vph">Prueba VPH (35 a 64 años)</label>
                     <select class="form-control" id="its-resultado-vph">
                       <option value="">Selecciona una opción</option>
                     </select>

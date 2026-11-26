@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="es-MX">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="description" content="Sistema Integral de Gestión de Servicios de Salud" />
+  <meta name="author" content="SIGSS" />
+  <title>SIGSS | Informe mensual</title>
+
+  <!-- Hojas de estilo de iconos (raíz = ../../../) -->
+  <link href="../../../lib/fontawesome-free/css/all.min.css" rel="stylesheet" />
+  <link href="../../../lib/ionicons/css/ionicons.min.css" rel="stylesheet" />
+  <link href="../../../lib/typicons.font/typicons.css" rel="stylesheet" />
+  <link href="../../../lib/flag-icon-css/css/flag-icon.min.css" rel="stylesheet" />
+
+  <!-- Hojas de estilo de la plantilla -->
+  <link rel="stylesheet" href="../../../lib/bootstrap/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="/css/popup.css" />
+  <link rel="stylesheet" href="/css/dashboard.css" />
+  <link rel="stylesheet" href="/css/modal.css" />
+  <!-- Reaprovechamos las tarjetas (mismas clases hc-*); aquí solo se agrega
+       lo propio de esta pantalla. -->
+  <link rel="stylesheet" href="../../../css/consultas_registros.css" />
+  <link rel="stylesheet" href="../../../css/informe_mensual.css" />
+</head>
+
+<body id="pagina-sigss">
+  <!-- ================================================== -->
+  <!-- ENCABEZADO PRINCIPAL                               -->
+  <!-- ================================================== -->
+    <div data-layout="/partials/header.html"></div>
+
+  <!-- ================================================== -->
+  <!-- CONTENIDO PRINCIPAL                                -->
+  <!-- ================================================== -->
+  <main id="seccion-contenido" class="az-content az-content-dashboard">
+    <div id="contenedor-contenido" class="container">
+      <div id="contenido-dashboard" class="az-content-body">
+
+        <section id="seccion-bienvenida" class="az-dashboard-one-title">
+          <div id="informacion-bienvenida">
+            <h1 id="titulo-bienvenida" class="az-dashboard-title">Informe mensual de actividades</h1>
+            <p id="descripcion-bienvenida" class="az-dashboard-text">Genera el Excel del informe mensual por
+              módulo, mes y año.</p>
+          </div>
+          <div id="informacion-adicional" class="az-content-header-right">
+            <div id="informacion-fecha" class="media">
+              <div class="media-body">
+                <label id="fecha">Fecha</label>
+                <h6 id="hora">--/--/----</h6>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="seccion-informe-mensual" aria-label="Generación del informe mensual">
+          <div id="contenedor-informe" class="sigss-formulario">
+
+            <!-- Filtros -->
+            <div class="shadow card hc-card-filtros mt-4" id="tarjeta-filtros">
+              <div class="card-header hc-card-header" id="encabezado-filtros" data-toggle="collapse"
+                href="#cuerpo-filtros" role="button" aria-expanded="true" aria-controls="cuerpo-filtros">
+                <span class="hc-card-header-titulo">
+                  Filtros del informe
+                </span>
+                <i class="fa-solid fa-chevron-up hc-chevron" id="icono-colapso-filtros"></i>
+              </div>
+              <div id="cuerpo-filtros" class="collapse show" aria-labelledby="encabezado-filtros">
+                <div class="card-body">
+                  <form id="form_filtros_informe" novalidate>
+                    <div class="form-row">
+                      <div class="form-group col-md-4">
+                        <label for="modulo">Módulo</label>
+                        <select class="form-control" id="modulo" required>
+                          <option value="" selected disabled>Selecciona un módulo</option>
+                        </select>
+                      </div>
+                      <div class="form-group col-md-4">
+                        <label for="mes">Mes</label>
+                        <select class="form-control" id="mes" required>
+                          <option value="" selected disabled>Mes</option>
+                          <option value="1">Enero</option>
+                          <option value="2">Febrero</option>
+                          <option value="3">Marzo</option>
+                          <option value="4">Abril</option>
+                          <option value="5">Mayo</option>
+                          <option value="6">Junio</option>
+                          <option value="7">Julio</option>
+                          <option value="8">Agosto</option>
+                          <option value="9">Septiembre</option>
+                          <option value="10">Octubre</option>
+                          <option value="11">Noviembre</option>
+                          <option value="12">Diciembre</option>
+                        </select>
+                      </div>
+                      <div class="form-group col-md-4">
+                        <label for="anio">Año</label>
+                        <input type="number" class="form-control" id="anio" min="2020" max="2100"
+                          placeholder="Año" required />
+                      </div>
+                    </div>
+                    <div class="form-row justify-content-end hc-fila-botones">
+                      <button type="submit" class="btn btn-primary" id="btn_generar_excel">
+                        <i class="fa-solid fa-file-excel mr-1"></i>
+                        Generar Excel
+                      </button>
+                    </div>
+                  </form>
+
+                  <div id="mensaje_informe" class="im-mensaje im-oculto"></div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <!-- ================================================== -->
+  <!-- PIE DE PÁGINA                                      -->
+  <!-- ================================================== -->
+    <div data-layout="/partials/footer.html"></div>
+
+  <!-- Ventanas modales (popup de estado + modal genérico) -->
+  <div data-layout="/partials/modales.html"></div>
+
+  <!-- ================================================== -->
+  <!-- BIBLIOTECAS JAVASCRIPT                             -->
+  <!-- ================================================== -->
+  <script src="/js/layout.js"></script>
+  <script src="../../../lib/jquery/jquery.min.js"></script>
+  <script src="../../../lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../../../lib/ionicons/ionicons.js"></script>
+  <script src="../../../js/popup.js"></script>
+  <!-- Lógica propia de SIGSS -->
+  <script type="module" src="../../../js/informe_mensual.js"></script>
+  <script src="../../../js/dashboard.js"></script>
+  <script src="../../../js/clock.js"></script>
+</body>
+
+</html>

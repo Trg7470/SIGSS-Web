@@ -1,0 +1,27 @@
+/* SIGSS | Informe Mensual — reaprovecha las clases hc-* / az-* compartidas
+   (card-header colapsable, botones, etc. definidas en dashboard.css /
+   consultas_registros.css); aquí solo el mensaje de resultado (prefijo .im-). */
+
+.im-mensaje {
+    margin-top: 16px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    border: 1px solid transparent;
+}
+
+.im-mensaje--exito {
+    background-color: #eafaf0;
+    border-color: #b7ebc6;
+    color: #1c7a3f;
+}
+
+.im-mensaje--error {
+    background-color: #fdecec;
+    border-color: #f5b7b7;
+    color: #a12a2a;
+}
+
+.im-oculto {
+    display: none;
+}

@@ -361,6 +361,16 @@ function generar_menu_medico() {
                         <i class="fa-solid fa-file-lines mr-2"></i>
                         Hoja diaria
                     </a>
+                    <a
+                        href="/pages/modules/reportes/informe_mensual.html"
+                        id="opcion-informe-mensual"
+                        class="nav-link"
+                        data-modulo="reportes"
+                        data-vista="informe-mensual"
+                    >
+                        <i class="fa-solid fa-calendar-days mr-2"></i>
+                        Informe mensual
+                    </a>
                 </nav>
             </details>
         </li>
@@ -427,6 +437,16 @@ function generar_menu_administrativo() {
                     >
                         <i class="fa-solid fa-file-lines mr-2"></i>
                         Hoja diaria
+                    </a>
+                    <a
+                        href="/pages/modules/reportes/informe_mensual.html"
+                        id="opcion-informe-mensual"
+                        class="nav-link"
+                        data-modulo="reportes"
+                        data-vista="informe-mensual"
+                    >
+                        <i class="fa-solid fa-calendar-days mr-2"></i>
+                        Informe mensual
                     </a>
                 </nav>
             </details>
