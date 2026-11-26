@@ -90,7 +90,7 @@ async function manejar_envio_filtros(evento) {
             });
             return;
         }
-
+console.log("Respuesta del historial:", respuesta);
         const resultado = await respuesta.json();
         const registros = Array.isArray(resultado.registros) ? resultado.registros : [];
 
