@@ -63,9 +63,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     document.getElementById("boton-editar-datos")
         .addEventListener("click", abrir_edicion_paciente);
 
-    document.getElementById("boton-generar-reporte")
-        .addEventListener("click", ir_a_generar_reporte);
-
     const catalogos_cargados = await cargar_catalogos();
     if (!catalogos_cargados) return;
 
