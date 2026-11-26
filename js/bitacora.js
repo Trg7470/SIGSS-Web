@@ -133,7 +133,7 @@ function pintar_tabla(registros) {
     if (registros.length === 0) {
         cuerpo_tabla.innerHTML = `
             <tr>
-                <td colspan="5" class="text-center text-muted py-3">
+                <td colspan="6" class="text-center text-muted py-3">
                     No se encontraron registros con los filtros aplicados.
                 </td>
             </tr>`;
@@ -148,6 +148,7 @@ function pintar_tabla(registros) {
     <td>${registro.Modulo}</td>
     <td>${obtener_badge_accion(registro.Accion)}</td>
     <td>${registro.Tabla_Afectada ?? "—"}</td>
+    <td>${registro.Id_Registro_Afectado ?? "—"}</td>
 `;
         cuerpo_tabla.appendChild(fila);
     });
@@ -193,7 +194,9 @@ function obtener_badge_accion(accion) {
     const mapa_colores = {
         'CREAR': 'success',
         'ACTUALIZAR': 'primary',
+        'ACTIVAR': 'primary',
         'DESACTIVAR': 'danger',
+        'RESETEAR_CONTRASENA': 'warning',
         'Inicio de sesión': 'secondary',
         'Cierre de sesión': 'secondary'
     };

@@ -1,0 +1,56 @@
+:root {
+  --us-activo-fondo: rgba(40, 167, 69, 0.12);
+  --us-activo-texto: #1e7e34;
+  --us-inactivo-fondo: rgba(220, 53, 69, 0.12);
+  --us-inactivo-texto: #c0392b;
+}
+
+.us-estado-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+}
+
+.us-estado-badge i {
+  font-size: 0.5rem;
+}
+
+.us-estado-badge.us-estado-activo {
+  background-color: var(--us-activo-fondo);
+  color: var(--us-activo-texto);
+}
+
+.us-estado-badge.us-estado-inactivo {
+  background-color: var(--us-inactivo-fondo);
+  color: var(--us-inactivo-texto);
+}
+
+.hc-tabla-resultados td.us-celda-acciones .btn {
+  padding: 0.25rem 0.5rem;
+}
+
+.hc-tabla-resultados td.us-celda-acciones .btn + .btn {
+  margin-left: 0.25rem;
+}
+
+.hc-tabla-resultados td.us-celda-acciones .btn {
+  padding: 0.25rem 0.5rem;
+}
+
+.hc-tabla-resultados td.us-celda-acciones .btn + .btn {
+  margin-left: 0.25rem;
+}
+
+@media (max-width: 575.98px) {
+  .us-estado-badge {
+    padding: 0.15rem 0.45rem;
+    font-size: 0.625rem;
+  }
+}
