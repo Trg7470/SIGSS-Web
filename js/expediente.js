@@ -1,26 +1,3 @@
-// ==================================================
-// Expediente del paciente — lógica de la pantalla
-// Módulo de gestión de pacientes (SIGSS)
-// ==================================================
-//
-// Rutas reales usadas aquí:
-// - GET  /api/pacientes/:id_paciente                  (pacientes_formulario.js)
-// - GET  /api/modules/consulta-externa/historial       (buscar_historial)
-// - GET  /api/modules/nota-medica/historial/:id_consulta (ver nota médica)
-//
-// IMPORTANTE: buscar_historial no filtra por paciente/expediente; solo
-// acepta fecha_inicial/fecha_final (obligatorias) y un texto libre
-// (busqueda) que compara contra nombre_paciente/curp/folio_receta. Por
-// eso aquí se manda busqueda = CURP del paciente, con un rango de fechas
-// amplio, para traer todo su historial en consulta externa. Si el
-// paciente llega a tener más de LIMITE_HISTORIAL consultas, falta
-// paginar (hoy se pide todo en una sola página).
-//
-// Planificación familiar y salud bucal todavía no tienen un endpoint de
-// historial propio, así que por ahora el expediente solo muestra lo de
-// consulta externa; el filtro de módulo ya está listo para cuando
-// existan (agrega su chip en expediente.html y su llamada aquí).
-
 import {
     es_error_de_red,
     MENSAJE_SIN_CONEXION
@@ -356,13 +333,4 @@ async function alternar_detalle_nota(boton) {
     } finally {
         boton.disabled = false;
     }
-}
-
-// ======================= ACCIONES DEL ENCABEZADO =======================
-
-function ir_a_generar_reporte() {
-    // Lleva a la pantalla de reportes ya existente, pre-filtrada
-    // con el expediente de este paciente.
-    const expediente = paciente_actual?.Expediente ?? "";
-    window.location.href = `../reportes/hoja_diaria.html?expediente=${encodeURIComponent(expediente)}`;
 }
