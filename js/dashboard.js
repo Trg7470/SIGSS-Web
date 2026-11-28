@@ -69,6 +69,9 @@ async function cargar_dashboard() {
         case "Administrador":
             generar_menu_administrador();
             break;
+        case "Jefe de Jurisdicción":
+            generar_menu_jefe_jurisdiccion();
+            break;
         default:
             console.warn(
                 "No existe un menú configurado para el rol:",
@@ -515,6 +518,95 @@ function generar_menu_administrador() {
             >
                 <i class="typcn typcn-group mr-2"></i>
                 Usuarios
+            </a>
+        </li>
+    `;
+}
+
+function generar_menu_jefe_jurisdiccion() {
+    const menu =
+        document.getElementById("menu-principal");
+    if (!menu) {
+        console.error(
+            "No se encontró #menu-principal."
+        );
+        return;
+    }
+    menu.innerHTML = `
+        <!-- HOME -->
+        <li id="nav-home" class="nav-item">
+            <a
+                href="/pages/dashboard/dashboard.html"
+                id="enlace-home"
+                class="nav-link"
+                data-modulo="home"
+                data-vista="inicio"
+            >
+                <i class="typcn typcn-home mr-2"></i>
+                Home
+            </a>
+        </li>
+        <!-- REPORTES -->
+        <li id="nav-reportes" class="nav-item">
+            <details id="grupo-reportes">
+                <summary
+                    id="enlace-reportes"
+                    class="nav-link"
+                >
+                    <i class="typcn typcn-document-text mr-2"></i>
+                    Reportes
+                </summary>
+                <nav
+                    id="submenu-reportes"
+                    class="az-menu-sub"
+                >
+                    <a
+                        href="/pages/modules/reportes/hoja_diaria.html"
+                        id="opcion-hoja-diaria"
+                        class="nav-link"
+                        data-modulo="reportes"
+                        data-vista="hoja-diaria"
+                    >
+                        <i class="fa-solid fa-file-lines mr-2"></i>
+                        Hoja diaria
+                    </a>
+                    <a
+                        href="/pages/modules/reportes/informe_mensual.html"
+                        id="opcion-informe-mensual"
+                        class="nav-link"
+                        data-modulo="reportes"
+                        data-vista="informe-mensual"
+                    >
+                        <i class="fa-solid fa-calendar-days mr-2"></i>
+                        Informe mensual
+                    </a>
+                </nav>
+            </details>
+        </li>
+        <!-- CONSULTAS -->
+        <li id="nav-consultas" class="nav-item">
+            <a
+                href="/pages/modules/consultas/index.html"
+                id="opcion-consultas"
+                class="nav-link"
+                data-modulo="consultas"
+                data-vista="consultas"
+            >
+                <i class="fa-solid fa-folder-open mr-2"></i>
+                Consultas
+            </a>
+        </li>
+        <!-- PACIENTES -->
+        <li id="nav-pacientes" class="nav-item">
+            <a
+                href="/pages/modules/pacientes/index.html"
+                id="opcion-registrar-pacientes"
+                class="nav-link"
+                data-modulo="pacientes"
+                data-vista="pacientes"
+            >
+                <i class="typcn typcn-user mr-2"></i>
+                Pacientes
             </a>
         </li>
     `;

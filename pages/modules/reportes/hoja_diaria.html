@@ -71,7 +71,7 @@
                 <div class="card-body">
                   <form id="form-filtros-reporte" novalidate>
                     <div class="form-row">
-                      <div class="form-group col-md-6">
+                      <div class="form-group col-md-4">
                         <label for="filtro-modulo">Módulo</label>
                         <select class="form-control" id="filtro-modulo" required>
                           <option value="" selected disabled>Selecciona un módulo</option>
@@ -81,9 +81,15 @@
                           <option value="detecciones">Detecciones</option>
                         </select>
                       </div>
-                      <div class="form-group col-md-6">
+                      <div class="form-group col-md-4">
                         <label for="filtro-fecha">Fecha</label>
                         <input type="date" class="form-control" id="filtro-fecha" required />
+                      </div>
+                      <div class="form-group col-md-4" id="contenedor-filtro-medico">
+                        <label for="filtro-medico">Médico</label>
+                        <select class="form-control" id="filtro-medico">
+                          <option value="" selected disabled>Selecciona un médico</option>
+                        </select>
                       </div>
                     </div>
                     <div class="form-row justify-content-end hc-fila-botones">

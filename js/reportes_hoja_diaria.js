@@ -7,6 +7,7 @@ import {
 
 const URL_MODULOS = "http://localhost:3000/api/modules";
 const URL_DOCUMENTOS = "http://localhost:3000/api/documentos";
+const URL_PRESTADORES = "http://localhost:3000/api/prestadores";
 
 const LIMITE_SIN_PAGINACION = 50;
 
@@ -17,10 +18,17 @@ const NOMBRES_MODULO = {
     "detecciones": "Detecciones"
 };
 
+// Personal administrativo y Jefe de Jurisdicción eligen de qué médico
+// quieren el reporte. Un Médico nunca elige: siempre se usa su propio CURP.
+const ROLES_CON_FILTRO_MEDICO = ["Personal administrativo", "Jefe de Jurisdicción"];
+
 const Usuario = JSON.parse(sessionStorage.getItem("usuario"));
 
 let modulo_consultado = null;
 let fecha_consultada = null;
+let prestador_consultado = "";
+let mostrar_filtro_medico = false;
+let prestador_fijo = "";
 
 document.addEventListener("DOMContentLoaded", async () => {
     if (!Usuario) {
@@ -34,6 +42,20 @@ document.addEventListener("DOMContentLoaded", async () => {
         return;
     }
 
+    mostrar_filtro_medico = ROLES_CON_FILTRO_MEDICO.includes(Usuario.Rol);
+
+    const contenedor_filtro_medico = document.getElementById("contenedor-filtro-medico");
+    if (contenedor_filtro_medico) {
+        contenedor_filtro_medico.style.display = mostrar_filtro_medico ? "" : "none";
+    }
+
+    if (mostrar_filtro_medico) {
+        await cargar_medicos();
+    } else if (Usuario.Rol === "Médico") {
+        // El médico solo ve/genera sus propias consultas, sin selector.
+        prestador_fijo = Usuario.Curp || "";
+    }
+
     document.getElementById("form-filtros-reporte")
         .addEventListener("submit", manejar_envio_filtros);
 
@@ -45,16 +67,51 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     document.getElementById("boton-generar-pdf")
         .addEventListener("click", () => generar_documento("pdf"));
+
     document.getElementById("titulo-bienvenida").textContent = `Reporte de Hoja Diaria`;
     document.getElementById("descripcion-bienvenida").textContent = `Módulo de generación de reportes diarios.`;
 });
 
+async function cargar_medicos() {
+    try {
+        const respuesta = await fetch(URL_PRESTADORES);
+        if (!respuesta.ok) return;
+
+        const prestadores = await respuesta.json();
+        const select = document.getElementById("filtro-medico");
+
+        prestadores.forEach((prestador) => {
+            const opcion = document.createElement("option");
+            opcion.value = prestador.Curp;
+            opcion.textContent = `${prestador.nombre_completo} (${prestador.tipo_personal})`;
+            select.appendChild(opcion);
+        });
+    } catch (error) {
+        console.error("Error al cargar el catálogo de médicos:", error);
+    }
+}
 
 async function manejar_envio_filtros(evento) {
     evento.preventDefault();
 
     const modulo = document.getElementById("filtro-modulo").value;
     const fecha = document.getElementById("filtro-fecha").value;
+
+    let medico = prestador_fijo;
+
+    if (mostrar_filtro_medico) {
+        medico = document.getElementById("filtro-medico").value;
+
+        if (!medico) {
+            mostrarPopup({
+                tipo: "error",
+                titulo: "Falta el médico",
+                mensaje: "Selecciona el médico del que quieres generar el reporte.",
+                boton: true
+            });
+            return;
+        }
+    }
 
     if (!modulo || !fecha) {
         mostrarPopup({
@@ -76,6 +133,7 @@ async function manejar_envio_filtros(evento) {
             fecha_final: fecha,
             limite: LIMITE_SIN_PAGINACION
         });
+        if (medico) parametros.set("prestador", medico);
 
         const respuesta = await fetch(`${URL_MODULOS}/${modulo}/historial?${parametros.toString()}`);
 
@@ -90,7 +148,7 @@ async function manejar_envio_filtros(evento) {
             });
             return;
         }
-console.log("Respuesta del historial:", respuesta);
+
         const resultado = await respuesta.json();
         const registros = Array.isArray(resultado.registros) ? resultado.registros : [];
 
@@ -107,6 +165,7 @@ console.log("Respuesta del historial:", respuesta);
 
         modulo_consultado = modulo;
         fecha_consultada = fecha;
+        prestador_consultado = medico;
 
         mostrar_resultados(registros, modulo, fecha);
     } catch (error) {
@@ -165,6 +224,7 @@ function ocultar_resultados() {
     document.getElementById("boton-generar-pdf").disabled = true;
     modulo_consultado = null;
     fecha_consultada = null;
+    prestador_consultado = "";
 }
 
 function limpiar_filtros() {
@@ -199,6 +259,7 @@ async function generar_documento(tipo_salida) {
             fecha: fecha_consultada,
             nombre_archivo
         });
+        if (prestador_consultado) parametros.set("prestador", prestador_consultado);
 
         const respuesta_documento = await fetch(`${URL_DOCUMENTOS}/exportar?${parametros.toString()}`);
 
@@ -243,7 +304,7 @@ function descargar_blob(blob, nombre_archivo) {
 
 function formatear_fecha(fecha) {
     if (!fecha) return "";
-    const fecha_texto = String(fecha).slice(0, 10); // admite "YYYY-MM-DD" o timestamp ISO
+    const fecha_texto = String(fecha).slice(0, 10);
     const [anio, mes, dia] = fecha_texto.split("-");
     if (!anio || !mes || !dia) return fecha_texto;
     return `${dia}/${mes}/${anio}`;
